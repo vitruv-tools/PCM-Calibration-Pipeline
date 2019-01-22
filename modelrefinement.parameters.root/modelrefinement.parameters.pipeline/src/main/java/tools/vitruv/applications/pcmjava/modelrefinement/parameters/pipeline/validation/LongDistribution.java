@@ -39,4 +39,12 @@ public class LongDistribution {
 		return values.stream().mapToDouble(l -> (double) l).average().getAsDouble();
 	}
 
+	public List<Long> getValues() {
+		return values;
+	}
+
+	public void setValues(List<Long> values) {
+		this.values = values;
+	}
+
 }

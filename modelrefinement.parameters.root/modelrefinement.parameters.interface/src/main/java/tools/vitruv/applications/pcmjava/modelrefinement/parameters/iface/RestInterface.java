@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.PipelineState;
@@ -33,6 +34,21 @@ public class RestInterface {
 		return "";
 	}
 
+	@GetMapping("/results")
+	public String getResults() {
+		return prepareAnalysisResults();
+	}
+
+	@GetMapping("/stats")
+	public String getStats() {
+		try {
+			return mapper.writeValueAsString(pipeline.provideStatsJson());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
 	@PostMapping("/create")
 	public String createPipeline(@RequestBody String body) {
 		try {
@@ -50,6 +66,15 @@ public class RestInterface {
 
 	public void setPipeline(RestPipeline pipeline) {
 		this.pipeline = pipeline;
+	}
+
+	private String prepareAnalysisResults() {
+		try {
+			return mapper.writeValueAsString(this.pipeline.provideResultsJson());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 }
