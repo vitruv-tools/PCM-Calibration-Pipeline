@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<usagemodel:UsageModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stoex="http://sdq.ipd.uka.de/StochasticExpressions/2.2" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2">
+  <usageScenario_UsageModel id="_g7baUB5LEemPvvn78tU9Ng">
+    <scenarioBehaviour_UsageScenario id="_g7fEsB5LEemPvvn78tU9Ng">
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_g7fEsR5LEemPvvn78tU9Ng" successor="_g7fEsh5LEemPvvn78tU9Ng"/>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_g7fEsh5LEemPvvn78tU9Ng" successor="_g7gS0B5LEemPvvn78tU9Ng" predecessor="_g7fEsR5LEemPvvn78tU9Ng">
+        <providedRole_EntryLevelSystemCall href="cocome.system#_MSQMUFcnEd23wcZsd06DZg"/>
+        <operationSignature__EntryLevelSystemCall href="cocome.repository#_2NKrM1cvEeGI_ZRmqWdpYA"/>
+        <inputParameterUsages_EntryLevelSystemCall>
+          <variableCharacterisation_VariableUsage type="NUMBER_OF_ELEMENTS">
+            <specification_VariableCharacterisation specification="IntPMF[(1;0.054)(2;0.046)(3;0.057)(4;0.043)(5;0.042)(6;0.045)(7;0.056)(8;0.358)(9;0.024)(10;0.03)(11;0.03)(12;0.03)(13;0.024)(14;0.024)(15;0.026)(16;0.022)(17;0.024)(18;0.026)(19;0.021)(20;0.015)]"/>
+          </variableCharacterisation_VariableUsage>
+          <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="saleTO"/>
+        </inputParameterUsages_EntryLevelSystemCall>
+      </actions_ScenarioBehaviour>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_g7gS0B5LEemPvvn78tU9Ng" predecessor="_g7fEsh5LEemPvvn78tU9Ng"/>
+    </scenarioBehaviour_UsageScenario>
+    <workload_UsageScenario xsi:type="usagemodel:OpenWorkload">
+      <interArrivalTime_OpenWorkload specification="967"/>
+    </workload_UsageScenario>
+  </usageScenario_UsageModel>
+</usagemodel:UsageModel>

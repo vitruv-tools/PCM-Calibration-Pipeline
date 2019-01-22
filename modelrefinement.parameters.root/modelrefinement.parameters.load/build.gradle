@@ -1,0 +1,30 @@
+
+dependencies {
+	// https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_core
+	compile(group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.0') {
+		exclude group: 'org.apache.logging.log4j'
+	}
+	
+	// https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_http
+	compile(group: 'org.apache.jmeter', name: 'ApacheJMeter_http', version: '5.0') {
+		exclude group: 'org.apache.logging.log4j'
+	}
+	
+	// https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_components
+	compile(group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.0') {
+		exclude group: 'org.apache.logging.log4j'
+	}
+	
+	// https://mvnrepository.com/artifact/org.apache.jmeter/jorphan
+	compile(group: 'org.apache.jmeter', name: 'jorphan', version: '5.0') {
+		exclude group: 'org.apache.logging.log4j'
+	}
+	
+	// https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_java
+	compile(group:'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.0') {
+		exclude group: 'org.apache.logging.log4j'
+	}
+		
+	
+}
+

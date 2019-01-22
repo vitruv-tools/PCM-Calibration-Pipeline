@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ExperimentAutomation.Experiments:ExperimentRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ExperimentAutomation.Experiments="http://palladiosimulator.org/ExperimentAutomation/Experiments/1.0" xmlns:ExperimentAutomation.Experiments.AbstractSimulation="http://palladiosimulator.org/ExperimentAutomation/AbstractSimulation/1.0" xmlns:simucomtooladapter="http://palladiosimulator.org/ExperimentAutomation/ToolAdapter/SimuCom/1.0">
+  <experiments name="Cocome" description="Cocome Execution" repetitions="3">
+    <toolConfiguration xsi:type="simucomtooladapter:SimuComConfiguration">
+      <stopConditions xsi:type="ExperimentAutomation.Experiments.AbstractSimulation:MeasurementCountStopCondition" measurementCount="50"/>
+    </toolConfiguration>
+    <stopConditions xsi:type="ExperimentAutomation.Experiments.AbstractSimulation:SimTimeStopCondition" simulationTime="360000"/>
+    <experimentDesign xsi:type="ExperimentAutomation.Experiments:FullFactorialDesign"/>
+    <responseMeasurement xsi:type="ExperimentAutomation.Experiments:ProfilingMeasurement"/>
+    <initialModel>
+      <usageModel href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.usagemodel#/"/>
+      <allocation href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.allocation#_pY23oFc-Ed23wcZsd06DZg"/>
+      <monitorRepository href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.monitorrepository#_pwrOQAMkEem9sOJHDLkfcw"/>
+      <serviceLevelObjectives href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.slo#/"/>
+      <repository href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.repository#_HZJnoJSbEd-mVsWhjZHqXg"/>
+      <system href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.system#_3Sgb8FcmEd23wcZsd06DZg"/>
+      <resourceEnvironment href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/Setup%20Gradle/workspace/modelrefinement.parameters.root/modelrefinement.parameters.palladio/cocome/cocome.resourceenvironment#/"/>
+    </initialModel>
+  </experiments>
+</ExperimentAutomation.Experiments:ExperimentRepository>

@@ -1,0 +1,12 @@
+
+
+dependencies {
+	compile project(":modelrefinement.parameters.usagemodel")
+	compile project(":modelrefinement.parameters.palladio")
+	compile project(":modelrefinement.parameters.load")
+	compile project(":modelrefinement.parameters.estimation")
+	
+	// https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin
+	compile group: 'com.spotify', name: 'docker-maven-plugin', version: '1.2.0'
+}
+
