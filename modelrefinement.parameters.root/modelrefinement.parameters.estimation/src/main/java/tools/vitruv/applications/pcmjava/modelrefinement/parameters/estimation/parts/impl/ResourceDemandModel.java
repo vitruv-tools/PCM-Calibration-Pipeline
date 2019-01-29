@@ -14,11 +14,15 @@ import org.palladiosimulator.pcm.core.PCMRandomVariable;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.data.ResourceDemandTriple;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.IResourceDemandModel;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.util.IntDistribution;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
+import weka.core.Instance;
 import weka.core.Instances;
 
+// TODO it is unclean to return null if its an too high result
+// this should be modeled different
 public class ResourceDemandModel implements IResourceDemandModel {
 	private static final long NANO_TO_MS = 1000L * 1000L;
 
@@ -73,18 +77,38 @@ public class ResourceDemandModel implements IResourceDemandModel {
 		try {
 			regression.buildClassifier(dataset);
 			double[] coeff = regression.coefficients();
+			IntDistribution constants = buildConstantDistribution(coeff, dataset);
 
 			PCMRandomVariable var = CoreFactory.eINSTANCE.createPCMRandomVariable();
-			var.setSpecification(getResourceDemandStochasticExpression(coeff, indexAttributeMapping));
-			if (!var.getSpecification().contains("E")) {
-				// TODO this is only a hotfix
-				return var;
-			} else {
+			var.setSpecification(getResourceDemandStochasticExpression(coeff, constants, indexAttributeMapping));
+			if (var.getSpecification() == null) {
 				return null;
+			} else {
+				return var;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
+	}
+
+	private IntDistribution buildConstantDistribution(double[] coeff, Instances dataset) {
+		IntDistribution distr = new IntDistribution();
+
+		for (Instance instance : dataset) {
+			double sum = 0;
+			for (int k = 1; k < coeff.length - 1; k++) {
+				sum += coeff[k] * instance.value(k - 1);
+			}
+			double constValue = instance.value(dataset.numAttributes() - 1) - sum;
+			distr.push((int) Math.round(constValue));
+
+			if (constValue >= 1000 * 60 * 60) {
+				return null;
+			}
+		}
+
+		return distr;
 	}
 
 	@Override
@@ -133,7 +157,13 @@ public class ResourceDemandModel implements IResourceDemandModel {
 		return parameterValue;
 	}
 
-	private String getResourceDemandStochasticExpression(double[] coefficients, Map<Integer, String> parameterMapping) {
+	// TODO to be more accurate we could use a double distribution
+	private String getResourceDemandStochasticExpression(double[] coefficients, IntDistribution constant,
+			Map<Integer, String> parameterMapping) {
+		if (constant == null) {
+			return null;
+		}
+
 		StringJoiner result = new StringJoiner(" + (");
 		int braces = 0;
 		for (int i = 0; i < coefficients.length - 2; i++) {
@@ -146,7 +176,7 @@ public class ResourceDemandModel implements IResourceDemandModel {
 			result.add(coefficientPart.toString());
 			braces++;
 		}
-		result.add(String.valueOf(coefficients[coefficients.length - 1]));
+		result.add(constant.toStochasticExpression().getSpecification());
 		StringBuilder strBuilder = new StringBuilder().append(result.toString());
 		for (int i = 0; i < braces; i++) {
 			strBuilder.append(")");

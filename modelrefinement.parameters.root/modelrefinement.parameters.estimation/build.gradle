@@ -3,6 +3,7 @@ dependencies {
 	compile project(":modelrefinement.parameters.palladio")
 	compile project(":modelrefinement.parameters.monitoring")
 	compile project(":modelrefinement.parameters.shared")
+	compile project(":modelrefinement.parameters.usagemodel")
 	
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-math3
 	compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'

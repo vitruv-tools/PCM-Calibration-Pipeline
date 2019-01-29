@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.palladiosimulator.edp2.models:MeasuringPointRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.palladiosimulator.edp2.models="http://palladiosimulator.org/EDP2/MeasuringPoint/1.0" xmlns:pcmmeasuringpoint="http://palladiosimulator.org/PCM/MeasuringPoint/1.0" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" id="_hBtIcAMjEem9sOJHDLkfcw">
+  <measuringPoints xsi:type="pcmmeasuringpoint:AssemblyOperationMeasuringPoint" stringRepresentation="Operation: Application.ProductDispatcher_EnterpriseServer.ProductDispatcherIf.queryEnterpriseById" resourceURIRepresentation="platform:/resource/tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio/cocome/cocome.repository#_2NLSRFcvEeGI_ZRmqWdpYA">
+    <role xsi:type="repository:OperationProvidedRole" href="cocome.repository#_gMw-sNCiEduC9O_qbthgAg"/>
+    <operationSignature href="cocome.repository#_2NLSRFcvEeGI_ZRmqWdpYA"/>
+    <assembly href="cocome.system#_-W_gcFcoEd23wcZsd06DZg"/>
+  </measuringPoints>
+</org.palladiosimulator.edp2.models:MeasuringPointRepository>

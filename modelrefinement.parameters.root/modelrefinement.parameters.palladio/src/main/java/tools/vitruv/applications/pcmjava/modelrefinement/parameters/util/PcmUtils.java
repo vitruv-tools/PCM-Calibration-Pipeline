@@ -1,7 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.util;
 
-
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.palladiosimulator.pcm.PcmPackage;
@@ -44,12 +45,9 @@ public class PcmUtils {
 	/**
 	 * Gets all objects in a {@link Repository} of a specific type.
 	 * 
-	 * @param <T>
-	 *            The type of the objects to find.
-	 * @param pcmModel
-	 *            The repository which is searched.
-	 * @param type
-	 *            The type of the objects to find.
+	 * @param          <T> The type of the objects to find.
+	 * @param pcmModel The repository which is searched.
+	 * @param type     The type of the objects to find.
 	 * @return A list of all found objects or an empty list.
 	 */
 	@SuppressWarnings("unchecked")
@@ -68,10 +66,8 @@ public class PcmUtils {
 	/**
 	 * Saves the repository into a file.
 	 * 
-	 * @param filePath
-	 *            The file for the repository.
-	 * @param repository
-	 *            The repository which will be saved.
+	 * @param filePath   The file for the repository.
+	 * @param repository The repository which will be saved.
 	 */
 	public static void saveModel(final String filePath, final Repository repository) {
 		try {
@@ -98,10 +94,8 @@ public class PcmUtils {
 	/**
 	 * Reads a Model from file with a given class
 	 * 
-	 * @param path
-	 *            file path
-	 * @param clazz
-	 *            model type class
+	 * @param path  file path
+	 * @param clazz model type class
 	 * @return parsed model
 	 */
 	public static <T> T readFromFile(String path, Class<T> clazz) {
@@ -118,10 +112,8 @@ public class PcmUtils {
 	/**
 	 * Saves a model to file
 	 * 
-	 * @param model
-	 *            model to save
-	 * @param path
-	 *            path for the file
+	 * @param model model to save
+	 * @param path  path for the file
 	 */
 	public static <T extends EObject> void saveToFile(T model, String path) {
 		URI writeModelURI = URI.createFileURI(path);
@@ -146,12 +138,9 @@ public class PcmUtils {
 	 * Resolves a SEFF with given System, Signature and Provided Role Searches the
 	 * delegation and resolves the assembly to which the role is delegated
 	 * 
-	 * @param system
-	 *            system link
-	 * @param sig
-	 *            signature
-	 * @param role
-	 *            provided role
+	 * @param system system link
+	 * @param sig    signature
+	 * @param role   provided role
 	 * @return pair (left = SEFF, right = providing assembly)
 	 */
 	public static Pair<ServiceEffectSpecification, AssemblyContext> getSeffByProvidedRoleAndSignature(System system,
@@ -176,8 +165,7 @@ public class PcmUtils {
 	/**
 	 * Gets all provided operations by a system.
 	 * 
-	 * @param system
-	 *            the system
+	 * @param system the system
 	 * @return set of all provided operations by the passed system
 	 */
 	public static Set<OperationSignature> getProvidedOperations(System system) {
@@ -189,12 +177,9 @@ public class PcmUtils {
 	/**
 	 * Gets an element with a given ID.
 	 * 
-	 * @param obj
-	 *            the object which child's should be examined
-	 * @param clazz
-	 *            type of the element
-	 * @param id
-	 *            id of the element
+	 * @param obj   the object which child's should be examined
+	 * @param clazz type of the element
+	 * @param id    id of the element
 	 * @return found element or null if it could not be found
 	 */
 	public static <T extends Identifier> T getElementById(EObject obj, Class<T> clazz, String id) {
@@ -204,10 +189,8 @@ public class PcmUtils {
 	/**
 	 * Gets the provided role of a system which contains a given SEFF
 	 * 
-	 * @param sys
-	 *            system
-	 * @param seff
-	 *            SEFF
+	 * @param sys  system
+	 * @param seff SEFF
 	 * @return provided role which contains the SEFF or null if not available
 	 */
 	public static OperationProvidedRole getProvidedRole(System sys, ServiceEffectSpecification seff) {
@@ -224,5 +207,27 @@ public class PcmUtils {
 	public static void loadPCMModels() {
 		RepositoryPackage.eINSTANCE.eClass();
 		PcmPackage.eINSTANCE.eClass();
+
+		initPathmaps();
+	}
+
+	private static void initPathmaps() {
+		final String metricSpecModel = "models/Palladio.resourcetype";
+		final URL url = PcmUtils.class.getClassLoader().getResource(metricSpecModel);
+		if (url == null) {
+			throw new RuntimeException("Error getting common metric definitions");
+		}
+		String urlString = url.toString();
+		if (!urlString.endsWith(metricSpecModel)) {
+			throw new RuntimeException("Error getting common metric definitions. Got: " + urlString);
+		}
+		urlString = urlString.substring(0, urlString.length() - metricSpecModel.length() - 1);
+		final URI uri = URI.createURI(urlString);
+		final URI target = uri.appendSegment("models").appendSegment("");
+		URIConverter.URI_MAP.put(URI.createURI("pathmap://PCM_MODELS/"), target);
+
+		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("restypes", new XMIResourceFactoryImpl());
 	}
 }

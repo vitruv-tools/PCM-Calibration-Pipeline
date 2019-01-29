@@ -27,7 +27,7 @@ public class IntDistribution {
 				builder.append("(");
 				builder.append(String.valueOf(entry.getKey()));
 				builder.append(";");
-				builder.append(String.valueOf(roundDouble(prob, 3)));
+				builder.append(String.valueOf(roundDouble(prob, 10)));
 				builder.append(")");
 			}
 			builder.append("]");
