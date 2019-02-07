@@ -17,15 +17,8 @@ dependencies {
     compile 'extra:de.uka.ipd.sdq.probfunction:2.1.1+'
     
     compile 'extra:tools.descartes.librede.estimation:1.1.0+'
-    compile 'extra:tools.descartes.librede.bayesplusplus.java:1.1.0+'
-    compile 'extra:tools.descartes.librede.model.edit:1.1.0+'
-    compile 'extra:tools.descartes.librede.ipopt.java:1.1.0+'
-    compile 'extra:tools.descartes.librede.nnls.java:1.1.0+'
-    compile 'extra:tools.descartes.librede.nativehelper:1.1.0+'
     compile 'extra:tools.descartes.librede.model:1.1.0+'
-    compile 'extra:tools.descartes.librede.model.editor:1.1.0+'
     compile 'extra:tools.descartes.librede.linalg:1.1.0+'
-    compile 'extra:tools.descartes.librede.connector.dml:1.1.0+'
     
     // from extra repo
 	compile 'extra:tools.descartes.dlim.generator:0.15.9.201606230914'
@@ -33,7 +26,6 @@ dependencies {
     
     compile 'extra:org.palladiosimulator.edp2.dao:1.0.0.201608091414'
     compile 'extra:org.palladiosimulator.edp2:2.0.0+'
-    compile 'extra:org.palladiosimulator.edp2.datastream:1.0.0.201608091414'
     compile 'extra:org.palladiosimulator.edp2.util:1.0.0.201608091414'
     compile 'extra:org.palladiosimulator.edp2.repository.local:1.0.0.201608091414'
     compile 'extra:org.palladiosimulator.servicelevelobjective.edp2:1.1.0.201709290951'

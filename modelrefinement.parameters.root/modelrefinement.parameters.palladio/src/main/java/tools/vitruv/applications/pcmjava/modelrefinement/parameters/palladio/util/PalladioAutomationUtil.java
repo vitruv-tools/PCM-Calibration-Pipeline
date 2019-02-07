@@ -94,6 +94,9 @@ public class PalladioAutomationUtil {
 				if (entryCallMatcher.find()) {
 					EntryLevelSystemCall entryCall = PcmUtils.getElementById(usageModel, EntryLevelSystemCall.class,
 							entryCallMatcher.group(1));
+					if (entryCall == null) {
+						return null;
+					}
 					return PcmUtils.getSeffByProvidedRoleAndSignature(system,
 							entryCall.getOperationSignature__EntryLevelSystemCall(),
 							entryCall.getProvidedRole_EntryLevelSystemCall());

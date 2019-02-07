@@ -30,7 +30,8 @@ public class CrossValidationPart extends AbstractPipelinePart {
 		// state
 		getBlackboard().setState(PipelineState.EVALUATION);
 
-		PalladioAnalysisResults results = getBlackboard().getAnalysisResults();
+		PalladioAnalysisResults results = getBlackboard().getAnalysisResults()
+				.get(getBlackboard().getAnalysisResults().size() - 1);
 
 		final InMemoryPCM pcm = getBlackboard().getLoadedPcm();
 		final Repository repository = pcm.getRepository();

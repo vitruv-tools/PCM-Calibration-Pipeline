@@ -34,6 +34,8 @@ public class EPAPipelineConfiguration {
 
 	private DockerConfiguration docker;
 
+	private boolean analysisOnce;
+
 	public String getJavaPath() {
 		return javaPath;
 	}
@@ -128,5 +130,13 @@ public class EPAPipelineConfiguration {
 
 	public void setJmxPath(String jmxPath) {
 		this.jmxPath = jmxPath;
+	}
+
+	public boolean isAnalysisOnce() {
+		return analysisOnce;
+	}
+
+	public void setAnalysisOnce(boolean analysisOnce) {
+		this.analysisOnce = analysisOnce;
 	}
 }

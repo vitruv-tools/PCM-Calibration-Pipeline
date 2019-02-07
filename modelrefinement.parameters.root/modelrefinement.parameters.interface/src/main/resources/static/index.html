@@ -1,0 +1,274 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Parameter Update Pipeline</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Parameter Estimation Pipeline</a>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="play"></span>
+                  Pipeline <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="results.html">
+                  <span data-feather="activity"></span>
+                  Results
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved results</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Pipeline</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary" id="start"><span data-feather="play"></span>Start</button>
+              </div>
+            </div>
+          </div>
+          
+          <canvas id="pipeline" width="900" height="800"></canvas>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Draw Pipeline -->
+    <script>
+    
+ 	// draw logic
+ 	var loadCounter = 0;
+ 	var images = 7;
+ 	
+    var canvas = document.getElementById("pipeline");
+    var ctx = canvas.getContext("2d");
+    
+    var load_logo = loadImage("icons/start-logo.png", 256, 256, semaphore);
+    var palladio_logo = loadImage("icons/palladio-logo.png", 225, 225, semaphore);
+    var kieker_logo = loadImage("icons/kieker-logo.png", 495, 150, semaphore);
+    var jmeter_logo = loadImage("icons/jmeter.png", 400, 400, semaphore);
+    var para_update = loadImage("icons/para_update.png", 150, 150, semaphore);
+    var usagemodel = loadImage("icons/usagemodel.png", 100, 100, semaphore);
+    var results_logo = loadImage("icons/results.png", 256, 256, semaphore);
+    
+    function semaphore() {
+    	loadCounter++;
+    	if (loadCounter >= images) {
+    		updateState();
+    	}
+    }
+    
+    function drawPipeline(state) {
+    	ctx.clearRect(0, 0, canvas.width, canvas.height);
+    	
+    	var centerX = canvas.width / 2;
+    	var centerY = canvas.height / 2;
+    	
+    	var lp = {
+    			load : {
+    				x : 0,
+    				y : 0,
+    				width : 100,
+    				height: 100
+    			},
+    			jmeter : {
+    				x : 300,
+    				y : 0,
+    				width : 100,
+    				height: 100
+    			},
+    			kieker : {
+    				x : 75,
+    				y : 250,
+    				width : 250,
+    				height: 75
+    			},
+    			parameter : {
+    				x : 125,
+    				y : 420,
+    				width : 150,
+    				height: 150
+    			},
+    			usage : {
+    				x : 550,
+    				y : 433,
+    				width: 125,
+    				height: 125
+    			},
+    			palladio : {
+    				x : 550,
+    				y : 225,
+    				width: 125,
+    				height : 125
+    			},
+    			results : {
+    				x : 550,
+    				y: 0,
+    				width: 125,
+    				height: 125
+    			}
+    	};
+    	
+    	// logos
+    	ctx.drawImage(load_logo, lp.load.x, lp.load.y, lp.load.width, lp.load.height);
+    	ctx.drawImage(jmeter_logo, lp.jmeter.x, lp.jmeter.y, lp.jmeter.width, lp.jmeter.height);
+    	
+    	ctx.drawImage(kieker_logo, lp.kieker.x, lp.kieker.y, lp.kieker.width, lp.kieker.height);
+    	
+    	ctx.drawImage(para_update, lp.parameter.x, lp.parameter.y, lp.parameter.width, lp.parameter.height);
+    	
+    	ctx.drawImage(usagemodel, lp.usage.x, lp.usage.y, lp.usage.width, lp.usage.height);
+    	
+    	ctx.drawImage(palladio_logo, lp.palladio.x, lp.palladio.y, lp.palladio.width, lp.palladio.height);
+    	ctx.drawImage(results_logo, lp.results.x, lp.results.y, lp.results.width, lp.results.height);
+    	
+    	// arrows
+    	drawArrow({x: lp.load.x + lp.load.width / 2, y: lp.load.height + 5}, {x: lp.kieker.x + lp.kieker.width / 2 - 30, y: lp.kieker.y - 10}, 8, 10, state > 0);
+    	drawArrow({x: lp.jmeter.x + lp.jmeter.width / 2, y: lp.jmeter.height + 5}, {x: lp.kieker.x + lp.kieker.width / 2 + 30, y: lp.kieker.y - 10}, 8, 10, state > 1);
+    	drawArrow({x: lp.kieker.x + lp.kieker.width / 2, y: lp.kieker.y + lp.kieker.height + 5}, {x: lp.parameter.x + lp.parameter.width / 2, y: lp.parameter.y - 10}, 8, 10, state > 2);
+    	drawArrow({x: lp.parameter.x + lp.parameter.width + 5, y: lp.parameter.y + lp.parameter.height / 2}, {x: lp.usage.x - 5, y: lp.usage.y + lp.usage.height / 2}, 8, 10, state > 3);
+    	drawArrow({x: lp.usage.x + lp.usage.width / 2, y: lp.usage.y - 5}, {x: lp.palladio.x + lp.palladio.width / 2, y: lp.palladio.y + lp.palladio.height + 15}, 8, 10, state > 4);
+    	drawArrow({x: lp.palladio.x + lp.palladio.width / 2, y: lp.palladio.y - 5}, {x: lp.results.x + lp.results.width / 2, y: lp.results.y + lp.results.height + 15}, 8, 10, state > 5);
+    }
+    
+    function drawArrow(from, to, width, head_size, filled) {
+    	ctx.strokeStyle = filled ? "#0080FF" : "#282828";
+    	ctx.fillStyle = filled ? "#0080FF" : "#282828";
+    	ctx.lineWidth = width;
+    	
+    	ctx.beginPath();
+    	ctx.moveTo(from.x, from.y);
+    	ctx.lineTo(to.x, to.y);
+    	ctx.stroke();
+    	
+    	drawArrowhead(ctx, from, to, head_size);
+    }
+    
+    function drawArrowhead(context, from, to, radius) {
+    	var x_center = to.x;
+    	var y_center = to.y;
+
+    	var angle;
+    	var x;
+    	var y;
+
+    	context.beginPath();
+
+    	angle = Math.atan2(to.y - from.y, to.x - from.x)
+    	x = radius * Math.cos(angle) + x_center;
+    	y = radius * Math.sin(angle) + y_center;
+
+    	context.moveTo(x, y);
+
+    	angle += (1.0/3.0) * (2 * Math.PI)
+    	x = radius * Math.cos(angle) + x_center;
+    	y = radius * Math.sin(angle) + y_center;
+
+    	context.lineTo(x, y);
+
+    	angle += (1.0/3.0) * (2 * Math.PI)
+    	x = radius *Math.cos(angle) + x_center;
+    	y = radius *Math.sin(angle) + y_center;
+
+    	context.lineTo(x, y);
+
+    	context.closePath();
+
+    	context.fill();
+    }
+    
+    function loadImage(url, width, height, sema) {
+    	const image = new Image(width, height);
+    	image.src = url;
+    	image.onload = sema;
+    	
+    	return image;
+    }
+    
+    </script>
+    
+    <script>
+    // click logic
+    var interval = null;
+    var stateMap = {
+    		"INIT" : 0,
+    		"STARTED" : 0,
+    		"PCM_LOADED" : 0,
+    		"DOCKER_CLEAN" : 1,
+    		"LOAD_TESTING" : 1,
+    		"DOCKER_IMPORT" : 2,
+    		"LOAD_MONITORING_DATA" : 2,
+    		"PARAMETER_UPDATES" : 3,
+    		"USAGEMODEL_UPDATE" : 4,
+    		"PCM_ANALYSIS" : 5,
+    		"EVALUATION" : 6,
+    		"FINISHED" : 7
+    }
+    
+    $(document).ready(function() {
+    	$("#start").click(function() {
+    		$("#start").prop("disabled", true);
+    		interval = setInterval(updateState, 500);
+    		
+    		$.ajax({url: "start", success: function(result) {
+    			drawPipeline(7);
+    			if (interval != null) {
+    				clearInterval(interval);
+    			}
+    			$("#start").prop("disabled", false);
+    		}});
+    	});
+    });
+    
+    function updateState() {
+    	$.ajax({url: "state", success: function(result) {
+			drawPipeline(stateMap[result]);
+		}});
+    }
+    </script>
+  </body>
+</html>

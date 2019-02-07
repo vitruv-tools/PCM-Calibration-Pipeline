@@ -10,7 +10,7 @@
 
 # Specific
 # ----
-*.html
+!*.html
 
 # IDEA
 # ----

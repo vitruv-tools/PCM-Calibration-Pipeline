@@ -14,7 +14,7 @@ public class DataBlackboard {
 	private InMemoryPCM loadedPcm;
 	private LocalFilesystemPCM filesystemPcm;
 
-	private PalladioAnalysisResults analysisResults;
+	private List<PalladioAnalysisResults> analysisResults;
 
 	private PipelineState state;
 
@@ -22,6 +22,7 @@ public class DataBlackboard {
 
 	public DataBlackboard() {
 		this.listeners = new ArrayList<>();
+		this.analysisResults = new ArrayList<>();
 	}
 
 	public MonitoringDataSet getMonitoringData() {
@@ -52,12 +53,12 @@ public class DataBlackboard {
 		getLoadedPcm().saveToFilesystem(getFilesystemPcm());
 	}
 
-	public PalladioAnalysisResults getAnalysisResults() {
+	public List<PalladioAnalysisResults> getAnalysisResults() {
 		return analysisResults;
 	}
 
-	public synchronized void setAnalysisResults(PalladioAnalysisResults analysisResults) {
-		this.analysisResults = analysisResults;
+	public synchronized void addAnalysisResults(PalladioAnalysisResults analysisResults) {
+		this.analysisResults.add(analysisResults);
 	}
 
 	public PipelineState getState() {

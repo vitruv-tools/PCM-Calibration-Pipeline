@@ -44,12 +44,14 @@ public class RestPipeline extends ParameterEstimationPipeline implements IPipeli
 	// TODO this code duplication is a bit ugly
 	protected List<StatResults> provideStatsJson() {
 		final List<StatResults> ret = new ArrayList<>();
-		if (blackboard.getAnalysisResults() == null) {
+		if (blackboard.getAnalysisResults() == null || blackboard.getAnalysisResults().size() == 0) {
 			return Collections.emptyList();
 		}
 		final MonitoringDataSet monitoringData = blackboard.getMonitoringData();
 
-		blackboard.getAnalysisResults().entries().forEach(entry -> {
+		int lastId = blackboard.getAnalysisResults().size() - 1;
+
+		blackboard.getAnalysisResults().get(lastId).entries().forEach(entry -> {
 			Pair<ServiceEffectSpecification, AssemblyContext> metadata = PalladioAutomationUtil.getSeffByMeasuringPoint(
 					blackboard.getLoadedPcm().getRepository(), blackboard.getLoadedPcm().getUsageModel(),
 					blackboard.getLoadedPcm().getSystem(), entry.getKey(), entry.getValue().getMetricDescription());
@@ -85,12 +87,14 @@ public class RestPipeline extends ParameterEstimationPipeline implements IPipeli
 
 	protected ServiceResults provideResultsJson() {
 		final ServiceResults ret = new ServiceResults();
-		if (blackboard.getAnalysisResults() == null) {
+		if (blackboard.getAnalysisResults() == null || blackboard.getAnalysisResults().size() == 0) {
 			return ret;
 		}
 		final MonitoringDataSet monitoringData = blackboard.getMonitoringData();
 
-		blackboard.getAnalysisResults().entries().forEach(entry -> {
+		int lastId = blackboard.getAnalysisResults().size() - 1;
+
+		blackboard.getAnalysisResults().get(lastId).entries().forEach(entry -> {
 			Pair<ServiceEffectSpecification, AssemblyContext> metadata = PalladioAutomationUtil.getSeffByMeasuringPoint(
 					blackboard.getLoadedPcm().getRepository(), blackboard.getLoadedPcm().getUsageModel(),
 					blackboard.getLoadedPcm().getSystem(), entry.getKey(), entry.getValue().getMetricDescription());

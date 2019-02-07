@@ -54,7 +54,7 @@ public class PalladioExecutorPart extends AbstractPipelinePart {
 		// perform the analysis
 		try {
 			PalladioAnalysisResults res = executor.run(exec);
-			getBlackboard().setAnalysisResults(res);
+			getBlackboard().addAnalysisResults(res);
 		} catch (IOException e) {
 			logger.warn("Failed to perform the Analysis correctly.");
 		}

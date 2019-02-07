@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.config.EPAPipelineConfiguration;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.LocalFilesystemPCM;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.AbstractPipelinePart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.CrossValidationPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.DockerImportMonitoringPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadMonitoringDataPart;
@@ -47,8 +48,20 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 			return;
 		}
 
+		// clean part
+		this.addPart(new AbstractPipelinePart(false) {
+			@Override
+			protected void execute() {
+				getBlackboard().setState(PipelineState.INIT);
+			}
+		});
+
 		// initialization part
 		this.addPart(new LoadPCMModelsPart(filesystemPCM));
+
+		// perform palladio analysis before
+		this.addPart(
+				new PalladioExecutorPart(pipelineConfiguration.getJavaPath(), pipelineConfiguration.getEclipsePath()));
 
 		// produce monitoring data (load test)
 		// TODO inspect why load testing doesnt work
@@ -65,6 +78,12 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		// derive actual models
 		// -> doesnt work atm, maybe need to cherry pick his changes
 		this.addPart(new ParameterEstimationPart());
+
+		// perform palladio before us
+		this.addPart(
+				new PalladioExecutorPart(pipelineConfiguration.getJavaPath(), pipelineConfiguration.getEclipsePath()));
+
+		// do our job
 		this.addPart(new ResourceDemandEstimationPart());
 		this.addPart(new UsageModelDerivationPart(monitoringDataMapping));
 

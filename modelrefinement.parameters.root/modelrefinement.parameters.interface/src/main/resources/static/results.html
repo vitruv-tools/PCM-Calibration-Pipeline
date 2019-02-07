@@ -1,0 +1,360 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Parameter Update Pipeline</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	crossorigin="anonymous"></script>
+
+<!-- Custom styles for this template -->
+<link href="dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Parameter
+			Estimation Pipeline</a>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" href="index.html">
+								<span data-feather="play"></span> Pipeline
+						</a></li>
+						<li class="nav-item"><a class="nav-link active" href="#">
+								<span data-feather="activity"></span> Results <span
+								class="sr-only">(current)</span>
+						</a></li>
+					</ul>
+
+					<h6
+						class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span>Saved results</span> <a
+							class="d-flex align-items-center text-muted" href="#"> <span
+							data-feather="plus-circle"></span>
+						</a>
+					</h6>
+				</div>
+			</nav>
+
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+			<div
+				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+				<h1 class="h2">Results</h1>
+			</div>
+
+			<div id="mainContainer">
+				<div id="tabs">
+					<ul id="tab-topics">
+						<li><a href="#tabs-1">Nunc tincidunt</a></li>
+						<li><a href="#tabs-2">Proin dolor</a></li>
+						<li><a href="#tabs-3">Aenean lacinia</a></li>
+					</ul>
+					<div id="tab-containments">
+						<div id="tabs-1">
+							<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo
+								a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet
+								mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa
+								et lorem. Mauris dapibus lacus auctor risus. Aenean tempor
+								ullamcorper leo. Vivamus sed magna quis ligula eleifend
+								adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum.
+								Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede
+								varius sollicitudin. Sed ut dolor nec orci tincidunt interdum.
+								Phasellus ipsum. Nunc tristique tempus lectus.</p>
+						</div>
+						<div id="tabs-2">
+							<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio
+								metus gravida ante, ut pharetra massa metus id nunc. Duis
+								scelerisque molestie turpis. Sed fringilla, massa eget luctus
+								malesuada, metus eros molestie lectus, ut tempus eros massa ut
+								dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in
+								ligula suscipit aliquam. Praesent in eros vestibulum mi
+								adipiscing adipiscing. Morbi facilisis. Curabitur ornare
+								consequat nunc. Aenean vel metus. Ut posuere viverra nulla.
+								Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat,
+								tellus pellentesque pretium posuere, felis lorem euismod felis,
+								eu ornare leo nisi vel felis. Mauris consectetur tortor et
+								purus.</p>
+						</div>
+						<div id="tabs-3">
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse
+								potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque
+								rutrum erat, eu congue orci lorem eget lorem. Vestibulum non
+								ante. Class aptent taciti sociosqu ad litora torquent per
+								conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque
+								eu urna vel enim commodo pellentesque. Praesent eu risus
+								hendrerit ligula tempus pretium. Curabitur lorem enim, pretium
+								nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra
+								at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent
+								viverra justo vitae neque. Praesent blandit adipiscing velit.
+								Suspendisse potenti. Donec mattis, pede vel pharetra blandit,
+								magna ligula faucibus eros, id euismod lacus dolor eget odio.
+								Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut
+								sagittis. Donec nisi lectus, feugiat porttitor, tempor ac,
+								tempor vitae, pede. Aenean vehicula velit eu tellus interdum
+								rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus.
+								Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			</main>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		crossorigin="anonymous"></script>
+
+	<!-- Icons -->
+	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.6/chartjs-plugin-zoom.min.js"></script>
+	<script>
+		feather.replace()
+	</script>
+
+	<!-- Load results -->
+	<script>
+		window.chartColors = {
+			red: 'rgb(255, 99, 132)',
+			orange: 'rgb(255, 159, 64)',
+			yellow: 'rgb(255, 205, 86)',
+			green: 'rgb(75, 192, 192)',
+			blue: 'rgb(54, 162, 235)',
+			purple: 'rgb(153, 102, 255)',
+			grey: 'rgb(201, 203, 207)'
+		};
+		var color = Chart.helpers.color;
+		
+		Array.prototype.max = function() {
+		  return Math.max.apply(null, this);
+		};
+
+		Array.prototype.min = function() {
+		  return Math.min.apply(null, this);
+		};
+	
+		$(function() {
+			$("#tabs").tabs();
+			loadData();
+		});
+
+		function loadData() {
+			$("#tab-topics").empty();
+			$("#tab-containments").empty();
+
+			$.getJSON('results', function(data) {
+				$.getJSON('stats', function(stats) {
+					var statMapping = {};
+					stats.forEach(function(stat) {
+						statMapping[stat.seffId] = stat;
+					});
+							
+					data.results.forEach(function(seff) {
+						createTab(seff.seffId, seff.seffId);
+						createTabValue(seff.seffId, statMapping);
+						applyChartData(seff.seffId, seff);
+					});
+					
+					$("#tabs").tabs("refresh");
+				});
+			});
+		}
+		
+		function createTab(id, name) {
+			$("#tab-topics").append("<li><a href=\"#" + id + "\">" + name + "</a></li>");
+		}
+		
+		function createTabValue(id, seff) {
+			$("#tab-containments").append("<div id=\"" + id + "\">" + buildStats(seff[id], id + "-canvas") + "</div>");
+		}
+		
+		function applyChartData(id, data) {
+			var ctx = document.getElementById(id + "-canvas");
+			
+			// sort distrs
+			data.analysisDistribution.values.sort(sortNumber);
+			data.monitoringDistribution.values.sort(sortNumber);
+			
+			// inherit
+			axy = {};
+			mxy = {};
+			
+			data.analysisDistribution.values.forEach(function(val, i, all) {
+				axy[val] = i / (all.length - 1);
+			});
+			data.monitoringDistribution.values.forEach(function(val, i, all) {
+				mxy[val] = i / (all.length - 1);
+			});
+			
+			// build
+			var data_a = [];
+			var data_m = [];
+			
+			Object.keys(axy).forEach(function(key) {
+    			data_a.push({x: key, y: axy[key]});
+			});
+			Object.keys(mxy).forEach(function(key) {
+				data_m.push({x: key, y: mxy[key]});
+			});
+			
+			var myChart = new Chart(ctx, {
+		        type: 'scatter',
+		        data: {
+		          datasets: [{
+		        	  label: "Analysis",
+		        	  borderColor: window.chartColors.red,
+						backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+		            data: data_a,
+		            lineTension: 0,
+		            borderWidth: 2,
+		            showLine: true
+		          }, {
+		        	  label: "Montitoring",
+		        	  borderColor: window.chartColors.blue,
+						backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+			            data: data_m,
+			            lineTension: 0,
+			            borderWidth: 2,
+			            showLine: true
+			          }]
+		        },
+		        options: {
+		          scales: {
+		        	xAxes: [{
+		               type: 'linear',
+		               position: 'bottom'
+		            }],
+		            yAxes: [{
+		              ticks: {
+		                beginAtZero: true
+		              }
+		            }]
+		          },
+		          legend: {
+		            display: true,
+		          },
+		          tooltips: {
+		              callbacks: {
+		                 label: function(tooltipItem, data) {
+		                    var label = data.datasets[tooltipItem.datasetIndex].label;
+		                    return label + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+		                 }
+		              }
+		           },
+		        // Container for pan options
+		       	pan: {
+		       		// Boolean to enable panning
+		       		enabled: true,
+
+		       		// Panning directions. Remove the appropriate direction to disable 
+		       		// Eg. 'y' would only allow panning in the y direction
+		       		mode: 'x',
+		       		rangeMin: {
+		       			// Format of min pan range depends on scale type
+		       			x: null,
+		       			y: null
+		       		},
+		       		rangeMax: {
+		       			// Format of max pan range depends on scale type
+		       			x: null,
+		       			y: null
+		       		},
+		       		// Function called once panning is completed
+		       		// Useful for dynamic data loading
+		       		onPan: function({chart}) { console.log(`I was panned!!!`); }
+		       	},
+		       	
+		       	// Container for zoom options
+		       	zoom: {
+		       		// Boolean to enable zooming
+		       		enabled: true,
+
+		       		// Enable drag-to-zoom behavior
+		       		drag: true,
+
+		       		// Drag-to-zoom rectangle style can be customized
+		       		// drag: {
+		       		// 	 borderColor: 'rgba(225,225,225,0.3)'
+		       		// 	 borderWidth: 5,
+		       		// 	 backgroundColor: 'rgb(225,225,225)'
+		       		// },
+
+		       		// Zooming directions. Remove the appropriate direction to disable 
+		       		// Eg. 'y' would only allow zooming in the y direction
+		       		mode: 'xy',
+		       		rangeMin: {
+		       			// Format of min zoom range depends on scale type
+		       			x: null,
+		       			y: null
+		       		},
+		       		rangeMax: {
+		       			// Format of max zoom range depends on scale type
+		       			x: null,
+		       			y: null
+		       		},
+		       		// Function called once zooming is completed
+		       		// Useful for dynamic data loading
+		       		onZoom: function({chart}) { console.log(`I was zoomed!!!`); }
+		       	}
+		        }
+		      });
+		}
+		
+		function sortNumber(a,b) {
+	        return a - b;
+	    }
+		
+		function buildStats(stats, canvasId) {
+			return `
+			    <p>
+					<span>Average analysis: ${stats.avgAnalysis}ms</span>
+					<br>
+					<span>Average monitoring: ${stats.avgMonitoring}ms</span>
+					<br>
+					<span>Average TEST: ${stats.averageTest}</span>
+					<br>
+					<span>KS TEST: ${stats.ksTest}</span>
+					<hr>
+					<canvas id=${canvasId} width="800" height="300"></canvas>
+				</p>
+			`;
+		}
+	</script>
+</body>
+</html>

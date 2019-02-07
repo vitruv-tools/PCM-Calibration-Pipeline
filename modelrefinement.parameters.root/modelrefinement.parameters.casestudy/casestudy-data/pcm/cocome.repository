@@ -259,7 +259,7 @@
         </resourceDemand_Action>
       </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_qPZWwNJOEduQ7qbNANXHPw" entityName="getPersistenceContext" predecessor_AbstractAction="_ckGrcNJOEduQ7qbNANXHPw" successor_AbstractAction="_m1YuANJOEduQ7qbNANXHPw" calledService_ExternalService="_2NL5V1cvEeGI_ZRmqWdpYA" role_ExternalService="_0k7YYdCnEduC9O_qbthgAg"/>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_wAfysNJOEduQ7qbNANXHPw" entityName="ProductWithStockItemIterator" predecessor_AbstractAction="_m1YuANJOEduQ7qbNANXHPw" successor_AbstractAction="_dbRHgNJPEduQ7qbNANXHPw">
+      <steps_Behaviour xsi:type="seff:LoopAction" id="_wAfysNJOEduQ7qbNANXHPw" entityName="ProductWithStockItemIterator" predecessor_AbstractAction="_m1YuANJOEduQ7qbNANXHPw" successor_AbstractAction="_M7N1kNJPEduQ7qbNANXHPw">
         <bodyBehaviour_Loop id="_EIWgAaTJEeGVosGVY5oxwg">
           <steps_Behaviour xsi:type="seff:StopAction" id="_2ZFscNJOEduQ7qbNANXHPw" entityName="stopItemIterator" predecessor_AbstractAction="_sWjMnP1LEeicRPoFxRMR1Q"/>
           <steps_Behaviour xsi:type="seff:StartAction" id="_2sTjYNJOEduQ7qbNANXHPw" successor_AbstractAction="_3isY0NJOEduQ7qbNANXHPw"/>
@@ -273,23 +273,7 @@
         </bodyBehaviour_Loop>
         <iterationCount_LoopAction specification="1 * saleTO.NUMBER_OF_ELEMENTS + (0)"/>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_M7N1kNJPEduQ7qbNANXHPw" entityName="getPersistenceContext" predecessor_AbstractAction="_dbRHgNJPEduQ7qbNANXHPw" successor_AbstractAction="_YeyxANJQEduQ7qbNANXHPw" calledService_ExternalService="_2NL5V1cvEeGI_ZRmqWdpYA" role_ExternalService="_0k7YYdCnEduC9O_qbthgAg"/>
-      <steps_Behaviour xsi:type="seff:InternalAction" id="_dbRHgNJPEduQ7qbNANXHPw" entityName="catchBlock" predecessor_AbstractAction="_wAfysNJOEduQ7qbNANXHPw" successor_AbstractAction="_M7N1kNJPEduQ7qbNANXHPw">
-        <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="20"/>
-          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
-        </resourceDemand_Action>
-      </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_YeyxANJQEduQ7qbNANXHPw" entityName="queryLowStockItemsWithRespectToIncomingProducts" predecessor_AbstractAction="_M7N1kNJPEduQ7qbNANXHPw" successor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" calledService_ExternalService="_2NNHclcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_CrPMVBA0EembpMH3VukgUA" entityName="calculateProductAmountsLoop" predecessor_AbstractAction="_YeyxANJQEduQ7qbNANXHPw" successor_AbstractAction="_1UJywNJQEduQ7qbNANXHPw">
-        <bodyBehaviour_Loop id="_Jwf-0hA0EembpMH3VukgUA">
-          <steps_Behaviour xsi:type="seff:StartAction" id="_OdggghA0EembpMH3VukgUA" entityName="startProductAmountLoop" successor_AbstractAction="_SFTGnBA0EembpMH3VukgUA"/>
-          <steps_Behaviour xsi:type="seff:StopAction" id="_PJXg8BA0EembpMH3VukgUA" predecessor_AbstractAction="_SFTGnBA0EembpMH3VukgUA"/>
-          <steps_Behaviour xsi:type="seff:InternalAction" id="_SFTGnBA0EembpMH3VukgUA" entityName="calculateProductAmount" predecessor_AbstractAction="_OdggghA0EembpMH3VukgUA" successor_AbstractAction="_PJXg8BA0EembpMH3VukgUA"/>
-        </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="2"/>
-      </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_1UJywNJQEduQ7qbNANXHPw" entityName="queryStoreById" predecessor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" successor_AbstractAction="_XoxOlP1OEeicRPoFxRMR1Q" calledService_ExternalService="_2NL5WlcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_M7N1kNJPEduQ7qbNANXHPw" entityName="getPersistenceContext" predecessor_AbstractAction="_wAfysNJOEduQ7qbNANXHPw" successor_AbstractAction="_YeyxANJQEduQ7qbNANXHPw" calledService_ExternalService="_2NL5V1cvEeGI_ZRmqWdpYA" role_ExternalService="_0k7YYdCnEduC9O_qbthgAg"/>
       <steps_Behaviour xsi:type="seff:LoopAction" id="_XoxOlP1OEeicRPoFxRMR1Q" entityName="selectItemsToOrder" predecessor_AbstractAction="_1UJywNJQEduQ7qbNANXHPw" successor_AbstractAction="_c4EJQNJOEduQ7qbNANXHPw">
         <bodyBehaviour_Loop id="_2bUVwv1OEeicRPoFxRMR1Q">
           <steps_Behaviour xsi:type="seff:StartAction" id="_-bUSMv1OEeicRPoFxRMR1Q" entityName="startLowStock" successor_AbstractAction="_25wIzv1PEeicRPoFxRMR1Q"/>
@@ -301,8 +285,18 @@
             </resourceDemand_Action>
           </steps_Behaviour>
         </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="2"/>
+        <iterationCount_LoopAction specification="0"/>
       </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_YeyxANJQEduQ7qbNANXHPw" entityName="queryLowStockItemsWithRespectToIncomingProducts" predecessor_AbstractAction="_M7N1kNJPEduQ7qbNANXHPw" successor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" calledService_ExternalService="_2NNHclcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
+      <steps_Behaviour xsi:type="seff:LoopAction" id="_CrPMVBA0EembpMH3VukgUA" entityName="calculateProductAmountsLoop" predecessor_AbstractAction="_YeyxANJQEduQ7qbNANXHPw" successor_AbstractAction="_1UJywNJQEduQ7qbNANXHPw">
+        <bodyBehaviour_Loop id="_Jwf-0hA0EembpMH3VukgUA">
+          <steps_Behaviour xsi:type="seff:StartAction" id="_OdggghA0EembpMH3VukgUA" entityName="startProductAmountLoop" successor_AbstractAction="_SFTGnBA0EembpMH3VukgUA"/>
+          <steps_Behaviour xsi:type="seff:StopAction" id="_PJXg8BA0EembpMH3VukgUA" predecessor_AbstractAction="_SFTGnBA0EembpMH3VukgUA"/>
+          <steps_Behaviour xsi:type="seff:InternalAction" id="_SFTGnBA0EembpMH3VukgUA" entityName="calculateProductAmount" predecessor_AbstractAction="_OdggghA0EembpMH3VukgUA" successor_AbstractAction="_PJXg8BA0EembpMH3VukgUA"/>
+        </bodyBehaviour_Loop>
+        <iterationCount_LoopAction specification="0"/>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_1UJywNJQEduQ7qbNANXHPw" entityName="queryStoreById" predecessor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" successor_AbstractAction="_XoxOlP1OEeicRPoFxRMR1Q" calledService_ExternalService="_2NL5WlcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
     </serviceEffectSpecifications__BasicComponent>
     <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="__vMR4h_6Edy5k9ER1TBmjg" describedService__SEFF="_2NPjuVcvEeGI_ZRmqWdpYA">
       <steps_Behaviour xsi:type="seff:StartAction" id="_FJDSgB_7Edy5k9ER1TBmjg" successor_AbstractAction="_FTVP4B_7Edy5k9ER1TBmjg"/>
