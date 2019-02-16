@@ -44,11 +44,4 @@ allprojects {
 		mavenCentral()
 		jcenter()
     }
-    
-    jar {
-    	zip64=true
-  		from{
-    		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-  		}
-	}
 }

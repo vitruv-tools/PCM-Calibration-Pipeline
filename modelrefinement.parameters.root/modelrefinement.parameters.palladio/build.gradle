@@ -32,6 +32,7 @@ dependencies {
     
     compile 'extra:org.palladiosimulator.pcm.edp2.measuringpoint:1.0.0+'
     compile 'extra:org.palladiosimulator.metricspec:1.0.3.201709282208'
+    compile 'extra:org.palladiosimulator.pcm.resources:4.0.0+'
     
     compile 'extra:org.palladiosimulator.experimentautomation.application.tooladapter.simucom:1.0.0+'
     compile 'extra:org.palladiosimulator.experimentautomation.application.tooladapter.simulizar:1.0.0+'

@@ -28,6 +28,7 @@ import org.palladiosimulator.pcm.repository.OperationProvidedRole;
 import org.palladiosimulator.pcm.repository.OperationSignature;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryPackage;
+import org.palladiosimulator.pcm.resourcetype.ResourcetypePackage;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
 import org.palladiosimulator.pcm.system.System;
 
@@ -207,6 +208,7 @@ public class PcmUtils {
 	public static void loadPCMModels() {
 		RepositoryPackage.eINSTANCE.eClass();
 		PcmPackage.eINSTANCE.eClass();
+		ResourcetypePackage.eINSTANCE.eClass();
 
 		initPathmaps();
 	}
@@ -228,6 +230,6 @@ public class PcmUtils {
 
 		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("restypes", new XMIResourceFactoryImpl());
+		m.put("resourcetype", new XMIResourceFactoryImpl());
 	}
 }

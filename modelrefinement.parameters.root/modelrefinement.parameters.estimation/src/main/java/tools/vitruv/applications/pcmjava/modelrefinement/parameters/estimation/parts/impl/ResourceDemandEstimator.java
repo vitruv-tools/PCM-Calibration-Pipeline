@@ -44,24 +44,33 @@ public class ResourceDemandEstimator implements IResourceDemandEstimator {
 		for (String serviceId : data.getServiceCalls().getServiceIds()) {
 			ResourceDemandingSEFF seff = PcmUtils.getElementById(pcm.getRepository(), ResourceDemandingSEFF.class,
 					serviceId);
-			AssemblyContext ctx = EstimationUtil.getAssemblyBySeff(pcm.getRepository(), pcm.getSystem(), serviceId);
-			if (ctx != null) {
-				ResourceContainer container = EstimationUtil.getContainerByAssemblyContext(ctx,
-						pcm.getAllocationModel());
+			List<ParametricResourceDemand> innerResourceDemands = PcmUtils.getObjects(seff,
+					ParametricResourceDemand.class);
 
-				if (container != null) {
-					List<ParametricResourceDemand> innerResourceDemands = PcmUtils.getObjects(seff,
-							ParametricResourceDemand.class);
-					for (ParametricResourceDemand resourceDemand : innerResourceDemands) {
-						for (ServiceCall call : data.getServiceCalls().getServiceCalls(serviceId)) {
-							List<ResponseTimeRecord> recs = getResponseTimes(resourceDemand, call);
-							// TODO support multiple resources
-							if (recs != null) {
-								String resId = recs.get(0).getResourceId();
-								for (ResponseTimeRecord record : recs) {
-									// TODO hardcoded container resource id because we could not load the default
-									// ones
-									// TODO this a todo for future after evaluation
+			for (ParametricResourceDemand resourceDemand : innerResourceDemands) {
+				for (ServiceCall call : data.getServiceCalls().getServiceCalls(serviceId)) {
+					AssemblyContext ctx = PcmUtils.getElementById(pcm.getSystem(), AssemblyContext.class,
+							call.getAssemblyId());
+					if (ctx == null) {
+						ctx = EstimationUtil.getAssemblyBySeff(pcm.getRepository(), pcm.getSystem(), serviceId);
+					}
+
+					if (ctx != null) {
+						ResourceContainer container = EstimationUtil.getContainerByAssemblyContext(ctx,
+								pcm.getAllocationModel());
+
+						List<ResponseTimeRecord> recs = getResponseTimes(resourceDemand, call);
+
+						if (recs != null) {
+							String resId = recs.get(0).getResourceId();
+							for (ResponseTimeRecord record : recs) {
+								ProcessingResourceSpecification spec = container
+										.getActiveResourceSpecifications_ResourceContainer().stream()
+										.filter(p -> p.getActiveResourceType_ActiveResourceSpecification().getId()
+												.equals(resId))
+										.findFirst().orElse(null);
+
+								if (spec != null) {
 									buildResourceDemandTriple(resourceDemand,
 											container.getActiveResourceSpecifications_ResourceContainer().get(0),
 											record.getStopTime() - record.getStartTime(), call.getParameters());

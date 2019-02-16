@@ -65,8 +65,7 @@ public interface ServiceCall {
 	/**
 	 * Converts the time of the records into seconds.
 	 * 
-	 * @param time
-	 *            A time value of the record.
+	 * @param time A time value of the record.
 	 * @return The time in seconds.
 	 */
 	double timeToSeconds(long time);
@@ -94,4 +93,6 @@ public interface ServiceCall {
 	String getServiceId();
 
 	String getSessionId();
+
+	String getAssemblyId();
 }

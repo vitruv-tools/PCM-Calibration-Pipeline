@@ -1,4 +1,12 @@
 
+plugins {
+	id 'org.springframework.boot' version '2.1.2.RELEASE'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
 dependencies {
 	compile project(":modelrefinement.parameters.pipeline")
 
@@ -6,12 +14,28 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.2.RELEASE'
 }
 
+bootJar {
+    baseName = 'modelrefinement-interface'
+    version =  '0.1.0'
+}
+
 task fatJar(type: Jar) {
     classifier = 'all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     manifest {
-        attributes 'Implementation-Title': 'PCM Calibration Pipeline',  
+        attributes 'Implementation-Title': 'PCM Calibration Pipeline',
+        	'Implementation-Version': '1.0',  
         	'Main-Class': 'tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface.start.StartPipeline'
     }
+    zip64=true
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
+jar {
+    zip64=true
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+  	from{
+    	configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  	}
 }

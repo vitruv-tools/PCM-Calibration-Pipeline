@@ -5,6 +5,7 @@ import java.io.File;
 import org.palladiosimulator.pcm.allocation.Allocation;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.resourceenvironment.ResourceEnvironment;
+import org.palladiosimulator.pcm.resourcetype.ResourcetypePackage;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
@@ -17,6 +18,8 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtil
 public class EstimationTest {
 
 	public static void main(String[] args) {
+		ResourcetypePackage.eINSTANCE.eClass();
+
 		PcmUtils.loadPCMModels();
 
 		InMemoryPCM pcm = new InMemoryPCM();

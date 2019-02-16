@@ -45,11 +45,9 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
 	 * Plugin requires a constructor with a Configuration object and a
 	 * IProjectContext.
 	 * 
-	 * @param configuration
-	 *            The configuration for this component.
-	 * @param projectContext
-	 *            The project context for this component. The component will be
-	 *            registered.
+	 * @param configuration  The configuration for this component.
+	 * @param projectContext The project context for this component. The component
+	 *                       will be registered.
 	 */
 	public KiekerServiceCallRecordFilter(final Configuration configuration, final IProjectContext projectContext) {
 		super(configuration, projectContext);
@@ -102,8 +100,7 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
 	 * This method is called by kieker for each record of the type specified by
 	 * {@link InputPort}.
 	 * 
-	 * @param record
-	 *            The record of the specified type.
+	 * @param record The record of the specified type.
 	 */
 	@InputPort(name = INPUT_PORT_NAME_EVENTS, description = "Input for service call records.", eventTypes = {
 			ServiceCallRecord.class })
@@ -207,6 +204,11 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
 		@Override
 		public String getSessionId() {
 			return this.record.getSessionId();
+		}
+
+		@Override
+		public String getAssemblyId() {
+			return this.record.getAssemblyId();
 		}
 	}
 }
