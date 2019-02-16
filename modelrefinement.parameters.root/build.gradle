@@ -9,7 +9,7 @@ buildscript {
 if (project.properties['api.baseline'] == null || project.properties['api.baseline'].isEmpty()) {
 	System.err.println("Cannot find an Eclipse API baseline repository")
 } else {	
-	println "Baseline repository is at: " + project.properties['api.baseline']
+	println "Baseline repository is at: " + project.rootDir + project.properties['api.baseline']
 }
 
 allprojects {
@@ -38,7 +38,7 @@ allprojects {
 	}
 
     repositories {
-		maven {url project.properties['api.baseline']}
+		maven {url project.rootDir.toString() + project.properties['api.baseline']}
 		maven {url 'http://repo.typesafe.com/typesafe/maven-releases/'}
 		maven {url 'http://www.jabylon.org/maven/'}
 		mavenCentral()
