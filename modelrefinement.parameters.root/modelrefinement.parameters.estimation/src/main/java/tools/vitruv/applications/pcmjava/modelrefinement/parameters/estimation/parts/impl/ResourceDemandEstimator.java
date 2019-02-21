@@ -1,5 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
+import org.palladiosimulator.pcm.core.CoreFactory;
 import org.palladiosimulator.pcm.core.PCMRandomVariable;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.resourceenvironment.ProcessingResourceSpecification;
@@ -28,18 +33,23 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtil
 
 public class ResourceDemandEstimator implements IResourceDemandEstimator {
 
-	private Map<ParametricResourceDemand, IResourceDemandModel> resourceDemandMapping;
+	private Map<ParametricResourceDemand, Map<ProcessingResourceSpecification, IResourceDemandModel>> resourceDemandMapping;
+	private Map<ProcessingResourceSpecification, List<Double>> resourceSpecs;
+
 	private InMemoryPCM pcm;
 	private MonitoringDataSet monitoringData;
 
 	public ResourceDemandEstimator(InMemoryPCM pcm) {
 		this.resourceDemandMapping = new HashMap<>();
+		this.resourceSpecs = new HashMap<>();
 		this.pcm = pcm;
 	}
 
 	@Override
 	public void prepare(MonitoringDataSet data) {
 		this.monitoringData = data;
+		this.resourceDemandMapping.clear();
+		this.resourceSpecs.clear();
 
 		for (String serviceId : data.getServiceCalls().getServiceIds()) {
 			ResourceDemandingSEFF seff = PcmUtils.getElementById(pcm.getRepository(), ResourceDemandingSEFF.class,
@@ -85,10 +95,63 @@ public class ResourceDemandEstimator implements IResourceDemandEstimator {
 
 	@Override
 	public void derive() {
-		for (Entry<ParametricResourceDemand, IResourceDemandModel> entry : this.resourceDemandMapping.entrySet()) {
-			PCMRandomVariable newDemand = entry.getValue().deriveStochasticExpression(0.7f);
-			if (newDemand != null) {
-				entry.getKey().setSpecification_ParametericResourceDemand(newDemand);
+		// derive resource demands
+		for (Entry<ParametricResourceDemand, Map<ProcessingResourceSpecification, IResourceDemandModel>> entry : this.resourceDemandMapping
+				.entrySet()) {
+			// collect all PCM vars
+			List<Triple<ProcessingResourceSpecification, PCMRandomVariable, Double[]>> pairs = new ArrayList<>();
+
+			for (Entry<ProcessingResourceSpecification, IResourceDemandModel> innerEntry : entry.getValue()
+					.entrySet()) {
+				Pair<PCMRandomVariable, Double[]> inner = innerEntry.getValue().deriveStochasticExpression(0.7f);
+				if (inner != null) {
+					pairs.add(Triple.of(innerEntry.getKey(), inner.getKey(), inner.getValue()));
+				}
+			}
+
+			// calculate formula and add belonging resource scale
+			int minIndex = -1;
+			double minSum = -1;
+			for (int k = 0; k < pairs.size(); k++) {
+				Triple<ProcessingResourceSpecification, PCMRandomVariable, Double[]> currentEntry = pairs.get(k);
+				if (currentEntry != null) {
+					double sum = Arrays.stream(currentEntry.getRight()).mapToDouble(Double::doubleValue).sum();
+					if (minIndex == -1 || sum < minSum) {
+						minSum = sum;
+						minIndex = k;
+					}
+				}
+			}
+
+			if (minIndex >= 0) {
+				// set lowest as reference
+				entry.getKey().setSpecification_ParametericResourceDemand(pairs.get(minIndex).getMiddle());
+
+				// calculate belonging resource powers
+				Double[] reference = pairs.get(minIndex).getRight();
+				pairs.forEach(pair -> {
+					double sum = 0;
+					for (int z = 1; z < Math.min(reference.length, pair.getRight().length); z++) {
+						sum += reference[z].doubleValue() / pair.getRight()[z].doubleValue();
+					}
+					sum /= (double) (Math.min(reference.length, pair.getRight().length) - 1d);
+
+					if (!this.resourceSpecs.containsKey(pair.getLeft())) {
+						this.resourceSpecs.put(pair.getLeft(), new ArrayList<>());
+					}
+					this.resourceSpecs.get(pair.getLeft()).add(sum);
+				});
+			}
+		}
+
+		// recalculate processing resources
+		for (Entry<ProcessingResourceSpecification, List<Double>> recordedPower : this.resourceSpecs.entrySet()) {
+			// TODO use other metric than average here
+			if (recordedPower.getValue().size() > 0) {
+				PCMRandomVariable var = CoreFactory.eINSTANCE.createPCMRandomVariable();
+				var.setSpecification(
+						String.valueOf(recordedPower.getValue().stream().mapToDouble(d -> d).average().getAsDouble()));
+				recordedPower.getKey().setProcessingRate_ProcessingResourceSpecification(var);
 			}
 		}
 	}
@@ -100,9 +163,12 @@ public class ResourceDemandEstimator implements IResourceDemandEstimator {
 		nTriple.setParameters(parameters);
 
 		if (!this.resourceDemandMapping.containsKey(demand)) {
-			this.resourceDemandMapping.put(demand, new ResourceDemandModel());
+			this.resourceDemandMapping.put(demand, new HashMap<>());
 		}
-		this.resourceDemandMapping.get(demand).put(nTriple);
+		if (!this.resourceDemandMapping.get(demand).containsKey(containerResource)) {
+			this.resourceDemandMapping.get(demand).put(containerResource, new ResourceDemandModel());
+		}
+		this.resourceDemandMapping.get(demand).get(containerResource).put(nTriple);
 	}
 
 	private List<ResponseTimeRecord> getResponseTimes(ParametricResourceDemand demand, ServiceCall parent) {

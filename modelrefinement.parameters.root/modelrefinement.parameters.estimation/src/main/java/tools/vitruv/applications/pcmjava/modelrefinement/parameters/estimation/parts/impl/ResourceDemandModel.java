@@ -1,6 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import org.palladiosimulator.pcm.core.PCMRandomVariable;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.data.ResourceDemandTriple;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.IResourceDemandModel;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.util.IntDistribution;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.IntDistribution;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -38,7 +39,7 @@ public class ResourceDemandModel implements IResourceDemandModel {
 	}
 
 	@Override
-	public PCMRandomVariable deriveStochasticExpression(float thres) {
+	public Pair<PCMRandomVariable, Double[]> deriveStochasticExpression(float thres) {
 		LinearRegression regression = new LinearRegression();
 		// get attributes
 		List<String> attributes = getDependentParameters(thres);
@@ -84,7 +85,7 @@ public class ResourceDemandModel implements IResourceDemandModel {
 			if (var.getSpecification() == null) {
 				return null;
 			} else {
-				return var;
+				return Pair.of(var, Arrays.stream(coeff).boxed().toArray(Double[]::new));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

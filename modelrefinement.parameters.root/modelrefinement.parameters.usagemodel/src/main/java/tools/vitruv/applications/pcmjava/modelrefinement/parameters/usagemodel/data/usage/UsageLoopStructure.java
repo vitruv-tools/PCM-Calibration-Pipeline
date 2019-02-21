@@ -12,7 +12,7 @@ import org.palladiosimulator.pcm.usagemodel.UsagemodelFactory;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.UsageScenarioBehaviourBuilder;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.mapping.MonitoringDataMapping;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.util.IntDistribution;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.IntDistribution;
 
 public class UsageLoopStructure extends AbstractUsageElement {
 	private List<AbstractUsageElement> childs;
