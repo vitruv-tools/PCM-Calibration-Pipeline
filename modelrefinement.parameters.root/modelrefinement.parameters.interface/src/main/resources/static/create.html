@@ -131,7 +131,9 @@
     // load current configuration
     $(document).ready(function() {
     	$.getJSON({url: "conf", success: function(result) {
-    		editor.set(result);
+    		if (result != null) {
+    			editor.set(result);
+    		}
     	}});
     	
     	$("#start").click(function() {
