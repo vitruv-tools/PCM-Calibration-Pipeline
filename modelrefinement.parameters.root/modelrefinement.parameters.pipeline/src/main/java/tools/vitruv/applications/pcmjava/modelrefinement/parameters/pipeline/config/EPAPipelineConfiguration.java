@@ -17,6 +17,9 @@ public class EPAPipelineConfiguration {
 		}
 	}
 
+	private boolean loadTesting;
+	private boolean dockerImport;
+
 	private String javaPath;
 	private String eclipsePath;
 	private String jmeterPath;
@@ -138,5 +141,21 @@ public class EPAPipelineConfiguration {
 
 	public void setAnalysisOnce(boolean analysisOnce) {
 		this.analysisOnce = analysisOnce;
+	}
+
+	public boolean isLoadTesting() {
+		return loadTesting;
+	}
+
+	public void setLoadTesting(boolean loadTesting) {
+		this.loadTesting = loadTesting;
+	}
+
+	public boolean isDockerImport() {
+		return dockerImport;
+	}
+
+	public void setDockerImport(boolean dockerImport) {
+		this.dockerImport = dockerImport;
 	}
 }

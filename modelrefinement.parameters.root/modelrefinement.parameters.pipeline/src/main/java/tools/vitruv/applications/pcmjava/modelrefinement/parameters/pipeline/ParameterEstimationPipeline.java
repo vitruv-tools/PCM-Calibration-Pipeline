@@ -11,9 +11,11 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.con
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.LocalFilesystemPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.AbstractPipelinePart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.CrossValidationPart;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.DockerCleanMonitoringPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.DockerImportMonitoringPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadMonitoringDataPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadPCMModelsPart;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadTestingPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.PalladioExecutorPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.ParameterEstimationPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.ResourceDemandEstimationPart;
@@ -24,7 +26,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtil
 public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 	private Logger logger;
 
-	private EPAPipelineConfiguration pipelineConfiguration;
+	protected EPAPipelineConfiguration pipelineConfiguration;
 
 	private LocalFilesystemPCM filesystemPCM;
 	private MonitoringDataMapping monitoringDataMapping;
@@ -59,18 +61,26 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		// initialization part
 		this.addPart(new LoadPCMModelsPart(filesystemPCM));
 
-		// perform palladio analysis before
-		this.addPart(
-				new PalladioExecutorPart(pipelineConfiguration.getJavaPath(), pipelineConfiguration.getEclipsePath()));
+		/*
+		 * // perform palladio analysis before this.addPart( new
+		 * PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
+		 * pipelineConfiguration.getEclipsePath()));
+		 */
 
-		// produce monitoring data (load test)
-		// TODO inspect why load testing doesnt work
-		// this.addPart(new
-		// DockerCleanMonitoringPart(pipelineConfiguration.getDocker()));
-		// this.addPart(new LoadTestingPart(pipelineConfiguration.getJmeterPath(),
-		// pipelineConfiguration.getJmxPath()));
-		this.addPart(new DockerImportMonitoringPart(pipelineConfiguration.getDocker(),
-				pipelineConfiguration.getMonitoringDataPath()));
+		if (pipelineConfiguration.isDockerImport()) {
+			this.addPart(new DockerCleanMonitoringPart(pipelineConfiguration.getDocker()));
+		}
+
+		if (pipelineConfiguration.isLoadTesting()) {
+			// produce monitoring data (load test)
+			this.addPart(
+					new LoadTestingPart(pipelineConfiguration.getJmeterPath(), pipelineConfiguration.getJmxPath()));
+		}
+
+		if (pipelineConfiguration.isDockerImport()) {
+			this.addPart(new DockerImportMonitoringPart(pipelineConfiguration.getDocker(),
+					pipelineConfiguration.getMonitoringDataPath()));
+		}
 
 		// load current monitoring data
 		this.addPart(new LoadMonitoringDataPart(pipelineConfiguration.getMonitoringDataPath()));
@@ -80,8 +90,10 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		this.addPart(new ParameterEstimationPart());
 
 		// perform palladio before us
-		this.addPart(
-				new PalladioExecutorPart(pipelineConfiguration.getJavaPath(), pipelineConfiguration.getEclipsePath()));
+		/*
+		 * this.addPart( new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
+		 * pipelineConfiguration.getEclipsePath()));
+		 */
 
 		// do our job
 		this.addPart(new ResourceDemandEstimationPart());

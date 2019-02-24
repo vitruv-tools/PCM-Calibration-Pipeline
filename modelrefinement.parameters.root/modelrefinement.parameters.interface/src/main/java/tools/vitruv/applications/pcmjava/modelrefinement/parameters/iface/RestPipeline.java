@@ -41,6 +41,10 @@ public class RestPipeline extends ParameterEstimationPipeline implements IPipeli
 		this.rest.setCurrentState(nState);
 	}
 
+	public EPAPipelineConfiguration getConfig() {
+		return this.pipelineConfiguration;
+	}
+
 	// TODO this code duplication is a bit ugly
 	protected List<StatResults> provideStatsJson() {
 		final List<StatResults> ret = new ArrayList<>();

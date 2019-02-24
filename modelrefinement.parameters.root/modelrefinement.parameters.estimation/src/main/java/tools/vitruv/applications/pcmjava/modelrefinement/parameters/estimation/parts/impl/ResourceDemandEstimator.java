@@ -72,8 +72,9 @@ public class ResourceDemandEstimator implements IResourceDemandEstimator {
 						List<ResponseTimeRecord> recs = getResponseTimes(resourceDemand, call);
 
 						if (recs != null) {
-							String resId = recs.get(0).getResourceId();
 							for (ResponseTimeRecord record : recs) {
+								String resId = record.getResourceId();
+
 								ProcessingResourceSpecification spec = container
 										.getActiveResourceSpecifications_ResourceContainer().stream()
 										.filter(p -> p.getActiveResourceType_ActiveResourceSpecification().getId()

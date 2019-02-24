@@ -1,6 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,17 @@ public class RestInterface {
 		return prepareAnalysisResults();
 	}
 
+	@GetMapping("/conf")
+	public String getConfiguration() {
+		if (this.pipeline != null && this.pipeline.getConfig() != null) {
+			try {
+				return mapper.writeValueAsString(this.pipeline.getConfig());
+			} catch (JsonProcessingException e) {
+			}
+		}
+		return "null";
+	}
+
 	@GetMapping("/stats")
 	public String getStats() {
 		try {
@@ -52,11 +64,38 @@ public class RestInterface {
 	@PostMapping("/create")
 	public String createPipeline(@RequestBody String body) {
 		try {
-			EPAPipelineConfiguration config = mapper.readValue(body, EPAPipelineConfiguration.class);
+			EPAPipelineConfiguration config = mapper.readValue(URLDecoder.decode(body, "UTF-8"),
+					EPAPipelineConfiguration.class);
+			fillUpDefaults(config);
 			this.pipeline = new RestPipeline(this, config);
 			return "true";
 		} catch (IOException e) {
+			e.printStackTrace();
 			return "false";
+		}
+	}
+
+	private void fillUpDefaults(EPAPipelineConfiguration config) {
+		if (config.getDocker() == null) {
+			config.setDockerImport(false);
+		}
+
+		if (config.getJavaPath() == null) {
+			config.setJavaPath("java");
+		}
+
+		if (config.getJmxPath() == null) {
+			config.setLoadTesting(false);
+		} else {
+			config.setLoadTesting(true);
+		}
+
+		if (config.getEclipsePath() == null) {
+			config.setEclipsePath("/etc/eclipse/eclipse/eclipse");
+		}
+
+		if (config.getJmeterPath() == null) {
+			config.setJmeterPath("/etc/jmeter/");
 		}
 	}
 

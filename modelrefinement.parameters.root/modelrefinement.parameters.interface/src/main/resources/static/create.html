@@ -1,0 +1,145 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Parameter Update Pipeline</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.29.1/jsoneditor.min.css">
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	crossorigin="anonymous"></script>
+
+<!-- Custom styles for this template -->
+<link href="dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Parameter
+			Estimation Pipeline</a>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" href="index.html">
+								<span data-feather="play"></span> Pipeline
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="results.html">
+								<span data-feather="activity"></span> Results
+						</a></li>
+						<li class="nav-item"><a class="nav-link active" href="create.html">
+								<span data-feather="plus"></span> Create <span
+								class="sr-only">(current)</span>
+						</a></li>
+					</ul>
+
+					<h6
+						class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span>Saved results</span> <a
+							class="d-flex align-items-center text-muted" href="#"> <span
+							data-feather="plus-circle"></span>
+						</a>
+					</h6>
+				</div>
+			</nav>
+
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            		<h1 class="h2">Create Configuration</h1>
+            		<div class="btn-toolbar mb-2 mb-md-0">
+              		<div class="btn-group mr-2">
+                		<button class="btn btn-sm btn-outline-secondary" id="start"><span data-feather="play"></span>Load configuration</button>
+              		</div>
+            		</div>
+          		</div>
+				<div id="jsoneditor"></div>
+			</main>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		crossorigin="anonymous"></script>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.29.1/jsoneditor.min.js"></script>
+
+	<!-- Icons -->
+	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.6/chartjs-plugin-zoom.min.js"></script>
+	<script>
+		feather.replace()
+	</script>
+	
+	<!-- JSON Editor -->
+	<script>
+	// create the editor
+    var container = document.getElementById("jsoneditor");
+    var options = {};
+    var editor = new JSONEditor(container, options);
+
+    // set json
+    var json = {
+        "jmxPath": null,
+        "repositoryPath": "/path/to/repository",
+        "systemPath": "/path/to/system",
+        "usageModelPath": "/path/to/usagemodel",
+        "allocationModelPath": "/path/to/usagemodel",
+        "resourceEnvironmentModelPath":  "/path/to/resourceenvmodel",
+        
+        "monitoringDataPath" : "/path/to/monitoringdata",
+        "monitoringDataMapping" : "/path/to/monitoringdatamapping"
+    };
+    editor.set(json);
+
+    // get json
+    var json = editor.get();
+    
+    // load current configuration
+    $(document).ready(function() {
+    	$.getJSON({url: "conf", success: function(result) {
+    		editor.set(result);
+    	}});
+    	
+    	$("#start").click(function() {
+    		$.ajax({url: "create", method : "POST", data: JSON.stringify(editor.get()), success: function(result) {
+    			console.log(result);
+    		}});
+    	});
+    });
+	</script>
+</body>
+</html>
