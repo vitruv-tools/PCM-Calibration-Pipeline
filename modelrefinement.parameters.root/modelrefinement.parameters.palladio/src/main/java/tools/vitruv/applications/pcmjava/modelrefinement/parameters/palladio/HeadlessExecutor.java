@@ -218,7 +218,6 @@ public class HeadlessExecutor {
 	}
 
 	private boolean executeCommandBlocking(String command) {
-		System.out.println(command);
 		ProcessBuilder builder = new ProcessBuilder(splitCommand(command));
 		builder.redirectOutput(Redirect.INHERIT);
 

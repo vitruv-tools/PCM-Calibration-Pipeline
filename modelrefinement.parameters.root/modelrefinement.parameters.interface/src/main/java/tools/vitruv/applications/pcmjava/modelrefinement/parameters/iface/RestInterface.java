@@ -75,6 +75,7 @@ public class RestInterface {
 		}
 	}
 
+	// DEFAULTS FOR THE DOCKER CONTAINER
 	private void fillUpDefaults(EPAPipelineConfiguration config) {
 		if (config.getDocker() == null) {
 			config.setDockerImport(false);
@@ -91,7 +92,7 @@ public class RestInterface {
 		}
 
 		if (config.getEclipsePath() == null) {
-			config.setEclipsePath("/etc/eclipse/eclipse/eclipse");
+			config.setEclipsePath("/etc/eclipse/eclipse/");
 		}
 
 		if (config.getJmeterPath() == null) {
