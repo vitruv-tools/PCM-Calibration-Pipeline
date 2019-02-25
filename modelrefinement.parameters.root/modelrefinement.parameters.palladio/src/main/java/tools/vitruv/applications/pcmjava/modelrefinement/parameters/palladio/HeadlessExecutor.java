@@ -61,6 +61,7 @@ public class HeadlessExecutor {
 	// -arch x86_64 ..
 	private static final String ECL_APP_STATIC_MACOS = "-os macosx -ws cocoa -arch x86_64 -nl de_DE -consoleLog -clean ";
 	private static final String ECL_APP_STATIC_WINDOWS = "-os win32 -ws win32 -arch x86_64 -nl de_DE -consoleLog -clean ";
+	private static final String ECL_APP_STATIC_LINUX = "-os linux -ws gtk -arch x86 -nl de_DE -consoleLog -clean ";
 
 	private String javaPath;
 	private String eclipsePath;
@@ -72,8 +73,10 @@ public class HeadlessExecutor {
 
 		if (SystemUtils.IS_OS_WINDOWS) {
 			this.eclAppStatic = ECL_APP_STATIC_WINDOWS;
-		} else {
+		} else if (SystemUtils.IS_OS_MAC) {
 			this.eclAppStatic = ECL_APP_STATIC_MACOS;
+		} else {
+			this.eclAppStatic = ECL_APP_STATIC_LINUX;
 		}
 	}
 
@@ -215,6 +218,7 @@ public class HeadlessExecutor {
 	}
 
 	private boolean executeCommandBlocking(String command) {
+		System.out.println(command);
 		ProcessBuilder builder = new ProcessBuilder(splitCommand(command));
 		builder.redirectOutput(Redirect.INHERIT);
 
