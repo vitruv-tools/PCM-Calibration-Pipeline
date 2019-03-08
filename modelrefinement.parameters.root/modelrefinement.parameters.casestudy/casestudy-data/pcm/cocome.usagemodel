@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <usagemodel:UsageModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stoex="http://sdq.ipd.uka.de/StochasticExpressions/2.2" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2">
-  <usageScenario_UsageModel id="_BKrjUCpxEemfTsiEn6aNWg">
-    <scenarioBehaviour_UsageScenario id="_BKtYgCpxEemfTsiEn6aNWg">
-      <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_BKtYgSpxEemfTsiEn6aNWg" successor="_BKtYgipxEemfTsiEn6aNWg"/>
-      <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_BKtYgipxEemfTsiEn6aNWg" successor="_BKt_kCpxEemfTsiEn6aNWg" predecessor="_BKtYgSpxEemfTsiEn6aNWg">
+  <usageScenario_UsageModel id="_DHPBIEAeEem4ru6Xo8u-Wg">
+    <scenarioBehaviour_UsageScenario id="_DHQ2UEAeEem4ru6Xo8u-Wg">
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_DHQ2UUAeEem4ru6Xo8u-Wg" successor="_DHQ2UkAeEem4ru6Xo8u-Wg"/>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_DHQ2UkAeEem4ru6Xo8u-Wg" successor="_DHSEcEAeEem4ru6Xo8u-Wg" predecessor="_DHQ2UUAeEem4ru6Xo8u-Wg">
         <providedRole_EntryLevelSystemCall href="cocome.system#_MSQMUFcnEd23wcZsd06DZg"/>
         <operationSignature__EntryLevelSystemCall href="cocome.repository#_2NKrM1cvEeGI_ZRmqWdpYA"/>
         <inputParameterUsages_EntryLevelSystemCall>
@@ -13,7 +13,7 @@
           <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="saleTO"/>
         </inputParameterUsages_EntryLevelSystemCall>
       </actions_ScenarioBehaviour>
-      <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_BKt_kCpxEemfTsiEn6aNWg" predecessor="_BKtYgipxEemfTsiEn6aNWg"/>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_DHSEcEAeEem4ru6Xo8u-Wg" predecessor="_DHQ2UkAeEem4ru6Xo8u-Wg"/>
     </scenarioBehaviour_UsageScenario>
     <workload_UsageScenario xsi:type="usagemodel:OpenWorkload">
       <interArrivalTime_OpenWorkload specification="967"/>

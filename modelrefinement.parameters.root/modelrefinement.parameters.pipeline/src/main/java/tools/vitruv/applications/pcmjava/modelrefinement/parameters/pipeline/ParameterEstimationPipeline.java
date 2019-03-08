@@ -55,17 +55,12 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 			@Override
 			protected void execute() {
 				getBlackboard().setState(PipelineState.INIT);
+				getBlackboard().getAnalysisResults().clear();
 			}
 		});
 
 		// initialization part
 		this.addPart(new LoadPCMModelsPart(filesystemPCM));
-
-		/*
-		 * // perform palladio analysis before this.addPart( new
-		 * PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
-		 * pipelineConfiguration.getEclipsePath()));
-		 */
 
 		if (pipelineConfiguration.isDockerImport()) {
 			this.addPart(new DockerCleanMonitoringPart(pipelineConfiguration.getDocker()));
@@ -85,15 +80,21 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		// load current monitoring data
 		this.addPart(new LoadMonitoringDataPart(pipelineConfiguration.getMonitoringDataPath()));
 
+		// perform palladio analysis before
+		if (pipelineConfiguration.isAnalysisBefore()) {
+			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
+					pipelineConfiguration.getEclipsePath()));
+		}
+
 		// derive actual models
 		// -> doesnt work atm, maybe need to cherry pick his changes
 		this.addPart(new ParameterEstimationPart());
 
 		// perform palladio before us
-		/*
-		 * this.addPart( new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
-		 * pipelineConfiguration.getEclipsePath()));
-		 */
+		if (pipelineConfiguration.isAnalysisPreCalibration()) {
+			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
+					pipelineConfiguration.getEclipsePath()));
+		}
 
 		// do our job
 		this.addPart(new ResourceDemandEstimationPart());

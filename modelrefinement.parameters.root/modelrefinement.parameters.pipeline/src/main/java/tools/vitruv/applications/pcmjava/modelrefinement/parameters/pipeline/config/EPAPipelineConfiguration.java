@@ -39,6 +39,9 @@ public class EPAPipelineConfiguration {
 
 	private boolean analysisOnce;
 
+	private boolean analysisBefore;
+	private boolean analysisPreCalibration;
+
 	public String getJavaPath() {
 		return javaPath;
 	}
@@ -157,5 +160,21 @@ public class EPAPipelineConfiguration {
 
 	public void setDockerImport(boolean dockerImport) {
 		this.dockerImport = dockerImport;
+	}
+
+	public boolean isAnalysisBefore() {
+		return analysisBefore;
+	}
+
+	public void setAnalysisBefore(boolean analysisBefore) {
+		this.analysisBefore = analysisBefore;
+	}
+
+	public boolean isAnalysisPreCalibration() {
+		return analysisPreCalibration;
+	}
+
+	public void setAnalysisPreCalibration(boolean analysisPreCalibration) {
+		this.analysisPreCalibration = analysisPreCalibration;
 	}
 }

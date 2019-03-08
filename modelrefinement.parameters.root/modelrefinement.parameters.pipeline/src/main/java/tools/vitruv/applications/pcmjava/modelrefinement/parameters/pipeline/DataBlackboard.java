@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface.data.ServiceResults;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface.data.StatResults;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio.results.PalladioAnalysisResults;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.InMemoryPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.LocalFilesystemPCM;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.util.PrepareResultsUtil;
 
 public class DataBlackboard {
 	private MonitoringDataSet monitoringData;
@@ -15,6 +18,9 @@ public class DataBlackboard {
 	private LocalFilesystemPCM filesystemPcm;
 
 	private List<PalladioAnalysisResults> analysisResults;
+	private List<ServiceResults> serviceResults;
+
+	private List<List<StatResults>> statResults;
 
 	private PipelineState state;
 
@@ -23,6 +29,8 @@ public class DataBlackboard {
 	public DataBlackboard() {
 		this.listeners = new ArrayList<>();
 		this.analysisResults = new ArrayList<>();
+		this.serviceResults = new ArrayList<>();
+		this.statResults = new ArrayList<>();
 	}
 
 	public MonitoringDataSet getMonitoringData() {
@@ -59,6 +67,10 @@ public class DataBlackboard {
 
 	public synchronized void addAnalysisResults(PalladioAnalysisResults analysisResults) {
 		this.analysisResults.add(analysisResults);
+
+		// derive stats and service results
+		this.statResults.add(PrepareResultsUtil.prepareStatsResults(analysisResults, this));
+		this.serviceResults.add(PrepareResultsUtil.prepareServiceResults(analysisResults, this));
 	}
 
 	public PipelineState getState() {
@@ -72,6 +84,14 @@ public class DataBlackboard {
 
 	public List<IPipelineStateListener> getListeners() {
 		return listeners;
+	}
+
+	public List<List<StatResults>> getStatResults() {
+		return statResults;
+	}
+
+	public List<ServiceResults> getServiceResults() {
+		return serviceResults;
 	}
 
 }

@@ -23,8 +23,8 @@ public class LongDistribution {
 		Collections.sort(this.values);
 
 		KolmogorovSmirnovTest test = new KolmogorovSmirnovTest();
-		return 1 - (test.kolmogorovSmirnovStatistic(this.values.stream().mapToDouble(l -> (double) l).toArray(),
-				other.values.stream().mapToDouble(l -> (double) l).toArray()));
+		return test.kolmogorovSmirnovStatistic(this.values.stream().mapToDouble(l -> (double) l).toArray(),
+				other.values.stream().mapToDouble(l -> (double) l).toArray());
 	}
 
 	public double avgTest(LongDistribution other) {
