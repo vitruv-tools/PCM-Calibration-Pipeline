@@ -43,6 +43,7 @@ public class PalladioExecutorPart extends AbstractPipelinePart {
 
 		// build experiments repo
 		InMemoryPCM currentPCM = getBlackboard().getLoadedPcm();
+		currentPCM.saveToFilesystem(getBlackboard().getFilesystemPcm());
 		// TODO also variables not hardcoded maybe
 		ExperimentRepository exec = ExperimentBuilder.create().experiment().desc("Automatic Palladio Execution")
 				.name("EPS").reps(3).simucom(50).allocation(currentPCM.getAllocationModel())

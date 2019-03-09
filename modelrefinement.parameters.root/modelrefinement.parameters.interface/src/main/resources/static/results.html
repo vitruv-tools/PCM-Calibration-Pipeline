@@ -184,11 +184,11 @@
 			$.getJSON('results', function(data) {
 				$.getJSON('stats', function(stats) {
 					var statMapping = {};
-					stats.forEach(function(stat) {
+					stats[stats.length - 1].forEach(function(stat) {
 						statMapping[stat.seffId] = stat;
 					});
 							
-					data.results.forEach(function(seff) {
+					data[data.length - 1].results.forEach(function(seff) {
 						createTab(seff.seffId, seff.seffId);
 						createTabValue(seff.seffId, statMapping);
 						applyChartData(seff.seffId, seff);
