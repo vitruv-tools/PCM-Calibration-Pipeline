@@ -1,8 +1,14 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URLDecoder;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +21,8 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.Pip
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.config.EPAPipelineConfiguration;
 
 @RestController
-public class RestInterface {
+public class RestInterface implements InitializingBean {
+	private static final File configFile = new File("config.obj");
 
 	private PipelineState currentState;
 	private RestPipeline pipeline;
@@ -67,11 +74,22 @@ public class RestInterface {
 			EPAPipelineConfiguration config = mapper.readValue(URLDecoder.decode(body, "UTF-8"),
 					EPAPipelineConfiguration.class);
 			fillUpDefaults(config);
+			saveToFile(config);
 			this.pipeline = new RestPipeline(this, config);
 			return "true";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "false";
+		}
+	}
+
+	private void saveToFile(EPAPipelineConfiguration config) {
+		if (configFile.exists()) {
+			configFile.delete();
+		}
+		try (ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(configFile))) {
+			ois.writeObject(config);
+		} catch (IOException e) {
 		}
 	}
 
@@ -114,6 +132,21 @@ public class RestInterface {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return "";
+		}
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		if (configFile.exists()) {
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(configFile))) {
+				EPAPipelineConfiguration config = (EPAPipelineConfiguration) ois.readObject();
+				if (config != null) {
+					fillUpDefaults(config);
+					this.pipeline = new RestPipeline(this, config);
+				}
+			} catch (IOException e) {
+			}
+
 		}
 	}
 

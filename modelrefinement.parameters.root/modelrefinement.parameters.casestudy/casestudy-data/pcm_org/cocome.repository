@@ -285,7 +285,7 @@
             </resourceDemand_Action>
           </steps_Behaviour>
         </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="0"/>
+        <iterationCount_LoopAction specification="IntPMF[(0;0.7)(1;0.2)(2;0.1)]"/>
       </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_YeyxANJQEduQ7qbNANXHPw" entityName="queryLowStockItemsWithRespectToIncomingProducts" predecessor_AbstractAction="_M7N1kNJPEduQ7qbNANXHPw" successor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" calledService_ExternalService="_2NNHclcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
       <steps_Behaviour xsi:type="seff:LoopAction" id="_CrPMVBA0EembpMH3VukgUA" entityName="calculateProductAmountsLoop" predecessor_AbstractAction="_YeyxANJQEduQ7qbNANXHPw" successor_AbstractAction="_1UJywNJQEduQ7qbNANXHPw">
@@ -294,7 +294,7 @@
           <steps_Behaviour xsi:type="seff:StopAction" id="_PJXg8BA0EembpMH3VukgUA" predecessor_AbstractAction="_SFTGnBA0EembpMH3VukgUA"/>
           <steps_Behaviour xsi:type="seff:InternalAction" id="_SFTGnBA0EembpMH3VukgUA" entityName="calculateProductAmount" predecessor_AbstractAction="_OdggghA0EembpMH3VukgUA" successor_AbstractAction="_PJXg8BA0EembpMH3VukgUA"/>
         </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="0"/>
+        <iterationCount_LoopAction specification="saleTO.NUMBER_OF_ELEMENTS"/>
       </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_1UJywNJQEduQ7qbNANXHPw" entityName="queryStoreById" predecessor_AbstractAction="_CrPMVBA0EembpMH3VukgUA" successor_AbstractAction="_XoxOlP1OEeicRPoFxRMR1Q" calledService_ExternalService="_2NL5WlcvEeGI_ZRmqWdpYA" role_ExternalService="_4OSEsdCnEduC9O_qbthgAg"/>
     </serviceEffectSpecifications__BasicComponent>
