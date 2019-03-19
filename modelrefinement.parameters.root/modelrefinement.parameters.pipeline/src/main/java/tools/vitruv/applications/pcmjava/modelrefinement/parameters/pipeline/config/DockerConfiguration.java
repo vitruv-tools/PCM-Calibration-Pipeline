@@ -1,6 +1,8 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.config;
 
-public class DockerConfiguration {
+import java.io.Serializable;
+
+public class DockerConfiguration implements Serializable {
 	private String container;
 	private String path;
 	private String url;

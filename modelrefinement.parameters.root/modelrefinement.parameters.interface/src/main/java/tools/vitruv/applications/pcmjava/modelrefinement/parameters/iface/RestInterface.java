@@ -1,11 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URLDecoder;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -22,7 +18,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.con
 
 @RestController
 public class RestInterface implements InitializingBean {
-	private static final File configFile = new File("config.obj");
+	private static final File configFile = new File("config.json");
 
 	private PipelineState currentState;
 	private RestPipeline pipeline;
@@ -84,12 +80,10 @@ public class RestInterface implements InitializingBean {
 	}
 
 	private void saveToFile(EPAPipelineConfiguration config) {
-		if (configFile.exists()) {
-			configFile.delete();
-		}
-		try (ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(configFile))) {
-			ois.writeObject(config);
+		try {
+			mapper.writeValue(configFile, config);
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -138,15 +132,11 @@ public class RestInterface implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		if (configFile.exists()) {
-			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(configFile))) {
-				EPAPipelineConfiguration config = (EPAPipelineConfiguration) ois.readObject();
-				if (config != null) {
-					fillUpDefaults(config);
-					this.pipeline = new RestPipeline(this, config);
-				}
-			} catch (IOException e) {
+			EPAPipelineConfiguration config = mapper.readValue(configFile, EPAPipelineConfiguration.class);
+			if (config != null) {
+				fillUpDefaults(config);
+				this.pipeline = new RestPipeline(this, config);
 			}
-
 		}
 	}
 

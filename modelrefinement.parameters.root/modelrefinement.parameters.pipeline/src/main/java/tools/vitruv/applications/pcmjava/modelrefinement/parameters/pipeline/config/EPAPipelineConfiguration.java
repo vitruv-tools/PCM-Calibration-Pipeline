@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EPAPipelineConfiguration {
-
 	public static EPAPipelineConfiguration fromFile(File jsonFile) {
 		try {
 			return new ObjectMapper().readValue(jsonFile, EPAPipelineConfiguration.class);
