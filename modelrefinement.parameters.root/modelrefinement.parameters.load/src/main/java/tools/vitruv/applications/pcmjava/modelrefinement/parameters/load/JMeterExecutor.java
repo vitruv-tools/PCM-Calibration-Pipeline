@@ -10,8 +10,17 @@ public class JMeterExecutor {
 		JMETER_PATH = jMeterPath;
 	}
 
-	public void execute(File file) throws IOException {
-		// TODO
+	public boolean execute(File file) throws IOException {
+		if (file != null) {
+			ProcessBuilder builder = new ProcessBuilder(JMETER_PATH, "-n", "-t", "\"" + file.getAbsolutePath() + "\"");
+			try {
+				builder.start().waitFor();
+				return true;
+			} catch (InterruptedException e) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 }
