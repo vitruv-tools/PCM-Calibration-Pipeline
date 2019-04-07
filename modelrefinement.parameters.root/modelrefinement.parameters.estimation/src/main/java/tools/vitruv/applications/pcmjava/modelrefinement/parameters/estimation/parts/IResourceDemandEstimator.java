@@ -6,6 +6,6 @@ public interface IResourceDemandEstimator {
 
 	public void prepare(MonitoringDataSet data);
 
-	public void derive();
+	void derive();
 
 }

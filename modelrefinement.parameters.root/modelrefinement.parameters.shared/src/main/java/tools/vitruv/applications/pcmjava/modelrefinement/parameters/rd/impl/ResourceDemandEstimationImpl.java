@@ -44,10 +44,8 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 	/**
 	 * Initializes a new instance of {@link ResourceDemandEstimationImpl}.
 	 * 
-	 * @param loopPrediction
-	 *            The loop prediction.
-	 * @param branchPrediction
-	 *            The branch prediction.
+	 * @param loopPrediction   The loop prediction.
+	 * @param branchPrediction The branch prediction.
 	 */
 	public ResourceDemandEstimationImpl(final LoopPrediction loopPrediction, final BranchPrediction branchPrediction) {
 		this.modelCache = new HashMap<>();
@@ -128,6 +126,7 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 		}
 
 		String stoEx = rdModel.getResourceDemandStochasticExpression();
+		System.out.println(stoEx);
 		PCMRandomVariable randomVariable = CoreFactory.eINSTANCE.createPCMRandomVariable();
 		randomVariable.setSpecification(stoEx);
 		rd.setSpecification_ParametericResourceDemand(randomVariable);

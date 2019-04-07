@@ -9,6 +9,7 @@ template ServiceContextRecord : RecordWithSession {
 }
 
 entity ResourceUtilizationRecord : RecordWithSession {
+   string containerId = "<not set>"
    string resourceId = "<not set>"
    double utilization
    long timestamp

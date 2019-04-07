@@ -10,7 +10,7 @@ import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.IResourceDemandEstimator;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.ResourceDemandEstimator;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.alt.ResourceDemandEstimatorAlternative;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl.KiekerMonitoringReader;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.InMemoryPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
@@ -31,9 +31,9 @@ public class EstimationTest {
 		pcm.setResourceEnvironmentModel(PcmUtils
 				.readFromFile(new File("pcm/cocome.resourceenvironment").getAbsolutePath(), ResourceEnvironment.class));
 
-		KiekerMonitoringReader reader = new KiekerMonitoringReader("monitoring/");
+		KiekerMonitoringReader reader = new KiekerMonitoringReader("monitoring2/");
 
-		IResourceDemandEstimator estimation = new ResourceDemandEstimator(pcm);
+		IResourceDemandEstimator estimation = new ResourceDemandEstimatorAlternative(pcm);
 		estimation.prepare(reader);
 		estimation.derive();
 	}
