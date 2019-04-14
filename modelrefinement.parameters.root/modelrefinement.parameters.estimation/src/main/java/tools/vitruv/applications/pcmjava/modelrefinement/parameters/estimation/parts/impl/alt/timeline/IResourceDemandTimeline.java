@@ -28,4 +28,6 @@ public interface IResourceDemandTimeline {
 
 	List<Entry<Long, ResourceDemandTimelineInterval>> getIntersectingIntervals(long start, long end, long maxDuration);
 
+	public long maxDuration();
+
 }

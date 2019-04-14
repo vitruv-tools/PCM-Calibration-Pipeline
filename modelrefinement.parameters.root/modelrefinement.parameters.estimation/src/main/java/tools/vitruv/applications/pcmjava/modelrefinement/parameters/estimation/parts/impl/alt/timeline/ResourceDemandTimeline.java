@@ -29,17 +29,6 @@ public class ResourceDemandTimeline implements IResourceDemandTimeline {
 		this.utilizations = new TreeMap<>();
 	}
 
-	public List<Entry<Long, ResourceDemandTimelineInterval>> intersectingIntervals(long start,
-			ResourceDemandTimelineInterval ival) {
-		List<Entry<Long, ResourceDemandTimelineInterval>> ret = new ArrayList<>();
-		Entry<Long, ResourceDemandTimelineInterval> nextIval = nextInterval(start + 1);
-		while (nextIval != null && nextIval.getKey() < start + ival.getRoot().data.getDuration()) {
-			nextIval = nextInterval(nextIval.getKey() + 1);
-			ret.add(nextIval);
-		}
-		return ret;
-	}
-
 	@Override
 	public void addUtilization(long time, double value) {
 		this.utilizations.put(time, value);
@@ -59,7 +48,7 @@ public class ResourceDemandTimeline implements IResourceDemandTimeline {
 	public List<Entry<Long, ResourceDemandTimelineInterval>> getIntersectingIntervals(long start, long end,
 			long maxDuration) {
 		List<Entry<Long, ResourceDemandTimelineInterval>> res = new ArrayList<>();
-		Entry<Long, ResourceDemandTimelineInterval> current = this.nextInterval(start - maxDuration);
+		Entry<Long, ResourceDemandTimelineInterval> current = this.nextInterval(start - maxDuration - 1);
 		while (current != null && current.getKey() <= end) {
 			if (current.getKey() + current.getValue().getRoot().data.getDuration() >= start) {
 				res.add(current);
@@ -72,6 +61,11 @@ public class ResourceDemandTimeline implements IResourceDemandTimeline {
 	@Override
 	public Entry<Long, ResourceDemandTimelineInterval> nextInterval(long time) {
 		return intervals.ceilingEntry(time);
+	}
+
+	@Override
+	public long maxDuration() {
+		return intervals.entrySet().stream().mapToLong(i -> i.getValue().getRoot().data.getDuration()).max().orElse(0);
 	}
 
 	@Override

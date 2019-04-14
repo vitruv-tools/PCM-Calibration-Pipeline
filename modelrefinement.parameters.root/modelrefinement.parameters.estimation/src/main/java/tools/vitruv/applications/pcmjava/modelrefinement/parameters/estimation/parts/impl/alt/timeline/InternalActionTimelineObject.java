@@ -2,12 +2,12 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ResponseTimeRecord;
 
-public class InternalActionTimelineObject extends AbstractResourceDemandTimelineObject {
+public class InternalActionTimelineObject extends AbstractTimelineObject {
 
 	private String internalActionId;
 
 	public InternalActionTimelineObject(ResponseTimeRecord resp) {
-		super(resp.getStopTime() - resp.getStartTime());
+		super(resp.getStartTime(), resp.getStopTime() - resp.getStartTime());
 
 		this.internalActionId = resp.getInternalActionId();
 	}
@@ -18,6 +18,11 @@ public class InternalActionTimelineObject extends AbstractResourceDemandTimeline
 
 	public void setInternalActionId(String internalActionId) {
 		this.internalActionId = internalActionId;
+	}
+
+	@Override
+	public String toString() {
+		return "IA [" + internalActionId + "] - (" + this.getStart() + ", " + this.getDuration() + ")";
 	}
 
 }

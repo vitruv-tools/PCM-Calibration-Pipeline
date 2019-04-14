@@ -18,6 +18,7 @@ import org.palladiosimulator.pcm.seff.seff_performance.ParametricResourceDemand;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.IResourceDemandEstimator;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.alt.strategy.AdvancedPOSIXUsageEstimation;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.alt.timeline.IResourceDemandTimeline;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.alt.timeline.ResourceDemandTimeline;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.parts.impl.alt.timeline.ResourceDemandTimelineInterval;
@@ -117,7 +118,8 @@ public class ResourceDemandEstimatorAlternative implements IResourceDemandEstima
 
 	@Override
 	public void derive() {
-		TimelineAnalyzer analyzer = new TimelineAnalyzer(pcm, 10000); // 10 s
+		TimelineAnalyzer analyzer = new TimelineAnalyzer(pcm, TimelineAnalyzer.UnrollStrategy.COMPLETE,
+				new AdvancedPOSIXUsageEstimation()); // 20 s
 		for (IResourceDemandTimeline tl : this.timelines) {
 			analyzer.analyze(tl);
 		}

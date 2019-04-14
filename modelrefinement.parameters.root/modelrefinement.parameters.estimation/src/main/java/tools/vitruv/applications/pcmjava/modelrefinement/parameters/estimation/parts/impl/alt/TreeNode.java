@@ -3,6 +3,8 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TreeNode<T> {
 
 	public T data;
@@ -21,6 +23,19 @@ public class TreeNode<T> {
 		return childNode;
 	}
 
-	// other features ...
+	@Override
+	public String toString() {
+		return innerToString(0);
+	}
+
+	private String innerToString(int indent) {
+		StringBuilder builder = new StringBuilder();
+		String front = StringUtils.repeat(" ", indent);
+		builder.append(front + "-> " + data.toString());
+		for (TreeNode<T> child : children) {
+			builder.append("\n" + child.innerToString(indent + 2));
+		}
+		return builder.toString();
+	}
 
 }

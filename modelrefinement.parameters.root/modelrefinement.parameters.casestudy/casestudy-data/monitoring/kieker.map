@@ -2,4 +2,4 @@ $0=kieker.common.record.misc.KiekerMetadataRecord
 $1=tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ResponseTimeRecord
 $2=tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ServiceCallRecord
 $3=tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.LoopRecord
-$4=kieker.common.record.system.CPUUtilizationRecord
+$4=tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ResourceUtilizationRecord
