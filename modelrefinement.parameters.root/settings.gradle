@@ -1,3 +1,3 @@
 rootProject.name = 'modelrefinement.parameters.root'
 
-include "modelrefinement.parameters.shared", "modelrefinement.parameters.monitoring", "modelrefinement.parameters.palladio", "modelrefinement.parameters.casestudy", "modelrefinement.parameters.interface", "modelrefinement.parameters.load", "modelrefinement.parameters.pipeline", "modelrefinement.parameters.usagemodel", "modelrefinement.parameters.estimation"
+include "modelrefinement.parameters.shared", "modelrefinement.parameters.monitoring", "modelrefinement.parameters.palladio", "modelrefinement.parameters.casestudy", "modelrefinement.parameters.interface", "modelrefinement.parameters.load", "modelrefinement.parameters.pipeline", "modelrefinement.parameters.usagemodel", "modelrefinement.parameters.estimation", "modelrefinement.parameters.casestudy.teastore"

@@ -56,6 +56,7 @@ public class TimelineAnalyzer implements ITimelineAnalysis {
 
 		// iterate over cpu intervals
 		LOG.info("Iterate over CPU intervals.");
+
 		Entry<Long, Double> before = null;
 		for (Entry<Long, Double> entry : timeline.getAllUtilizations()) {
 			// new iteration

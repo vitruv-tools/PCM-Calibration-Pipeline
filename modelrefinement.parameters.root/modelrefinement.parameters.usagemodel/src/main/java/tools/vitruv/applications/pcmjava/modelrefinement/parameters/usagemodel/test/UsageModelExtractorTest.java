@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.palladiosimulator.pcm.repository.Repository;
-import org.palladiosimulator.pcm.seff.InternalAction;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
@@ -23,19 +22,17 @@ public class UsageModelExtractorTest {
 	public void test() {
 		PcmUtils.loadPCMModels();
 
-		Repository pcmModel = PcmUtils.readFromFile(new File("cocome/cocome.repository").getAbsolutePath(),
+		Repository pcmModel = PcmUtils.readFromFile(new File("teastore/pcm/teastore.repository").getAbsolutePath(),
 				Repository.class);
 
-		java.lang.System.out.println(
-				PcmUtils.getElementById(pcmModel, InternalAction.class, "_2GlXMNL-EdujoZKiiOMQBA").getEntityName());
-
-		System pcmSystem = PcmUtils.readFromFile(new File("cocome/cocome.system").getAbsolutePath(), System.class);
-		UsageModel usage = PcmUtils.readFromFile(new File("cocome/cocome.usagemodel").getAbsolutePath(),
+		System pcmSystem = PcmUtils.readFromFile(new File("teastore/pcm/teastore.system").getAbsolutePath(),
+				System.class);
+		UsageModel usage = PcmUtils.readFromFile(new File("teastore/pcm/teastore.usagemodel").getAbsolutePath(),
 				UsageModel.class);
-		MonitoringDataSet data = new KiekerMonitoringReader(
-				"monitoring-data/monitoring/kieker-20181216-223438-27519603339170-UTC--KIEKER");
+		MonitoringDataSet data = new KiekerMonitoringReader("teastore/monitoring/");
 		MonitoringDataMapping mapping = new MonitoringDataMapping();
-		mapping.addParameterMapping("products.VALUE", "saleTO.NUMBER_OF_ELEMENTS");
+		mapping.addParameterMapping("items.NUMBER_OF_ELEMENTS", "items.NUMBER_OF_ELEMENTS");
+		mapping.addParameterMapping("recommender.VALUE", "recommender.VALUE");
 
 		UsageModelExtractor extractor = new UsageModelExtractor(pcmModel, usage, pcmSystem);
 		List<SessionCluster> clusters = extractor.extractUserGroups(data, 0.8f, 5);

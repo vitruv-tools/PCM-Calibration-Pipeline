@@ -1,0 +1,6 @@
+{
+	"parameterMapping" : {
+		"items.NUMBER_OF_ELEMENTS" : "items.NUMBER_OF_ELEMENTS",
+		"recommender.VALUE" : "recommender.VALUE"
+	}
+}

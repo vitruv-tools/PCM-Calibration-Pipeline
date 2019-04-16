@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<usagemodel:UsageModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stoex="http://sdq.ipd.uka.de/StochasticExpressions/2.2" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2">
+  <usageScenario_UsageModel id="_-F0EsGCVEemFtK-rB2y8Zw">
+    <scenarioBehaviour_UsageScenario id="_-F0EsWCVEemFtK-rB2y8Zw">
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_-F0EsmCVEemFtK-rB2y8Zw"/>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_-F1S0WCVEemFtK-rB2y8Zw" predecessor="_-F1S0GCVEemFtK-rB2y8Zw"/>
+      <actions_ScenarioBehaviour xsi:type="usagemodel:Branch" id="_-F1S0GCVEemFtK-rB2y8Zw" successor="_-F1S0WCVEemFtK-rB2y8Zw">
+        <branchTransitions_Branch branchProbability="0.9931221747587878">
+          <branchedBehaviour_BranchTransition id="_-GezEGCVEemFtK-rB2y8Zw">
+            <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_-GezEWCVEemFtK-rB2y8Zw" successor="_-GezEmCVEemFtK-rB2y8Zw"/>
+            <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_-GezEmCVEemFtK-rB2y8Zw" successor="_-GhPUGCVEemFtK-rB2y8Zw" predecessor="_-GezEWCVEemFtK-rB2y8Zw">
+              <providedRole_EntryLevelSystemCall href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/gradle-working/git/modelrefinement.parameters.root/modelrefinement.parameters.usagemodel/teastore/pcm/teastore.system#_V9UrD2BXEem3FetPjQjq2g"/>
+              <operationSignature__EntryLevelSystemCall href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/gradle-working/git/modelrefinement.parameters.root/modelrefinement.parameters.usagemodel/teastore/pcm/teastore.repository#_MuwRYGBREem3FetPjQjq2g"/>
+              <inputParameterUsages_EntryLevelSystemCall>
+                <variableCharacterisation_VariableUsage type="NUMBER_OF_ELEMENTS">
+                  <specification_VariableCharacterisation specification="IntPMF[(1;0.6705142463)(2;0.3294857537)]"/>
+                </variableCharacterisation_VariableUsage>
+                <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="items"/>
+              </inputParameterUsages_EntryLevelSystemCall>
+              <inputParameterUsages_EntryLevelSystemCall>
+                <variableCharacterisation_VariableUsage type="VALUE"/>
+                <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="recommender"/>
+              </inputParameterUsages_EntryLevelSystemCall>
+            </actions_ScenarioBehaviour>
+            <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_-GhPUGCVEemFtK-rB2y8Zw" predecessor="_-GezEmCVEemFtK-rB2y8Zw"/>
+          </branchedBehaviour_BranchTransition>
+        </branchTransitions_Branch>
+        <branchTransitions_Branch branchProbability="0.006877825241212159">
+          <branchedBehaviour_BranchTransition id="_-GhPUWCVEemFtK-rB2y8Zw">
+            <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_-GhPUmCVEemFtK-rB2y8Zw" successor="_-Gh2YGCVEemFtK-rB2y8Zw"/>
+            <actions_ScenarioBehaviour xsi:type="usagemodel:Loop" id="_-Gh2YGCVEemFtK-rB2y8Zw" successor="_-GiddGCVEemFtK-rB2y8Zw" predecessor="_-GhPUmCVEemFtK-rB2y8Zw">
+              <loopIteration_Loop specification="IntPMF[(2;0.9972299169)(3;0.0027700831)]"/>
+              <bodyBehaviour_Loop id="_-GidcGCVEemFtK-rB2y8Zw">
+                <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_-GidcWCVEemFtK-rB2y8Zw" successor="_-GidcmCVEemFtK-rB2y8Zw"/>
+                <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_-GidcmCVEemFtK-rB2y8Zw" successor="_-Gidc2CVEemFtK-rB2y8Zw" predecessor="_-GidcWCVEemFtK-rB2y8Zw">
+                  <providedRole_EntryLevelSystemCall href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/gradle-working/git/modelrefinement.parameters.root/modelrefinement.parameters.usagemodel/teastore/pcm/teastore.system#_V9UrD2BXEem3FetPjQjq2g"/>
+                  <operationSignature__EntryLevelSystemCall href="file:/Users/david/Desktop/Studium/WS1819/Praktikum%20IngSoftware/gradle-working/git/modelrefinement.parameters.root/modelrefinement.parameters.usagemodel/teastore/pcm/teastore.repository#_MuwRYGBREem3FetPjQjq2g"/>
+                  <inputParameterUsages_EntryLevelSystemCall>
+                    <variableCharacterisation_VariableUsage type="NUMBER_OF_ELEMENTS">
+                      <specification_VariableCharacterisation specification="IntPMF[(1;0.643153527)(2;0.356846473)]"/>
+                    </variableCharacterisation_VariableUsage>
+                    <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="items"/>
+                  </inputParameterUsages_EntryLevelSystemCall>
+                  <inputParameterUsages_EntryLevelSystemCall>
+                    <variableCharacterisation_VariableUsage type="VALUE"/>
+                    <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="recommender"/>
+                  </inputParameterUsages_EntryLevelSystemCall>
+                </actions_ScenarioBehaviour>
+                <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_-Gidc2CVEemFtK-rB2y8Zw" predecessor="_-GidcmCVEemFtK-rB2y8Zw"/>
+              </bodyBehaviour_Loop>
+            </actions_ScenarioBehaviour>
+            <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_-GiddGCVEemFtK-rB2y8Zw" predecessor="_-Gh2YGCVEemFtK-rB2y8Zw"/>
+          </branchedBehaviour_BranchTransition>
+        </branchTransitions_Branch>
+      </actions_ScenarioBehaviour>
+    </scenarioBehaviour_UsageScenario>
+    <workload_UsageScenario xsi:type="usagemodel:OpenWorkload">
+      <interArrivalTime_OpenWorkload specification="10"/>
+    </workload_UsageScenario>
+  </usageScenario_UsageModel>
+</usagemodel:UsageModel>

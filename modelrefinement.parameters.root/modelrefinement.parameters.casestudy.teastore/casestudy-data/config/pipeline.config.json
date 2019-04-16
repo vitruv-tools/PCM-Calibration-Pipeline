@@ -1,0 +1,22 @@
+{
+	"javaPath" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/bin/java",
+	"eclipsePath" : "/Users/david/Desktop/Studium/WS1819/Praktikum IngSoftware/Setup Automation/Eclipse.app/Contents/Eclipse/",
+	"jmeterPath" : "/Users/david/Desktop/Studium/WS1819/Praktikum IngSoftware/Apache JMeter/apache-jmeter-5.0",
+	
+	"jmxPath" : "casestudy-data/jmeter/load.jmx",
+	
+	"repositoryPath" : "casestudy-data/pcm/teastore.repository",
+	"systemPath" : "casestudy-data/pcm/teastore.system",
+	"usageModelPath" : "casestudy-data/pcm/teastore.usagemodel",
+	"allocationModelPath" : "casestudy-data/pcm/teastore.allocation",
+	"resourceEnvironmentModelPath" : "casestudy-data/pcm/teastore.resourceenvironment",
+	
+	"monitoringDataPath" : "casestudy-data/monitoring",
+	"monitoringDataMapping" : "casestudy-data/config/data-mapping.json",
+	
+	"docker" : {
+		"url" : "unix:///var/run/docker.sock",
+		"container" : "cocome-cloud",
+		"path" : "/etc/monitoring"
+	}
+}
