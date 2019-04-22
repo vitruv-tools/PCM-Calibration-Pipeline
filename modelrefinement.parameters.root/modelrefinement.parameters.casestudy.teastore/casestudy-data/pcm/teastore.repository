@@ -3,42 +3,53 @@
   <components__Repository xsi:type="repository:BasicComponent" id="_FSvLwGBREem3FetPjQjq2g" entityName="Recommender">
     <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_FuAgkWBTEem3FetPjQjq2g" entityName="provideRecommender" providedInterface__OperationProvidedRole="_KMP4YWBREem3FetPjQjq2g"/>
     <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_fgN6Z2BTEem3FetPjQjq2g" describedService__SEFF="_MuwRYGBREem3FetPjQjq2g">
-      <steps_Behaviour xsi:type="seff:StartAction" id="_hWv-MmBTEem3FetPjQjq2g" entityName="startRecommend" successor_AbstractAction="_r2gsPGBUEem3FetPjQjq2g"/>
-      <steps_Behaviour xsi:type="seff:InternalAction" id="_r2gsPGBUEem3FetPjQjq2g" entityName="getRecommender" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_1OWlVGBUEem3FetPjQjq2g">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_hWv-MmBTEem3FetPjQjq2g" entityName="startRecommend" successor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_HK9fYGBWEem3FetPjQjq2g" entityName="stopRecommend" predecessor_AbstractAction="_NCQPrmVIEemy4ppYLIctGg"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_ddiwgGRPEemGrPrX_y-VRA" entityName="processOrder" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="DoublePMF[(0.0;0.9995953601)(0.1;1.798399E-4)(0.2;1.798399E-4)(0.5;4.496E-5)]"/>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.0175438596)(0.1;0.3333333333)(0.2;0.3333333333)(0.3;0.2456140351)(0.4;0.0526315789)(0.5;0.0175438596)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.0175438596)(0.1;0.3157894737)(0.2;0.3333333333)(0.3;0.2105263158)(0.4;0.0877192982)(0.5;0.0175438596)(0.7;0.0175438596)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.05)(0.1;0.1833333333)(0.2;0.3166666667)(0.3;0.3)(0.4;0.0833333333)(0.5;0.05)(1.7;0.0166666667)]) : DoublePMF[(0.0;0.0175438596)(0.1;0.3333333333)(0.2;0.350877193)(0.3;0.2280701754)(0.4;0.0701754386)])))"/>
           <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_1OWlVGBUEem3FetPjQjq2g" entityName="Convert List" predecessor_AbstractAction="_r2gsPGBUEem3FetPjQjq2g" successor_AbstractAction="_CHb7LGBWEem3FetPjQjq2g">
-        <bodyBehaviour_Loop id="_rbrU4mBVEem3FetPjQjq2g">
-          <steps_Behaviour xsi:type="seff:StartAction" id="_r_OG0mBVEem3FetPjQjq2g" entityName="startConvert" successor_AbstractAction="_y8fa_GBVEem3FetPjQjq2g"/>
-          <steps_Behaviour xsi:type="seff:InternalAction" id="_y8fa_GBVEem3FetPjQjq2g" entityName="convAction" predecessor_AbstractAction="_r_OG0mBVEem3FetPjQjq2g" successor_AbstractAction="_2YSMYGBVEem3FetPjQjq2g">
-            <resourceDemand_Action>
-              <specification_ParametericResourceDemand specification="DoublePMF[(0.0;0.9995600826)(0.1;3.045582E-4)(0.2;1.015194E-4)(0.5;3.38398E-5)]"/>
-              <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
-            </resourceDemand_Action>
-          </steps_Behaviour>
-          <steps_Behaviour xsi:type="seff:StopAction" id="_2YSMYGBVEem3FetPjQjq2g" entityName="stopConvert" predecessor_AbstractAction="_y8fa_GBVEem3FetPjQjq2g"/>
-        </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="items.NUMBER_OF_ELEMENTS"/>
-      </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:InternalAction" id="_CHb7LGBWEem3FetPjQjq2g" entityName="executeRecommend" predecessor_AbstractAction="_1OWlVGBUEem3FetPjQjq2g" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_K2mOEGRQEemGrPrX_y-VRA" entityName="findOrder" predecessor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA" successor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="DoublePMF[(0.0;0.450260778)(0.1;0.3389157376)(0.2;0.1758935834)(0.3;0.0190918226)(0.4;0.0095698359)(0.5;0.0024881573)(0.6;0.0015790229)(0.7;3.349443E-4)(0.8;2.870951E-4)(0.9;3.827934E-4)(1.0;9.56984E-5)(1.1;1.435475E-4)(1.2;9.56984E-5)(1.3;1.435475E-4)(1.4;4.78492E-5)(1.5;4.78492E-5)(1.7;4.78492E-5)(1.9;4.78492E-5)(2.3;4.78492E-5)(2.8;4.78492E-5)(2.9;4.78492E-5)(3.5;4.78492E-5)(4.0;4.78492E-5)(4.9;4.78492E-5)(7.1;4.78492E-5)(7.4;4.78492E-5)(8.9;4.78492E-5)(13.5;4.78492E-5)(18.1;4.78492E-5)]"/>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.6315789474)(0.1;0.3684210526)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.6140350877)(0.1;0.3684210526)(1.1;0.0175438596)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.5593220339)(0.1;0.4237288136)(0.2;0.0169491525)]) : DoublePMF[(0.0;0.6140350877)(0.1;0.3684210526)(0.2;0.0175438596)])))"/>
           <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:StopAction" id="_HK9fYGBWEem3FetPjQjq2g" entityName="stopRecommend" predecessor_AbstractAction="_CHb7LGBWEem3FetPjQjq2g"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_dFsbwGRQEemGrPrX_y-VRA" entityName="itemSetAction" predecessor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA" successor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.775862069)(0.1;0.224137931)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.7368421053)(0.1;0.2631578947)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.6949152542)(0.1;0.3050847458)]) : DoublePMF[(0.0;0.701754386)(0.1;0.298245614)])))"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_9OxRAGRQEemGrPrX_y-VRA" entityName="userMatrixAction" predecessor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA" successor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.0344827586)(0.1;0.5517241379)(0.2;0.2931034483)(0.3;0.1034482759)(0.4;0.0172413793)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.0350877193)(0.1;0.4736842105)(0.2;0.3684210526)(0.3;0.0877192982)(0.4;0.0175438596)(0.5;0.0175438596)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.0847457627)(0.1;0.406779661)(0.2;0.3559322034)(0.3;0.1016949153)(0.4;0.0169491525)(0.5;0.0169491525)(1.6;0.0169491525)]) : DoublePMF[(0.0;0.0350877193)(0.1;0.4736842105)(0.2;0.3859649123)(0.3;0.0877192982)(0.7;0.0175438596)])))"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_FrlsUGRREemGrPrX_y-VRA" entityName="preprocessAction" predecessor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA" successor_AbstractAction="_NCQPrmVIEemy4ppYLIctGg">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (1.432960516502863 * orders.NUMBER_OF_ELEMENTS + (DoublePMF[(-356.1;0.0136986301)(-329.7;0.0136986301)(-325.3;0.0136986301)(-320.2;0.0136986301)(-319.9;0.0136986301)(-319.8;0.0136986301)(-316.5;0.0136986301)(-312.0;0.0136986301)(-308.3;0.0136986301)(-304.6;0.0136986301)(-304.5;0.0136986301)(-303.2;0.0136986301)(-299.0;0.0136986301)(-296.9;0.0136986301)(-296.5;0.0136986301)(-293.3;0.0136986301)(-289.8;0.0136986301)(-288.9;0.0136986301)(-287.3;0.0136986301)(-287.0;0.0136986301)(-284.2;0.0136986301)(-283.8;0.0136986301)(-282.3;0.0136986301)(-282.0;0.0136986301)(-280.1;0.0136986301)(-279.8;0.0136986301)(-279.7;0.0136986301)(-278.6;0.0136986301)(-278.3;0.0273972603)(-278.2;0.0273972603)(-277.7;0.0136986301)(-276.2;0.0136986301)(-276.0;0.0136986301)(-275.3;0.0136986301)(-275.1;0.0136986301)(-273.3;0.0136986301)(-271.8;0.0136986301)(-270.8;0.0136986301)(-268.7;0.0136986301)(-268.6;0.0136986301)(-268.2;0.0136986301)(-268.1;0.0273972603)(-268.0;0.0136986301)(-267.3;0.0136986301)(-266.4;0.0136986301)(-266.2;0.0136986301)(-264.9;0.0136986301)(-264.7;0.0136986301)(-264.2;0.0136986301)(-263.6;0.0136986301)(-263.3;0.0136986301)(-262.8;0.0136986301)(-262.3;0.0136986301)(-259.6;0.0136986301)(-256.1;0.0136986301)(-252.1;0.0136986301)(-248.8;0.0136986301)(-246.4;0.0136986301)(-246.2;0.0136986301)(-243.8;0.0136986301)(-233.7;0.0136986301)(-231.6;0.0136986301)(-228.7;0.0136986301)(-228.3;0.0136986301)(-225.0;0.0136986301)(-205.1;0.0136986301)(-168.7;0.0136986301)(-152.3;0.0136986301)(-109.0;0.0136986301)(-95.2;0.0136986301)])) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (-8.87116646512292E-5 * items.NUMBER_OF_ELEMENTS + (DoublePMF[(0.2;0.0350877193)(0.3;0.4035087719)(0.4;0.3157894737)(0.5;0.1929824561)(0.6;0.0350877193)(0.8;0.0175438596)])) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.1;0.0117647059)(0.3;0.0117647059)(0.6;0.0117647059)(1.4;0.0117647059)(3.3;0.0117647059)(5.2;0.0117647059)(6.9;0.0117647059)(7.2;0.0117647059)(8.5;0.0117647059)(9.8;0.0117647059)(13.3;0.0117647059)(14.0;0.0117647059)(16.4;0.0117647059)(16.6;0.0117647059)(16.8;0.0117647059)(17.1;0.0117647059)(19.4;0.0117647059)(19.8;0.0117647059)(21.0;0.0117647059)(23.2;0.0117647059)(23.7;0.0117647059)(24.4;0.0117647059)(24.5;0.0117647059)(25.2;0.0117647059)(26.4;0.0117647059)(27.7;0.0117647059)(27.8;0.0117647059)(28.3;0.0117647059)(29.0;0.0117647059)(29.3;0.0117647059)(29.5;0.0235294118)(30.5;0.0117647059)(31.4;0.0117647059)(34.6;0.0117647059)(36.3;0.0117647059)(36.5;0.0117647059)(36.9;0.0117647059)(38.3;0.0117647059)(38.6;0.0117647059)(39.9;0.0117647059)(40.6;0.0235294118)(40.9;0.0117647059)(42.2;0.0117647059)(48.0;0.0117647059)(54.1;0.0117647059)(55.4;0.0117647059)(56.1;0.0117647059)(58.8;0.0117647059)(60.2;0.0117647059)(64.4;0.0117647059)(64.6;0.0117647059)(64.9;0.0117647059)(70.3;0.0117647059)(75.2;0.0117647059)(79.7;0.0117647059)(83.5;0.0117647059)(93.6;0.0117647059)(93.7;0.0117647059)(94.7;0.0117647059)(96.1;0.0117647059)(99.0;0.0117647059)(102.1;0.0117647059)(103.5;0.0117647059)(108.3;0.0117647059)(108.8;0.0117647059)(109.3;0.0117647059)(109.6;0.0117647059)(111.2;0.0117647059)(115.2;0.0117647059)(123.8;0.0117647059)(134.7;0.0117647059)(135.0;0.0117647059)(138.9;0.0117647059)(147.5;0.0117647059)(160.4;0.0117647059)(171.4;0.0117647059)(179.7;0.0117647059)(202.7;0.0117647059)(220.8;0.0117647059)(223.2;0.0117647059)(242.2;0.0117647059)(251.7;0.0117647059)(388.1;0.0117647059)]) : 0.0)))"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_NCQPrmVIEemy4ppYLIctGg" entityName="noiseAction" predecessor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="0"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
     </serviceEffectSpecifications__BasicComponent>
   </components__Repository>
   <interfaces__Repository xsi:type="repository:OperationInterface" id="_KMP4YWBREem3FetPjQjq2g" entityName="RecommenderInterface">
     <signatures__OperationInterface id="_MuwRYGBREem3FetPjQjq2g" entityName="recommend">
       <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="items"/>
-      <parameters__OperationSignature parameterName="userId">
-        <dataType__Parameter xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.0"/>
+      <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="orders"/>
+      <parameters__OperationSignature parameterName="recommender">
+        <dataType__Parameter xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
       </parameters__OperationSignature>
-      <parameters__OperationSignature parameterName="recommender"/>
     </signatures__OperationInterface>
   </interfaces__Repository>
   <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_UbdB7GBSEem3FetPjQjq2g" entityName="java.util.List"/>

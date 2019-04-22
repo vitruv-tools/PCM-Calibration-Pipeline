@@ -76,8 +76,8 @@ public class UsageScenarioBehaviourBuilder {
 
 		// chaining
 		start.setSuccessor(branch);
-		branch.setPredecessor(branch);
-		branch.setSuccessor(branch);
+		branch.setPredecessor(start);
+		branch.setSuccessor(stop);
 		stop.setPredecessor(branch);
 
 		// preprocessing

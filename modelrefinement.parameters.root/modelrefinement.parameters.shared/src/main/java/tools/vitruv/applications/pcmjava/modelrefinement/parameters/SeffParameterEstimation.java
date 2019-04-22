@@ -40,9 +40,10 @@ public class SeffParameterEstimation {
 	 *            We use this monitoring data for estimating the SEFF Parameters.
 	 */
 	public void update(final Repository pcm, final MonitoringDataSet monitoringDataSet) {
+		/*
 		this.loopEstimation.update(pcm, monitoringDataSet.getServiceCalls(), monitoringDataSet.getLoops());
 		this.branchEstimation.update(pcm, monitoringDataSet.getServiceCalls(), monitoringDataSet.getBranches());
 		this.resourceDemandEstimation.update(pcm, monitoringDataSet.getServiceCalls(),
-				monitoringDataSet.getResourceUtilizations(), monitoringDataSet.getResponseTimes());
+				monitoringDataSet.getResourceUtilizations(), monitoringDataSet.getResponseTimes()); */
 	}
 }

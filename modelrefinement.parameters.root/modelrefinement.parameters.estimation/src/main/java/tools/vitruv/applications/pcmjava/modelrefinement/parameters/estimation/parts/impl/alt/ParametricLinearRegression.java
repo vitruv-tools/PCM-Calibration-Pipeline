@@ -2,10 +2,13 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
@@ -14,6 +17,8 @@ import org.palladiosimulator.pcm.core.PCMRandomVariable;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceParameters;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.util.DoubleDistribution;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.util.IfCondition;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.estimation.util.IfDistribution;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -34,9 +39,41 @@ public class ParametricLinearRegression {
 	}
 
 	public PCMRandomVariable deriveStoex(Map<String, String> parameterMapping) {
+		// enum split
+		Set<String> enumAttributes = getEnumParameters();
+
+		if (enumAttributes.size() == 0) {
+			return deriveInner(underlying);
+		}
+
+		Map<String, Set<String>> enumValueMapping = getEnumValues(enumAttributes);
+		String firstKey = enumValueMapping.keySet().stream().findFirst().get();
+
+		IfDistribution distr = new IfDistribution();
+
+		// iterate
+		for (String enumVal : enumValueMapping.get(firstKey)) {
+			// TODO support combinations of enums
+			IfCondition cond = new IfCondition(firstKey + "==\"" + enumVal + "\"");
+
+			List<Pair<ServiceParameters, Double>> inner = underlying.stream().filter(f -> {
+				return f.getKey().getParameters().entrySet().stream().anyMatch(e -> {
+					return e.getKey().equals(firstKey) && e.getValue() instanceof String
+							&& ((String) e.getValue()).equals(enumVal);
+				});
+			}).collect(Collectors.toList());
+
+			distr.put(cond, this.deriveInner(inner));
+		}
+
+		return distr.toStoex();
+	}
+
+	private PCMRandomVariable deriveInner(List<Pair<ServiceParameters, Double>> inner) {
 		LinearRegression regression = new LinearRegression();
+
 		// get attributes
-		List<String> attributes = getDependentParameters(this.innerThres);
+		List<String> attributes = getDependentParameters(this.innerThres, inner);
 
 		ArrayList<Attribute> wekaAttributes = new ArrayList<>();
 		Map<String, Integer> attributeIndexMapping = new HashMap<>();
@@ -52,7 +89,7 @@ public class ParametricLinearRegression {
 		Instances dataset = new Instances("dataset", wekaAttributes, 0);
 		dataset.setClassIndex(dataset.numAttributes() - 1);
 
-		for (Pair<ServiceParameters, Double> tuple : underlying) {
+		for (Pair<ServiceParameters, Double> tuple : inner) {
 			double demand = tuple.getRight();
 			double[] values = new double[dataset.numAttributes()];
 			for (Entry<String, Object> parameter : tuple.getLeft().getParameters().entrySet()) {
@@ -87,14 +124,42 @@ public class ParametricLinearRegression {
 		}
 	}
 
+	private Map<String, Set<String>> getEnumValues(Set<String> enumAttributes) {
+		Map<String, Set<String>> ret = new HashMap<>();
+
+		this.underlying.stream().map(t -> t.getKey()).forEach(p -> {
+			for (String str : enumAttributes) {
+				if (p.getParameters().containsKey(str)) {
+					String v = (String) p.getParameters().get(str);
+					if (ret.containsKey(str)) {
+						ret.get(str).add(v);
+					} else {
+						ret.put(str, new HashSet<>());
+						ret.get(str).add(v);
+					}
+				}
+			}
+		});
+
+		return ret;
+	}
+
+	private Set<String> getEnumParameters() {
+		return this.underlying.stream().map(t -> t.getKey())
+				.map(s -> s.getParameters().entrySet().stream().filter(f -> f.getValue() instanceof String)
+						.map(t -> t.getKey()).collect(Collectors.toSet()))
+				.flatMap(Set::stream).collect(Collectors.toSet());
+	}
+
 	private DoubleDistribution buildConstantDistribution(double[] coeff, Instances dataset) {
 		DoubleDistribution distr = new DoubleDistribution(prec);
 
 		for (Instance instance : dataset) {
 			double sum = 0;
-			for (int k = 1; k < coeff.length - 1; k++) {
-				sum += coeff[k] * instance.value(k - 1);
+			for (int k = 0; k < coeff.length - 1; k++) {
+				sum += coeff[k] * instance.value(k);
 			}
+
 			double constValue = instance.value(dataset.numAttributes() - 1) - sum;
 			distr.put(constValue);
 
@@ -106,9 +171,9 @@ public class ParametricLinearRegression {
 		return distr;
 	}
 
-	private List<String> getDependentParameters(float thres) {
+	private List<String> getDependentParameters(float thres, List<Pair<ServiceParameters, Double>> inner) {
 		Map<String, List<Pair<Double, Double>>> parameterMap = new HashMap<>();
-		for (Pair<ServiceParameters, Double> tuple : underlying) {
+		for (Pair<ServiceParameters, Double> tuple : inner) {
 			for (Entry<String, Object> parameter : tuple.getLeft().getParameters().entrySet()) {
 				double parameterValue = resolveParameterValue(parameter.getValue());
 

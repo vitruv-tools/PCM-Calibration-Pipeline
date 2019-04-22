@@ -1,6 +1,7 @@
 {
 	"parameterMapping" : {
 		"items.NUMBER_OF_ELEMENTS" : "items.NUMBER_OF_ELEMENTS",
-		"recommender.VALUE" : "recommender.VALUE"
+		"recommender.VALUE" : "recommender.VALUE",
+		"orders.NUMBER_OF_ELEMENTS" : "orders.NUMBER_OF_ELEMENTS"
 	}
 }

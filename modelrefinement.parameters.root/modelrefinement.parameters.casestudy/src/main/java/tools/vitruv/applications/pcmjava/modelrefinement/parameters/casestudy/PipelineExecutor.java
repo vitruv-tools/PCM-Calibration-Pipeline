@@ -28,7 +28,7 @@ public class PipelineExecutor {
 				.fromFile(new File("casestudy-data/config/pipeline.config.json"));
 
 		SpringApplication app = new SpringApplication(RestApplication.class);
-		app.setDefaultProperties(Collections.singletonMap("server.port", "80"));
+		app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
 		ConfigurableApplicationContext ctx = app.run(args);
 		RestInterface iface = ctx.getBean(RestInterface.class);
 		iface.setPipeline(new RestPipeline(iface, config));

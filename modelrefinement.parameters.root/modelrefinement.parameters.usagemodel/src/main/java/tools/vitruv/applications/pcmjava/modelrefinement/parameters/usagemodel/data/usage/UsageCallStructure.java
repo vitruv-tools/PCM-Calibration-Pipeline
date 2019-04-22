@@ -20,6 +20,7 @@ import de.uka.ipd.sdq.stoex.VariableReference;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.mapping.MonitoringDataMapping;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.util.ServiceCallUtil;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.EnumDistribution;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.IntDistribution;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
@@ -80,6 +81,8 @@ public class UsageCallStructure extends AbstractUsageElement {
 			return ((IntDistribution) value).toStochasticExpression();
 		} else if (value instanceof Integer) {
 			return ServiceCallUtil.buildIntLiteral((int) value);
+		} else if (value instanceof EnumDistribution) {
+			return ((EnumDistribution) value).toStoex();
 		}
 		return null;
 	}

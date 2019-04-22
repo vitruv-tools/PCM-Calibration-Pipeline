@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2" id="_BEtsIGBREem3FetPjQjq2g" entityName="TeaStore Repository">
+  <components__Repository xsi:type="repository:BasicComponent" id="_FSvLwGBREem3FetPjQjq2g" entityName="Recommender">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_FuAgkWBTEem3FetPjQjq2g" entityName="provideRecommender" providedInterface__OperationProvidedRole="_KMP4YWBREem3FetPjQjq2g"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_fgN6Z2BTEem3FetPjQjq2g" describedService__SEFF="_MuwRYGBREem3FetPjQjq2g">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_hWv-MmBTEem3FetPjQjq2g" entityName="startRecommend" successor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_HK9fYGBWEem3FetPjQjq2g" entityName="stopRecommend" predecessor_AbstractAction="_NCQPrmVIEemy4ppYLIctGg"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_ddiwgGRPEemGrPrX_y-VRA" entityName="processOrder" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="15"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_K2mOEGRQEemGrPrX_y-VRA" entityName="findOrder" predecessor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA" successor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="10"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_dFsbwGRQEemGrPrX_y-VRA" entityName="itemSetAction" predecessor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA" successor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="10"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_9OxRAGRQEemGrPrX_y-VRA" entityName="userMatrixAction" predecessor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA" successor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="1"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_FrlsUGRREemGrPrX_y-VRA" entityName="preprocessAction" predecessor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA" successor_AbstractAction="_NCQPrmVIEemy4ppYLIctGg">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="25"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_NCQPrmVIEemy4ppYLIctGg" entityName="noiseAction" predecessor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="0"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <interfaces__Repository xsi:type="repository:OperationInterface" id="_KMP4YWBREem3FetPjQjq2g" entityName="RecommenderInterface">
+    <signatures__OperationInterface id="_MuwRYGBREem3FetPjQjq2g" entityName="recommend">
+      <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="items"/>
+      <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="orders"/>
+      <parameters__OperationSignature parameterName="recommender">
+        <dataType__Parameter xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
+      </parameters__OperationSignature>
+    </signatures__OperationInterface>
+  </interfaces__Repository>
+  <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_UbdB7GBSEem3FetPjQjq2g" entityName="java.util.List"/>
+</repository:Repository>

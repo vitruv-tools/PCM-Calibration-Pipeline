@@ -6,6 +6,7 @@ import org.palladiosimulator.pcm.core.CoreFactory;
 import org.palladiosimulator.pcm.core.PCMRandomVariable;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.EnumDistribution;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.IntDistribution;
 
 public class ServiceCallUtil {
@@ -17,6 +18,19 @@ public class ServiceCallUtil {
 				if (b.getParameters().getParameters().containsKey(parameter.getKey())) {
 					Object other = b.getParameters().getParameters().get(parameter.getKey());
 					Object mine = parameter.getValue();
+
+					if (mine instanceof String) {
+						EnumDistribution n = new EnumDistribution();
+						n.push((String) mine);
+						mine = n;
+					}
+					if (mine instanceof EnumDistribution) {
+						if (other instanceof EnumDistribution) {
+							((EnumDistribution) mine).push((EnumDistribution) other);
+						} else if (other instanceof String) {
+							((EnumDistribution) mine).push((String) other);
+						}
+					}
 
 					if (mine instanceof Integer) {
 						IntDistribution n = new IntDistribution();

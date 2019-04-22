@@ -33,6 +33,7 @@ public class UsageModelExtractorTest {
 		MonitoringDataMapping mapping = new MonitoringDataMapping();
 		mapping.addParameterMapping("items.NUMBER_OF_ELEMENTS", "items.NUMBER_OF_ELEMENTS");
 		mapping.addParameterMapping("recommender.VALUE", "recommender.VALUE");
+		mapping.addParameterMapping("userId.VALUE", "userId.VALUE");
 
 		UsageModelExtractor extractor = new UsageModelExtractor(pcmModel, usage, pcmSystem);
 		List<SessionCluster> clusters = extractor.extractUserGroups(data, 0.8f, 5);
