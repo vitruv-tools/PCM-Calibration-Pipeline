@@ -22,6 +22,7 @@ public class UsageModelDerivationPart extends AbstractPipelinePart {
 
 	@Override
 	protected void execute() {
+		long usageModelStart = System.currentTimeMillis();
 		logger.info("Deriving actual usage model.");
 		getBlackboard().setState(PipelineState.USAGEMODEL_UPDATE);
 
@@ -36,6 +37,8 @@ public class UsageModelDerivationPart extends AbstractPipelinePart {
 		UsageScenarioBehaviourBuilder builder = new UsageScenarioBehaviourBuilder(currentPCM.getSystem(),
 				currentPCM.getRepository(), mapping);
 		UsageModel result = builder.buildFullUsagemodel(clusters);
+
+		logger.info("Usagemodel derivation needed " + (System.currentTimeMillis() - usageModelStart) + "ms");
 
 		// save new usagemodel
 		currentPCM.setUsageModel(result);

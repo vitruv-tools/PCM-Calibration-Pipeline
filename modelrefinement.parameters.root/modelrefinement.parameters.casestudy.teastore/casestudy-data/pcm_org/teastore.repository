@@ -2,69 +2,66 @@
 <repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2" id="_BEtsIGBREem3FetPjQjq2g" entityName="TeaStore Repository">
   <components__Repository xsi:type="repository:BasicComponent" id="_FSvLwGBREem3FetPjQjq2g" entityName="Recommender">
     <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_FuAgkWBTEem3FetPjQjq2g" entityName="provideRecommender" providedInterface__OperationProvidedRole="_KMP4YWBREem3FetPjQjq2g"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_-Q3alXZAEempQpRnYjFCyw" entityName="requireUtil" requiredInterface__OperationRequiredRole="_-1LeB3Y_EempQpRnYjFCyw"/>
     <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_fgN6Z2BTEem3FetPjQjq2g" describedService__SEFF="_MuwRYGBREem3FetPjQjq2g">
-      <steps_Behaviour xsi:type="seff:StartAction" id="_hWv-MmBTEem3FetPjQjq2g" entityName="startRecommend" successor_AbstractAction="_Xwg8QGRPEemGrPrX_y-VRA"/>
-      <steps_Behaviour xsi:type="seff:StopAction" id="_HK9fYGBWEem3FetPjQjq2g" entityName="stopRecommend" predecessor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA"/>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_Xwg8QGRPEemGrPrX_y-VRA" entityName="orderLoop" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_HcW70GRQEemGrPrX_y-VRA">
-        <bodyBehaviour_Loop id="_Xwo4EGRPEemGrPrX_y-VRA">
-          <steps_Behaviour xsi:type="seff:StartAction" id="_XwqtQGRPEemGrPrX_y-VRA" successor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:StopAction" id="_XwrUUGRPEemGrPrX_y-VRA" predecessor_AbstractAction="_ddiwgGRPEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:InternalAction" id="_ddiwgGRPEemGrPrX_y-VRA" entityName="processOrder" predecessor_AbstractAction="_XwqtQGRPEemGrPrX_y-VRA" successor_AbstractAction="_XwrUUGRPEemGrPrX_y-VRA">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_hWv-MmBTEem3FetPjQjq2g" entityName="startRecommend" successor_AbstractAction="_JrTBHHZCEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_HK9fYGBWEem3FetPjQjq2g" entityName="stopRecommend" predecessor_AbstractAction="_gkg_HHZDEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_JrTBHHZCEempQpRnYjFCyw" entityName="processOrder" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_SoaGBHZCEempQpRnYjFCyw">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="0"/>
+        </resourceDemand_Action>
+      </steps_Behaviour>
+      <steps_Behaviour xsi:type="seff:LoopAction" id="_SoaGBHZCEempQpRnYjFCyw" entityName="loopItems" predecessor_AbstractAction="_JrTBHHZCEempQpRnYjFCyw" successor_AbstractAction="_zUR-8HZFEempQpRnYjFCyw">
+        <bodyBehaviour_Loop xsi:type="seff:ResourceDemandingSEFF" id="_IQ9fI3ZEEempQpRnYjFCyw">
+          <steps_Behaviour xsi:type="seff:StartAction" id="_JaAx4nZEEempQpRnYjFCyw" successor_AbstractAction="_KqUjPHZEEempQpRnYjFCyw"/>
+          <steps_Behaviour xsi:type="seff:StopAction" id="_KRE8wHZEEempQpRnYjFCyw" predecessor_AbstractAction="_KqUjPHZEEempQpRnYjFCyw"/>
+          <steps_Behaviour xsi:type="seff:InternalAction" id="_KqUjPHZEEempQpRnYjFCyw" entityName="itemProcess" predecessor_AbstractAction="_JaAx4nZEEempQpRnYjFCyw" successor_AbstractAction="_KRE8wHZEEempQpRnYjFCyw">
             <resourceDemand_Action>
-              <specification_ParametericResourceDemand specification="15"/>
-              <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+              <specification_ParametericResourceDemand specification="1"/>
             </resourceDemand_Action>
           </steps_Behaviour>
         </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="1"/>
+        <iterationCount_LoopAction specification="items.NUMBER_OF_ELEMENTS"/>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_HcW70GRQEemGrPrX_y-VRA" entityName="reorderLoop" predecessor_AbstractAction="_Xwg8QGRPEemGrPrX_y-VRA" successor_AbstractAction="_XnQdIGRQEemGrPrX_y-VRA">
-        <bodyBehaviour_Loop id="_Hch68GRQEemGrPrX_y-VRA">
-          <steps_Behaviour xsi:type="seff:StartAction" id="_HciiAGRQEemGrPrX_y-VRA" successor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:StopAction" id="_HciiAWRQEemGrPrX_y-VRA" predecessor_AbstractAction="_K2mOEGRQEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:InternalAction" id="_K2mOEGRQEemGrPrX_y-VRA" entityName="findOrder" predecessor_AbstractAction="_HciiAGRQEemGrPrX_y-VRA" successor_AbstractAction="_HciiAWRQEemGrPrX_y-VRA">
-            <resourceDemand_Action>
-              <specification_ParametericResourceDemand specification="10"/>
-              <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
-            </resourceDemand_Action>
-          </steps_Behaviour>
-        </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="1"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_QbQchnZDEempQpRnYjFCyw" entityName="createBuyMatrix" predecessor_AbstractAction="_zUR-8HZFEempQpRnYjFCyw" successor_AbstractAction="_gkg_HHZDEempQpRnYjFCyw" calledService_ExternalService="_m-YLgHZAEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_gkg_HHZDEempQpRnYjFCyw" entityName="preprocessDelegate" predecessor_AbstractAction="_QbQchnZDEempQpRnYjFCyw" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
+        <resourceDemand_Action>
+          <specification_ParametericResourceDemand specification="5"/>
+        </resourceDemand_Action>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:LoopAction" id="_XnQdIGRQEemGrPrX_y-VRA" entityName="ItemSetLoop" predecessor_AbstractAction="_HcW70GRQEemGrPrX_y-VRA" successor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA">
-        <bodyBehaviour_Loop id="_XnRrQGRQEemGrPrX_y-VRA">
-          <steps_Behaviour xsi:type="seff:StartAction" id="_XnRrQWRQEemGrPrX_y-VRA" successor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:StopAction" id="_XnRrQmRQEemGrPrX_y-VRA" predecessor_AbstractAction="_dFsbwGRQEemGrPrX_y-VRA"/>
-          <steps_Behaviour xsi:type="seff:InternalAction" id="_dFsbwGRQEemGrPrX_y-VRA" entityName="itemSetAction" predecessor_AbstractAction="_XnRrQWRQEemGrPrX_y-VRA" successor_AbstractAction="_XnRrQmRQEemGrPrX_y-VRA">
-            <resourceDemand_Action>
-              <specification_ParametericResourceDemand specification="10"/>
-              <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
-            </resourceDemand_Action>
-          </steps_Behaviour>
-        </bodyBehaviour_Loop>
-        <iterationCount_LoopAction specification="1"/>
-      </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:InternalAction" id="_9OxRAGRQEemGrPrX_y-VRA" entityName="userMatrixAction" predecessor_AbstractAction="_XnQdIGRQEemGrPrX_y-VRA" successor_AbstractAction="_FrlsUGRREemGrPrX_y-VRA">
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_zUR-8HZFEempQpRnYjFCyw" entityName="createUserItemSet" predecessor_AbstractAction="_SoaGBHZCEempQpRnYjFCyw" successor_AbstractAction="_QbQchnZDEempQpRnYjFCyw">
         <resourceDemand_Action>
           <specification_ParametericResourceDemand specification="1"/>
           <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:InternalAction" id="_FrlsUGRREemGrPrX_y-VRA" entityName="preprocessAction" predecessor_AbstractAction="_9OxRAGRQEemGrPrX_y-VRA" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <components__Repository xsi:type="repository:BasicComponent" id="_7Q--gHY_EempQpRnYjFCyw" entityName="Util">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_MlTwkXZBEempQpRnYjFCyw" entityName="provideUtil" providedInterface__OperationProvidedRole="_-1LeB3Y_EempQpRnYjFCyw"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_PcBfB3ZBEempQpRnYjFCyw" describedService__SEFF="_m-YLgHZAEempQpRnYjFCyw">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_yDaJwnZBEempQpRnYjFCyw" entityName="startMatrix" successor_AbstractAction="_8KvmLHZBEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_8_5sgHZBEempQpRnYjFCyw" predecessor_AbstractAction="_8KvmLHZBEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:InternalAction" id="_8KvmLHZBEempQpRnYjFCyw" entityName="matrixInternal" predecessor_AbstractAction="_yDaJwnZBEempQpRnYjFCyw" successor_AbstractAction="_8_5sgHZBEempQpRnYjFCyw">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="25"/>
-          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
+          <specification_ParametericResourceDemand specification="1"/>
         </resourceDemand_Action>
       </steps_Behaviour>
     </serviceEffectSpecifications__BasicComponent>
   </components__Repository>
   <interfaces__Repository xsi:type="repository:OperationInterface" id="_KMP4YWBREem3FetPjQjq2g" entityName="RecommenderInterface">
-    <signatures__OperationInterface id="_MuwRYGBREem3FetPjQjq2g" entityName="recommend">
+    <signatures__OperationInterface id="_MuwRYGBREem3FetPjQjq2g" entityName="train">
       <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="items"/>
       <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="orders"/>
       <parameters__OperationSignature parameterName="recommender">
         <dataType__Parameter xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
       </parameters__OperationSignature>
+    </signatures__OperationInterface>
+    <signatures__OperationInterface id="_SmiTMHZBEempQpRnYjFCyw" entityName="recommend"/>
+  </interfaces__Repository>
+  <interfaces__Repository xsi:type="repository:OperationInterface" id="_-1LeB3Y_EempQpRnYjFCyw" entityName="UtilInterface">
+    <signatures__OperationInterface id="_m-YLgHZAEempQpRnYjFCyw" entityName="createBuyMatrix">
+      <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="userItems"/>
     </signatures__OperationInterface>
   </interfaces__Repository>
   <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_UbdB7GBSEem3FetPjQjq2g" entityName="java.util.List"/>

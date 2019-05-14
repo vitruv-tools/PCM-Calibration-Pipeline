@@ -15,11 +15,13 @@ public class LoadMonitoringDataPart extends AbstractPipelinePart {
 
 	@Override
 	protected void execute() {
+		long loadStart = System.currentTimeMillis();
 		logger.info("Loading monitoring data.");
 
 		getBlackboard().setState(PipelineState.LOAD_MONITORING_DATA);
 
 		this.getBlackboard().setMonitoringData(new KiekerMonitoringReader(monitoringDataPath));
+		logger.info("Loading all monitoring data needed " + (System.currentTimeMillis() - loadStart) + "ms.");
 	}
 
 }

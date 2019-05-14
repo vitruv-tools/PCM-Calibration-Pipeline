@@ -3,6 +3,7 @@
   <assemblyContexts__ComposedStructure id="_glnfYGBXEem3FetPjQjq2g" entityName="innerRecomm">
     <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="teastore.repository#_FSvLwGBREem3FetPjQjq2g"/>
   </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_mndY8HZDEempQpRnYjFCyw"/>
   <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_n4NjRGBXEem3FetPjQjq2g" entityName="delegateThrough" outerProvidedRole_ProvidedDelegationConnector="_V9UrD2BXEem3FetPjQjq2g" assemblyContext_ProvidedDelegationConnector="_glnfYGBXEem3FetPjQjq2g">
     <innerProvidedRole_ProvidedDelegationConnector href="teastore.repository#_FuAgkWBTEem3FetPjQjq2g"/>
   </connectors__ComposedStructure>

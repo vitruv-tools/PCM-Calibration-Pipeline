@@ -225,7 +225,7 @@ public class TimelineAnalyzer implements ITimelineAnalysis {
 		LOG.info("Performing linear regressions.");
 		Map<String, PCMRandomVariable> stoexMapping = new HashMap<>();
 		for (Entry<String, List<Pair<ServiceParameters, Double>>> demandEntry : iaDemands.entrySet()) {
-			ParametricLinearRegression regression = new ParametricLinearRegression(demandEntry.getValue(), 1, 0.5f);
+			ParametricLinearRegression regression = new ParametricLinearRegression(demandEntry.getValue(), 1, 0.2f);
 			PCMRandomVariable derived = regression.deriveStoex(null);
 			stoexMapping.put(demandEntry.getKey(), derived);
 			LOG.info(derived.getSpecification());

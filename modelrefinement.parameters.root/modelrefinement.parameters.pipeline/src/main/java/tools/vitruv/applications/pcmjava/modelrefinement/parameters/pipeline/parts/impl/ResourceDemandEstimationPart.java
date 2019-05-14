@@ -12,9 +12,12 @@ public class ResourceDemandEstimationPart extends AbstractPipelinePart {
 
 	@Override
 	protected void execute() {
+		long timelineStart = System.currentTimeMillis();
 		IResourceDemandEstimator estimation = new ResourceDemandEstimatorAlternative(getBlackboard().getLoadedPcm());
 		estimation.prepare(getBlackboard().getMonitoringData());
 		estimation.derive();
+
+		logger.info("Timeline derivation needed " + (System.currentTimeMillis() - timelineStart) + "ms.");
 
 		// save it
 		getBlackboard().persistInMemoryPCM();

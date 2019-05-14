@@ -6,4 +6,8 @@
     <resourceContainer_AllocationContext href="teastore.resourceenvironment#_9fz90WBXEem3FetPjQjq2g"/>
     <assemblyContext_AllocationContext href="teastore.system#_glnfYGBXEem3FetPjQjq2g"/>
   </allocationContexts_Allocation>
+  <allocationContexts_Allocation id="_-JDbAHZDEempQpRnYjFCyw" entityName="allocateUtil">
+    <resourceContainer_AllocationContext href="teastore.resourceenvironment#_9fz90WBXEem3FetPjQjq2g"/>
+    <assemblyContext_AllocationContext href="teastore.system#_qCsJsHZDEempQpRnYjFCyw"/>
+  </allocationContexts_Allocation>
 </allocation:Allocation>

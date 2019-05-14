@@ -98,6 +98,7 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 
 		// do our job
 		this.addPart(new ResourceDemandEstimationPart());
+
 		this.addPart(new UsageModelDerivationPart(monitoringDataMapping));
 
 		// perform palladio analysis

@@ -12,6 +12,7 @@ public class ParameterEstimationPart extends AbstractPipelinePart {
 
 	@Override
 	protected void execute() {
+		long paraBranchStart = System.currentTimeMillis();
 		logger.info("Using the parameter estimation.");
 		getBlackboard().setState(PipelineState.PARAMETER_UPDATES);
 		// update parameters
@@ -20,6 +21,7 @@ public class ParameterEstimationPart extends AbstractPipelinePart {
 
 		// save it
 		getBlackboard().persistInMemoryPCM();
+		logger.info("JP derivation needed " + (System.currentTimeMillis() - paraBranchStart) + "ms.");
 	}
 
 }
