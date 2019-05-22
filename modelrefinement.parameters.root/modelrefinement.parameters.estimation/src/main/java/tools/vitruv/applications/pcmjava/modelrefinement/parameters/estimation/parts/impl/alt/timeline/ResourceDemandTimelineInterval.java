@@ -36,13 +36,15 @@ public class ResourceDemandTimelineInterval {
 	private void enrichNode(TreeNode<AbstractTimelineObject> root, ServiceCall data, MonitoringDataSet data2,
 			String resourceId) {
 		List<ResponseTimeRecord> records = data2.getResponseTimes().getResponseTimes(data.getServiceExecutionId());
-		records.forEach(r -> {
-			if (r.getResourceId().equals(resourceId)) {
-				TreeNode<AbstractTimelineObject> temp = buildNode(r);
-				temp.parent = root;
-				root.children.add(temp);
-			}
-		});
+		if (records != null) {
+			records.forEach(r -> {
+				if (r != null && r.getResourceId().equals(resourceId)) {
+					TreeNode<AbstractTimelineObject> temp = buildNode(r);
+					temp.parent = root;
+					root.children.add(temp);
+				}
+			});
+		}
 	}
 
 	private TreeNode<AbstractTimelineObject> buildNode(ResponseTimeRecord r) {

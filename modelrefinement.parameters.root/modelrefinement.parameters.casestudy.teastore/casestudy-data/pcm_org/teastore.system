@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ASCII"?>
 <system:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:composition="http://palladiosimulator.org/PalladioComponentModel/Core/Composition/5.2" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:system="http://palladiosimulator.org/PalladioComponentModel/System/5.2" id="_wcqtEGBWEem3FetPjQjq2g" entityName="TeaStore System">
   <assemblyContexts__ComposedStructure id="_glnfYGBXEem3FetPjQjq2g" entityName="innerRecomm">
     <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="teastore.repository#_FSvLwGBREem3FetPjQjq2g"/>

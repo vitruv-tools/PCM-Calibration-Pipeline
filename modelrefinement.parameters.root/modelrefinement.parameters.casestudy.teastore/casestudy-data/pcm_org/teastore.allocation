@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ASCII"?>
 <allocation:Allocation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:allocation="http://palladiosimulator.org/PalladioComponentModel/Allocation/5.2" id="_qNC3MGBYEem3FetPjQjq2g" entityName="TeaStore Allocation">
   <targetResourceEnvironment_Allocation href="teastore.resourceenvironment#/"/>
   <system_Allocation href="teastore.system#_wcqtEGBWEem3FetPjQjq2g"/>

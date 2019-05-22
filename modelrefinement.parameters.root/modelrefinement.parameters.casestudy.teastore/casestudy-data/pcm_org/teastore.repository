@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2" id="_BEtsIGBREem3FetPjQjq2g" entityName="TeaStore Repository">
+<?xml version="1.0" encoding="ASCII"?>
+<repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2" xmlns:stoex="http://sdq.ipd.uka.de/StochasticExpressions/2.2" id="_BEtsIGBREem3FetPjQjq2g" entityName="TeaStore Repository">
   <components__Repository xsi:type="repository:BasicComponent" id="_FSvLwGBREem3FetPjQjq2g" entityName="Recommender">
     <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_FuAgkWBTEem3FetPjQjq2g" entityName="provideRecommender" providedInterface__OperationProvidedRole="_KMP4YWBREem3FetPjQjq2g"/>
     <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_-Q3alXZAEempQpRnYjFCyw" entityName="requireUtil" requiredInterface__OperationRequiredRole="_-1LeB3Y_EempQpRnYjFCyw"/>
@@ -9,29 +9,39 @@
       <steps_Behaviour xsi:type="seff:InternalAction" id="_JrTBHHZCEempQpRnYjFCyw" entityName="processOrder" predecessor_AbstractAction="_hWv-MmBTEem3FetPjQjq2g" successor_AbstractAction="_SoaGBHZCEempQpRnYjFCyw">
         <resourceDemand_Action>
           <specification_ParametericResourceDemand specification="0"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:LoopAction" id="_SoaGBHZCEempQpRnYjFCyw" entityName="loopItems" predecessor_AbstractAction="_JrTBHHZCEempQpRnYjFCyw" successor_AbstractAction="_zUR-8HZFEempQpRnYjFCyw">
-        <bodyBehaviour_Loop xsi:type="seff:ResourceDemandingSEFF" id="_IQ9fI3ZEEempQpRnYjFCyw">
+        <bodyBehaviour_Loop id="_ly3agnyqEem-KrJuEEzR6g">
           <steps_Behaviour xsi:type="seff:StartAction" id="_JaAx4nZEEempQpRnYjFCyw" successor_AbstractAction="_KqUjPHZEEempQpRnYjFCyw"/>
           <steps_Behaviour xsi:type="seff:StopAction" id="_KRE8wHZEEempQpRnYjFCyw" predecessor_AbstractAction="_KqUjPHZEEempQpRnYjFCyw"/>
           <steps_Behaviour xsi:type="seff:InternalAction" id="_KqUjPHZEEempQpRnYjFCyw" entityName="itemProcess" predecessor_AbstractAction="_JaAx4nZEEempQpRnYjFCyw" successor_AbstractAction="_KRE8wHZEEempQpRnYjFCyw">
             <resourceDemand_Action>
-              <specification_ParametericResourceDemand specification="1"/>
+              <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (0.0) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (0.0) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.9999086647)(0.1;9.13353E-5)]) : DoublePMF[(0.0;0.9999301041)(0.1;6.98959E-5)])))"/>
+              <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
             </resourceDemand_Action>
           </steps_Behaviour>
         </bodyBehaviour_Loop>
         <iterationCount_LoopAction specification="items.NUMBER_OF_ELEMENTS"/>
       </steps_Behaviour>
-      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_QbQchnZDEempQpRnYjFCyw" entityName="createBuyMatrix" predecessor_AbstractAction="_zUR-8HZFEempQpRnYjFCyw" successor_AbstractAction="_gkg_HHZDEempQpRnYjFCyw" calledService_ExternalService="_m-YLgHZAEempQpRnYjFCyw"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_QbQchnZDEempQpRnYjFCyw" entityName="createBuyMatrix" predecessor_AbstractAction="_zUR-8HZFEempQpRnYjFCyw" successor_AbstractAction="_gkg_HHZDEempQpRnYjFCyw" calledService_ExternalService="_m-YLgHZAEempQpRnYjFCyw" role_ExternalService="_-Q3alXZAEempQpRnYjFCyw">
+        <inputVariableUsages__CallAction>
+          <variableCharacterisation_VariableUsage type="NUMBER_OF_ELEMENTS">
+            <specification_VariableCharacterisation specification="1"/>
+          </variableCharacterisation_VariableUsage>
+          <namedReference__VariableUsage xsi:type="stoex:VariableReference" referenceName="userItems"/>
+        </inputVariableUsages__CallAction>
+      </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:InternalAction" id="_gkg_HHZDEempQpRnYjFCyw" entityName="preprocessDelegate" predecessor_AbstractAction="_QbQchnZDEempQpRnYjFCyw" successor_AbstractAction="_HK9fYGBWEem3FetPjQjq2g">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="5"/>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.1;0.015625)(0.5;0.015625)(0.8;0.015625)(1.3;0.0078125)(1.5;0.0078125)(1.9;0.015625)(2.2;0.015625)(2.3;0.015625)(2.5;0.015625)(2.6;0.0078125)(2.7;0.0234375)(2.8;0.0078125)(2.9;0.0078125)(3.1;0.0078125)(3.4;0.0078125)(3.5;0.0078125)(3.6;0.0078125)(3.7;0.0078125)(3.9;0.0078125)(4.2;0.0078125)(4.3;0.0078125)(4.4;0.0078125)(4.5;0.0078125)(4.6;0.0234375)(4.7;0.0234375)(4.8;0.0078125)(5.3;0.0078125)(5.4;0.0078125)(5.5;0.0078125)(5.7;0.0078125)(5.8;0.0078125)(6.0;0.015625)(6.6;0.0078125)(6.8;0.0078125)(7.0;0.0078125)(7.3;0.015625)(7.9;0.0078125)(8.2;0.0078125)(8.4;0.0078125)(8.6;0.0078125)(9.3;0.0078125)(9.6;0.0234375)(10.7;0.015625)(10.8;0.0078125)(11.6;0.0234375)(13.3;0.0078125)(13.4;0.0078125)(14.1;0.0078125)(15.3;0.0078125)(15.4;0.015625)(15.5;0.0078125)(16.5;0.0078125)(17.1;0.015625)(17.3;0.0078125)(17.5;0.0078125)(17.6;0.0078125)(18.5;0.0078125)(19.0;0.0078125)(19.5;0.0078125)(19.7;0.0078125)(21.0;0.0078125)(22.7;0.0078125)(23.2;0.0078125)(23.7;0.0078125)(25.5;0.0078125)(27.3;0.0078125)(28.7;0.0078125)(28.9;0.0078125)(29.3;0.0078125)(31.7;0.0078125)(33.2;0.0078125)(33.6;0.0078125)(34.2;0.0078125)(35.3;0.0078125)(37.2;0.0078125)(37.3;0.0078125)(38.5;0.0078125)(39.3;0.0078125)(39.7;0.0078125)(40.7;0.0078125)(41.1;0.0078125)(41.3;0.0078125)(42.0;0.0078125)(43.9;0.0078125)(44.6;0.0078125)(44.7;0.0078125)(50.1;0.0078125)(51.4;0.0078125)(52.1;0.0078125)(53.2;0.0078125)(53.3;0.0078125)(57.2;0.0078125)(63.4;0.0078125)(68.4;0.0078125)(69.1;0.0078125)(69.9;0.0078125)(70.3;0.0078125)(79.1;0.0078125)(89.6;0.0078125)(89.9;0.0078125)(97.4;0.0078125)(98.2;0.0078125)(101.8;0.0078125)(118.1;0.0078125)(132.0;0.0078125)(239.7;0.0078125)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.3431372549)(0.1;0.362745098)(0.2;0.2450980392)(0.3;0.0490196078)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.4;0.0215827338)(0.5;0.0071942446)(1.8;0.0071942446)(1.9;0.0071942446)(2.6;0.0071942446)(2.9;0.0071942446)(3.0;0.0071942446)(3.6;0.0071942446)(3.7;0.0071942446)(4.4;0.0071942446)(5.2;0.0071942446)(5.3;0.0071942446)(5.7;0.0071942446)(6.3;0.0071942446)(6.5;0.0071942446)(6.7;0.0071942446)(7.0;0.0071942446)(7.4;0.0071942446)(8.4;0.0071942446)(8.5;0.0071942446)(9.2;0.0071942446)(9.3;0.0071942446)(10.0;0.0071942446)(10.3;0.0143884892)(10.9;0.0071942446)(11.2;0.0071942446)(11.4;0.0071942446)(12.4;0.0071942446)(13.5;0.0071942446)(13.6;0.0143884892)(14.9;0.0071942446)(15.1;0.0071942446)(15.4;0.0071942446)(15.5;0.0071942446)(15.7;0.0071942446)(15.8;0.0071942446)(16.3;0.0215827338)(16.8;0.0071942446)(17.0;0.0143884892)(17.1;0.0071942446)(17.7;0.0071942446)(17.8;0.0071942446)(17.9;0.0071942446)(18.6;0.0071942446)(18.8;0.0071942446)(18.9;0.0071942446)(19.0;0.0071942446)(19.2;0.0071942446)(19.4;0.0071942446)(19.6;0.0143884892)(19.9;0.0071942446)(21.7;0.0143884892)(22.4;0.0071942446)(22.5;0.0071942446)(23.5;0.0071942446)(23.6;0.0071942446)(24.6;0.0071942446)(25.0;0.0071942446)(26.2;0.0071942446)(26.6;0.0071942446)(27.7;0.0071942446)(28.1;0.0143884892)(28.8;0.0071942446)(29.0;0.0071942446)(29.1;0.0071942446)(29.6;0.0071942446)(29.8;0.0071942446)(30.3;0.0071942446)(30.9;0.0071942446)(31.5;0.0071942446)(32.4;0.0071942446)(32.8;0.0071942446)(33.4;0.0071942446)(34.3;0.0071942446)(35.5;0.0071942446)(37.0;0.0071942446)(37.5;0.0071942446)(39.2;0.0071942446)(39.5;0.0071942446)(40.8;0.0071942446)(41.7;0.0071942446)(42.5;0.0071942446)(42.7;0.0071942446)(43.3;0.0071942446)(43.9;0.0071942446)(44.3;0.0071942446)(44.7;0.0071942446)(49.1;0.0071942446)(50.4;0.0071942446)(54.9;0.0071942446)(56.1;0.0071942446)(61.9;0.0071942446)(62.2;0.0143884892)(62.4;0.0071942446)(65.7;0.0071942446)(70.2;0.0071942446)(71.2;0.0071942446)(75.0;0.0071942446)(78.2;0.0071942446)(78.4;0.0071942446)(79.1;0.0071942446)(82.3;0.0071942446)(83.5;0.0071942446)(86.2;0.0071942446)(91.7;0.0071942446)(93.4;0.0071942446)(95.5;0.0071942446)(96.7;0.0071942446)(106.7;0.0071942446)(107.5;0.0071942446)(109.1;0.0071942446)(117.7;0.0071942446)(118.2;0.0071942446)(122.3;0.0071942446)(124.8;0.0071942446)(125.4;0.0071942446)(130.9;0.0071942446)(134.5;0.0071942446)(149.6;0.0071942446)(168.1;0.0071942446)(183.3;0.0071942446)(187.1;0.0071942446)(198.2;0.0071942446)(198.5;0.0071942446)(202.9;0.0071942446)(242.0;0.0071942446)(243.8;0.0071942446)(286.3;0.0071942446)]) : 0.0)))"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
       <steps_Behaviour xsi:type="seff:InternalAction" id="_zUR-8HZFEempQpRnYjFCyw" entityName="createUserItemSet" predecessor_AbstractAction="_SoaGBHZCEempQpRnYjFCyw" successor_AbstractAction="_QbQchnZDEempQpRnYjFCyw">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="1"/>
+          <specification_ParametericResourceDemand specification="((recommender.VALUE==&quot;SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.5631067961)(0.1;0.3106796117)(0.2;0.067961165)(0.4;0.0194174757)(0.6;0.0097087379)(0.7;0.0194174757)(0.9;0.0097087379)]) : ((recommender.VALUE==&quot;POPULARITY&quot;) ? (DoublePMF[(0.0;0.5841584158)(0.1;0.297029703)(0.2;0.0594059406)(0.5;0.0198019802)(0.6;0.0297029703)(42.9;0.0099009901)]) : ((recommender.VALUE==&quot;PREPROC_SLOPE_ONE&quot;) ? (DoublePMF[(0.0;0.5267857143)(0.1;0.3303571429)(0.2;0.0803571429)(0.4;0.0089285714)(0.5;0.0089285714)(0.7;0.0178571429)(0.9;0.0089285714)(1.2;0.0089285714)(1.8;0.0089285714)]) : DoublePMF[(0.0;0.5544554455)(0.1;0.297029703)(0.2;0.0891089109)(0.5;0.0198019802)(0.6;0.0099009901)(0.7;0.0099009901)(0.8;0.0099009901)(1.0;0.0099009901)])))"/>
           <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
@@ -44,7 +54,8 @@
       <steps_Behaviour xsi:type="seff:StopAction" id="_8_5sgHZBEempQpRnYjFCyw" predecessor_AbstractAction="_8KvmLHZBEempQpRnYjFCyw"/>
       <steps_Behaviour xsi:type="seff:InternalAction" id="_8KvmLHZBEempQpRnYjFCyw" entityName="matrixInternal" predecessor_AbstractAction="_yDaJwnZBEempQpRnYjFCyw" successor_AbstractAction="_8_5sgHZBEempQpRnYjFCyw">
         <resourceDemand_Action>
-          <specification_ParametericResourceDemand specification="1"/>
+          <specification_ParametericResourceDemand specification="DoublePMF[(0.0;0.3021582734)(0.1;0.381294964)(0.2;0.1462829736)(0.3;0.139088729)(0.4;0.0215827338)(0.6;0.0023980815)(1.0;0.0023980815)(1.2;0.0047961631)]"/>
+          <requiredResource_ParametricResourceDemand href="pathmap://PCM_MODELS/Palladio.resourcetype#_oro4gG3fEdy4YaaT-RYrLQ"/>
         </resourceDemand_Action>
       </steps_Behaviour>
     </serviceEffectSpecifications__BasicComponent>
@@ -57,12 +68,13 @@
         <dataType__Parameter xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
       </parameters__OperationSignature>
     </signatures__OperationInterface>
-    <signatures__OperationInterface id="_SmiTMHZBEempQpRnYjFCyw" entityName="recommend"/>
   </interfaces__Repository>
   <interfaces__Repository xsi:type="repository:OperationInterface" id="_-1LeB3Y_EempQpRnYjFCyw" entityName="UtilInterface">
     <signatures__OperationInterface id="_m-YLgHZAEempQpRnYjFCyw" entityName="createBuyMatrix">
       <parameters__OperationSignature dataType__Parameter="_UbdB7GBSEem3FetPjQjq2g" parameterName="userItems"/>
     </signatures__OperationInterface>
   </interfaces__Repository>
-  <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_UbdB7GBSEem3FetPjQjq2g" entityName="java.util.List"/>
+  <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_UbdB7GBSEem3FetPjQjq2g" entityName="java.util.List">
+    <innerType_CollectionDataType xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
+  </dataTypes__Repository>
 </repository:Repository>
