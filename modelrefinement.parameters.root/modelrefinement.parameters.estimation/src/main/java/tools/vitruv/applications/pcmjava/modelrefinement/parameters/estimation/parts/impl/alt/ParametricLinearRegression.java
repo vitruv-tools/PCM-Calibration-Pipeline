@@ -31,6 +31,8 @@ public class ParametricLinearRegression {
 	private float innerThres;
 	private int prec;
 
+	private static final int MAX_DEPTH = 5;
+
 	public ParametricLinearRegression(List<Pair<ServiceParameters, Double>> data, int precision,
 			float dependencyThreshold) {
 		this.underlying = data;
@@ -97,6 +99,13 @@ public class ParametricLinearRegression {
 					int index = attributeIndexMapping.get(parameter.getKey());
 					double value = resolveParameterValue(parameter.getValue());
 					values[index] = value;
+					// max ^ 5
+					for (int i = 2; i <= MAX_DEPTH; i++) {
+						String attrName = parameter.getKey() + "^" + String.valueOf(i);
+						int indexInner = attributeIndexMapping.get(attrName);
+						double valueInner = Math.pow(value, i);
+						values[indexInner] = valueInner;
+					}
 				}
 			}
 
@@ -183,6 +192,15 @@ public class ParametricLinearRegression {
 						parameterMap.put(parameter.getKey(), new ArrayList<>());
 					}
 					parameterMap.get(parameter.getKey()).add(Pair.of(parameterValue, tuple.getRight()));
+
+					// max ^ 5
+					for (int i = 2; i <= MAX_DEPTH; i++) {
+						String attrName = parameter.getKey() + "^" + String.valueOf(i);
+						if (!parameterMap.containsKey(attrName)) {
+							parameterMap.put(attrName, new ArrayList<>());
+						}
+						parameterMap.get(attrName).add(Pair.of(Math.pow(parameterValue, (double) i), tuple.getRight()));
+					}
 				}
 			}
 		}

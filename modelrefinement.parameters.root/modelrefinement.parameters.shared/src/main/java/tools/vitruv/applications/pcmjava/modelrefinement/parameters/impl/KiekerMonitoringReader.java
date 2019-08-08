@@ -42,11 +42,10 @@ public class KiekerMonitoringReader implements MonitoringDataSet {
 	/**
 	 * Initializes a new instance of {@link KiekerMonitoringReader}.
 	 * 
-	 * @param kiekerRecordsDirectoryPath
-	 *            The path of the directory for kieker monitoring data.
-	 * @param sessionId
-	 *            The session id for which the monitoring data will be filtered
-	 *            during read.
+	 * @param kiekerRecordsDirectoryPath The path of the directory for kieker
+	 *                                   monitoring data.
+	 * @param sessionId                  The session id for which the monitoring
+	 *                                   data will be filtered during read.
 	 */
 	public KiekerMonitoringReader(final String kiekerRecordsDirectoryPath, final String sessionId) {
 		this.read(kiekerRecordsDirectoryPath, Optional.of(sessionId));
@@ -56,8 +55,8 @@ public class KiekerMonitoringReader implements MonitoringDataSet {
 	 * Initializes a new instance of {@link KiekerMonitoringReader}. The records are
 	 * not filtered by a session id.
 	 * 
-	 * @param kiekerRecordsDirectoryPath
-	 *            The path of the directory for kieker monitoring data.
+	 * @param kiekerRecordsDirectoryPath The path of the directory for kieker
+	 *                                   monitoring data.
 	 */
 	public KiekerMonitoringReader(String kiekerRecordsDirectoryPath) {
 		this.read(kiekerRecordsDirectoryPath, Optional.empty());
