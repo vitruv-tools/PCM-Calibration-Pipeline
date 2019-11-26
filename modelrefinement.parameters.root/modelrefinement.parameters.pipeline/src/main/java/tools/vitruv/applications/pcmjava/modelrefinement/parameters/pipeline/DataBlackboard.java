@@ -3,10 +3,11 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pcm.headless.shared.data.results.InMemoryResultRepository;
+
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface.data.ServiceResults;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.iface.data.StatResults;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio.results.PalladioAnalysisResults;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.InMemoryPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.LocalFilesystemPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.util.PrepareResultsUtil;
@@ -17,7 +18,7 @@ public class DataBlackboard {
 	private InMemoryPCM loadedPcm;
 	private LocalFilesystemPCM filesystemPcm;
 
-	private List<PalladioAnalysisResults> analysisResults;
+	private List<InMemoryResultRepository> analysisResults;
 	private List<ServiceResults> serviceResults;
 
 	private List<List<StatResults>> statResults;
@@ -61,16 +62,16 @@ public class DataBlackboard {
 		getLoadedPcm().saveToFilesystem(getFilesystemPcm());
 	}
 
-	public List<PalladioAnalysisResults> getAnalysisResults() {
+	public List<InMemoryResultRepository> getAnalysisResults() {
 		return analysisResults;
 	}
 
-	public synchronized void addAnalysisResults(PalladioAnalysisResults analysisResults) {
-		this.analysisResults.add(analysisResults);
+	public synchronized void addAnalysisResults(InMemoryResultRepository rawAnalysisResults) {
+		this.analysisResults.add(rawAnalysisResults);
 
 		// derive stats and service results
-		this.statResults.add(PrepareResultsUtil.prepareStatsResults(analysisResults, this));
-		this.serviceResults.add(PrepareResultsUtil.prepareServiceResults(analysisResults, this));
+		this.statResults.add(PrepareResultsUtil.prepareStatsResults(rawAnalysisResults, this));
+		this.serviceResults.add(PrepareResultsUtil.prepareServiceResults(rawAnalysisResults, this));
 	}
 
 	public PipelineState getState() {

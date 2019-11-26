@@ -17,13 +17,14 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.par
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadPCMModelsPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.LoadTestingPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.PalladioExecutorPart;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.ParameterEstimationPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.ResourceDemandEstimationPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.parts.impl.UsageModelDerivationPart;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.mapping.MonitoringDataMapping;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
 public class ParameterEstimationPipeline extends AbstractPCMPipeline {
+	private static final String DEFAULT_PCM_URL = "http://127.0.0.1:8081/";
+
 	private Logger logger;
 
 	protected EPAPipelineConfiguration pipelineConfiguration;
@@ -46,6 +47,7 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		try {
 			processConfiguration();
 		} catch (IOException e) {
+			e.printStackTrace();
 			logger.error("Failed to build the EPS pipeline.");
 			return;
 		}
@@ -82,18 +84,12 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 
 		// perform palladio analysis before
 		if (pipelineConfiguration.isAnalysisBefore()) {
-			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
-					pipelineConfiguration.getEclipsePath()));
+			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getPcmBackendUrl()));
 		}
-
-		// derive actual models
-		// -> doesnt work atm, maybe need to cherry pick his changes
-		this.addPart(new ParameterEstimationPart());
 
 		// perform palladio before us
 		if (pipelineConfiguration.isAnalysisPreCalibration()) {
-			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getJavaPath(),
-					pipelineConfiguration.getEclipsePath()));
+			this.addPart(new PalladioExecutorPart(pipelineConfiguration.getPcmBackendUrl()));
 		}
 
 		// do our job
@@ -102,8 +98,7 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		this.addPart(new UsageModelDerivationPart(monitoringDataMapping));
 
 		// perform palladio analysis
-		this.addPart(
-				new PalladioExecutorPart(pipelineConfiguration.getJavaPath(), pipelineConfiguration.getEclipsePath()));
+		this.addPart(new PalladioExecutorPart(pipelineConfiguration.getPcmBackendUrl()));
 
 		// check results
 		this.addPart(new CrossValidationPart());
@@ -120,8 +115,8 @@ public class ParameterEstimationPipeline extends AbstractPCMPipeline {
 		monitoringDataMapping = new ObjectMapper().readValue(new File(pipelineConfiguration.getMonitoringDataMapping()),
 				MonitoringDataMapping.class);
 
-		if (pipelineConfiguration.getJavaPath() == null) {
-			pipelineConfiguration.setJavaPath(System.getProperty("java.home"));
+		if (pipelineConfiguration.getPcmBackendUrl() == null) {
+			pipelineConfiguration.setPcmBackendUrl(DEFAULT_PCM_URL);
 		}
 	}
 

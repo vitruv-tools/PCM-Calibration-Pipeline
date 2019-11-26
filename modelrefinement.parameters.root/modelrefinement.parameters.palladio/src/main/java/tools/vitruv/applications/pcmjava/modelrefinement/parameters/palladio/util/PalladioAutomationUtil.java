@@ -1,10 +1,6 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.tuple.Pair;
-import org.palladiosimulator.edp2.models.measuringpoint.MeasuringPoint;
 import org.palladiosimulator.metricspec.MetricDescription;
 import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
@@ -13,21 +9,50 @@ import org.palladiosimulator.pcm.core.composition.Connector;
 import org.palladiosimulator.pcm.core.composition.RequiredDelegationConnector;
 import org.palladiosimulator.pcm.repository.OperationRequiredRole;
 import org.palladiosimulator.pcm.repository.OperationSignature;
-import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.seff.AbstractAction;
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
-import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
-import org.palladiosimulator.pcm.usagemodel.UsageModel;
+import org.pcm.headless.shared.data.results.MeasuringPointType;
+import org.pcm.headless.shared.data.results.PlainMeasuringPoint;
+import org.pcm.headless.shared.data.results.PlainMetricDescription;
 
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.InMemoryPCM;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
 // TODO refactoring
 public class PalladioAutomationUtil {
-	private static final Pattern ASSEMBLY_CTX_PATTERN = Pattern.compile("AssemblyCtx: (.*),");
-	private static final Pattern CALL_ID_PATTERN = Pattern.compile("CallID: (.*)>");
-	private static final Pattern ENTRY_LEVEL_SYSTEM_PATTERN = Pattern.compile("EntryLevelSystemCall id: (.*) ");
+
+	public static Pair<ServiceEffectSpecification, AssemblyContext> getSeffByMeasuringPoint(InMemoryPCM pcm,
+			PlainMeasuringPoint point, PlainMetricDescription desc) {
+		if (!(MetricType.fromId(desc.getId()) == MetricType.RESPONSE_TIME)) {
+			return null;
+		}
+
+		if (point.getType() == MeasuringPointType.ENTRY_LEVEL_CALL && point.getSourceIds().size() == 1) {
+			EntryLevelSystemCall entryCall = PcmUtils.getElementById(pcm.getUsageModel(), EntryLevelSystemCall.class,
+					point.getSourceIds().get(0));
+			return PcmUtils.getSeffByProvidedRoleAndSignature(pcm.getSystem(),
+					entryCall.getOperationSignature__EntryLevelSystemCall(),
+					entryCall.getProvidedRole_EntryLevelSystemCall());
+		} else if (point.getType() == MeasuringPointType.ASSEMBLY_OPERATION && point.getSourceIds().size() == 2) {
+			// get belonging action
+			AbstractAction belongingAction = PcmUtils.getElementById(pcm.getRepository(), AbstractAction.class,
+					point.getSourceIds().get(1));
+			// this stays until i exactly know if the assembly context is relevant or not
+			AssemblyContext ctx = PcmUtils.getElementById(pcm.getSystem(), AssemblyContext.class,
+					point.getSourceIds().get(0));
+			if (belongingAction != null && ctx != null) {
+				if (belongingAction instanceof ExternalCallAction) {
+					return getSeffByAssemblySignature(ctx,
+							((ExternalCallAction) belongingAction).getRole_ExternalService(),
+							((ExternalCallAction) belongingAction).getCalledService_ExternalService());
+				}
+			}
+		}
+
+		return null;
+	}
 
 	public static Pair<ServiceEffectSpecification, AssemblyContext> getSeffByAssemblySignature(AssemblyContext ctx,
 			OperationRequiredRole reqRole, OperationSignature sig) {
@@ -62,44 +87,6 @@ public class PalladioAutomationUtil {
 						role);
 				if (innerCtx != null) {
 					return innerCtx;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public static Pair<ServiceEffectSpecification, AssemblyContext> getSeffByMeasuringPoint(Repository repository,
-			UsageModel usageModel, System system, MeasuringPoint point, MetricDescription metric) {
-		if (getMetricType(metric) == MetricType.RESPONSE_TIME) {
-			Matcher assemblyMatcher = ASSEMBLY_CTX_PATTERN.matcher(point.getStringRepresentation());
-			Matcher callIdMatcher = CALL_ID_PATTERN.matcher(point.getStringRepresentation());
-
-			if (assemblyMatcher.find() && callIdMatcher.find()) {
-				// get belonging action
-				AbstractAction belongingAction = PcmUtils.getElementById(repository, AbstractAction.class,
-						callIdMatcher.group(1));
-				// this stays until i exactly know if the assembly context is relevant or not
-				AssemblyContext ctx = PcmUtils.getElementById(system, AssemblyContext.class, assemblyMatcher.group(1));
-				if (belongingAction != null && ctx != null) {
-					if (belongingAction instanceof ExternalCallAction) {
-						return getSeffByAssemblySignature(ctx,
-								((ExternalCallAction) belongingAction).getRole_ExternalService(),
-								((ExternalCallAction) belongingAction).getCalledService_ExternalService());
-					}
-				}
-			} else {
-				// is entry level system call?
-				Matcher entryCallMatcher = ENTRY_LEVEL_SYSTEM_PATTERN.matcher(point.getStringRepresentation());
-				if (entryCallMatcher.find()) {
-					EntryLevelSystemCall entryCall = PcmUtils.getElementById(usageModel, EntryLevelSystemCall.class,
-							entryCallMatcher.group(1));
-					if (entryCall == null) {
-						return null;
-					}
-					return PcmUtils.getSeffByProvidedRoleAndSignature(system,
-							entryCall.getOperationSignature__EntryLevelSystemCall(),
-							entryCall.getProvidedRole_EntryLevelSystemCall());
 				}
 			}
 		}

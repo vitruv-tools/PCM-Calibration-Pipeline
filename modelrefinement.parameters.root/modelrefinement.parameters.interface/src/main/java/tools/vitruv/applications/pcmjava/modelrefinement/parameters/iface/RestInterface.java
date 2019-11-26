@@ -93,18 +93,14 @@ public class RestInterface implements InitializingBean {
 			config.setDockerImport(false);
 		}
 
-		if (config.getJavaPath() == null) {
-			config.setJavaPath("java");
+		if (config.getPcmBackendUrl() == null) {
+			config.setPcmBackendUrl("http://127.0.0.1:8081/");
 		}
 
 		if (config.getJmxPath() == null) {
 			config.setLoadTesting(false);
 		} else {
 			config.setLoadTesting(true);
-		}
-
-		if (config.getEclipsePath() == null) {
-			config.setEclipsePath("/etc/eclipse/eclipse/");
 		}
 
 		if (config.getJmeterPath() == null) {

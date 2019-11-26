@@ -47,4 +47,8 @@ public class LongDistribution {
 		this.values = values;
 	}
 
+	public int size() {
+		return values.size();
+	}
+
 }

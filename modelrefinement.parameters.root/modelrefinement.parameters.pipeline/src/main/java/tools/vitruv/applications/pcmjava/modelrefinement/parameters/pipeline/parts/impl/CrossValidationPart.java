@@ -2,14 +2,11 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.pa
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
-import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
-import org.palladiosimulator.pcm.system.System;
-import org.palladiosimulator.pcm.usagemodel.UsageModel;
+import org.pcm.headless.shared.data.results.InMemoryResultRepository;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio.results.PalladioAnalysisResults;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.palladio.util.PalladioAutomationUtil;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.PipelineState;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.pipeline.data.InMemoryPCM;
@@ -30,19 +27,21 @@ public class CrossValidationPart extends AbstractPipelinePart {
 		// state
 		getBlackboard().setState(PipelineState.EVALUATION);
 
-		PalladioAnalysisResults results = getBlackboard().getAnalysisResults()
+		InMemoryResultRepository results = getBlackboard().getAnalysisResults()
 				.get(getBlackboard().getAnalysisResults().size() - 1);
 
 		final InMemoryPCM pcm = getBlackboard().getLoadedPcm();
-		final Repository repository = pcm.getRepository();
-		final UsageModel usagemodel = pcm.getUsageModel();
-		final System system = pcm.getSystem();
+
+		if (results == null) {
+			logger.warn("Simulation results are not valid or a timeout occurred.");
+			return;
+		}
 
 		MonitoringDataSet monitoringData = getBlackboard().getMonitoringData();
 
-		results.entries().forEach(entry -> {
-			Pair<ServiceEffectSpecification, AssemblyContext> metadata = PalladioAutomationUtil.getSeffByMeasuringPoint(
-					repository, usagemodel, system, entry.getKey(), entry.getValue().getMetricDescription());
+		results.getValues().forEach(entry -> {
+			Pair<ServiceEffectSpecification, AssemblyContext> metadata = PalladioAutomationUtil
+					.getSeffByMeasuringPoint(pcm, entry.getKey().getPoint(), entry.getKey().getDesc());
 
 			if (metadata != null) {
 				ResourceDemandingSEFF demandingSeff = (ResourceDemandingSEFF) metadata.getLeft();
@@ -51,8 +50,8 @@ public class CrossValidationPart extends AbstractPipelinePart {
 				LongDistribution monitoringDistribution = new LongDistribution();
 
 				// add all values
-				entry.getValue().getYValues().forEach(y -> analysisDistribution.addValue(y.getValue().longValue()));
-				if (entry.getValue().getYValues().size() > 0
+
+				if (analysisDistribution.size() > 0
 						&& monitoringData.getServiceCalls().getServiceIds().contains(demandingSeff.getId())) {
 					monitoringData.getServiceCalls().getServiceCalls(demandingSeff.getId()).forEach(call -> {
 						monitoringDistribution.addValue(call.getResponseTime() / NANO_TO_MS);

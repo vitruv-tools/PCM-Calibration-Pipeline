@@ -14,7 +14,7 @@ public class ReadConfigurationTest {
 
 		EPAPipelineConfiguration config = EPAPipelineConfiguration
 				.fromFile(new File("casestudy-data/config/pipeline.config.json"));
-		System.out.println(config.getJavaPath());
+		System.out.println(config.getPcmBackendUrl());
 
 	}
 

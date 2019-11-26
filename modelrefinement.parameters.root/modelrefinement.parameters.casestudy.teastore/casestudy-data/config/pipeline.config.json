@@ -1,7 +1,6 @@
 {
-	"javaPath" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/bin/java",
-	"eclipsePath" : "/Users/david/Desktop/Studium/WS1819/Praktikum IngSoftware/Setup Automation/Eclipse.app/Contents/Eclipse/",
-	"jmeterPath" : "/Users/david/Desktop/Studium/WS1819/Praktikum IngSoftware/Apache JMeter/apache-jmeter-5.0",
+	"pcmBackendUrl" : "http://127.0.0.1:8080/",
+	"jmeterPath" : "",
 	
 	"jmxPath" : "casestudy-data/jmeter/load.jmx",
 	

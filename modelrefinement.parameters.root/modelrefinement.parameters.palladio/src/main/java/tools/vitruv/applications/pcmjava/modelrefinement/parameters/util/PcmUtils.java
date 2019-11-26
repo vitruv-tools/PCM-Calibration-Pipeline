@@ -46,7 +46,7 @@ public class PcmUtils {
 	/**
 	 * Gets all objects in a {@link Repository} of a specific type.
 	 * 
-	 * @param          <T> The type of the objects to find.
+	 * @param <T>      The type of the objects to find.
 	 * @param pcmModel The repository which is searched.
 	 * @param type     The type of the objects to find.
 	 * @return A list of all found objects or an empty list.
@@ -214,22 +214,29 @@ public class PcmUtils {
 	}
 
 	private static void initPathmaps() {
-		final String metricSpecModel = "models/Palladio.resourcetype";
-		final URL url = PcmUtils.class.getClassLoader().getResource(metricSpecModel);
-		if (url == null) {
-			throw new RuntimeException("Error getting common metric definitions");
+		final String palladioResModel = "models/Palladio.resourcetype";
+		final String metricSpecModel = "models/commonMetrics.metricspec";
+		final URL url = PcmUtils.class.getClassLoader().getResource(palladioResModel);
+		final URL url2 = PcmUtils.class.getClassLoader().getResource(metricSpecModel);
+		if (url == null || url2 == null) {
+			throw new RuntimeException("Error getting common definitions");
 		}
+
 		String urlString = url.toString();
-		if (!urlString.endsWith(metricSpecModel)) {
-			throw new RuntimeException("Error getting common metric definitions. Got: " + urlString);
-		}
-		urlString = urlString.substring(0, urlString.length() - metricSpecModel.length() - 1);
+		urlString = urlString.substring(0, urlString.length() - palladioResModel.length() - 1);
 		final URI uri = URI.createURI(urlString);
 		final URI target = uri.appendSegment("models").appendSegment("");
 		URIConverter.URI_MAP.put(URI.createURI("pathmap://PCM_MODELS/"), target);
 
+		urlString = url2.toString();
+		urlString = urlString.substring(0, urlString.length() - metricSpecModel.length() - 1);
+		final URI uri2 = URI.createURI(urlString);
+		final URI target2 = uri2.appendSegment("models").appendSegment("");
+		URIConverter.URI_MAP.put(URI.createURI("pathmap://METRIC_SPEC_MODELS/"), target2);
+
 		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("resourcetype", new XMIResourceFactoryImpl());
+		m.put("metricspec", new XMIResourceFactoryImpl());
 	}
 }

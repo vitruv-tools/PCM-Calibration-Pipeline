@@ -19,9 +19,9 @@ public class EPAPipelineConfiguration {
 	private boolean loadTesting;
 	private boolean dockerImport;
 
-	private String javaPath;
-	private String eclipsePath;
 	private String jmeterPath;
+	
+	private String pcmBackendUrl;
 
 	private String repositoryPath;
 	private String systemPath;
@@ -40,22 +40,6 @@ public class EPAPipelineConfiguration {
 
 	private boolean analysisBefore;
 	private boolean analysisPreCalibration;
-
-	public String getJavaPath() {
-		return javaPath;
-	}
-
-	public void setJavaPath(String javaPath) {
-		this.javaPath = javaPath;
-	}
-
-	public String getEclipsePath() {
-		return eclipsePath;
-	}
-
-	public void setEclipsePath(String eclipsePath) {
-		this.eclipsePath = eclipsePath;
-	}
 
 	public String getRepositoryPath() {
 		return repositoryPath;
@@ -175,5 +159,13 @@ public class EPAPipelineConfiguration {
 
 	public void setAnalysisPreCalibration(boolean analysisPreCalibration) {
 		this.analysisPreCalibration = analysisPreCalibration;
+	}
+
+	public String getPcmBackendUrl() {
+		return pcmBackendUrl;
+	}
+
+	public void setPcmBackendUrl(String pcmBackend) {
+		this.pcmBackendUrl = pcmBackend;
 	}
 }
