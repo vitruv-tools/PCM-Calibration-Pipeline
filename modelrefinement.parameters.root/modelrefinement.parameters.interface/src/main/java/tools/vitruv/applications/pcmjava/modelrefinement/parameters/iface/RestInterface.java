@@ -94,7 +94,7 @@ public class RestInterface implements InitializingBean {
 		}
 
 		if (config.getPcmBackendUrl() == null) {
-			config.setPcmBackendUrl("http://127.0.0.1:8081/");
+			config.setPcmBackendUrl("http://127.0.0.1:8080/");
 		}
 
 		if (config.getJmxPath() == null) {

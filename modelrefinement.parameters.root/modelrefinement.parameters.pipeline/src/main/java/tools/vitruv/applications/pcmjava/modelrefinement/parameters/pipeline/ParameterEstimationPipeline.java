@@ -23,7 +23,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.usagemodel.m
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
 public class ParameterEstimationPipeline extends AbstractPCMPipeline {
-	private static final String DEFAULT_PCM_URL = "http://127.0.0.1:8081/";
+	private static final String DEFAULT_PCM_URL = "http://127.0.0.1:8080/";
 
 	private Logger logger;
 
