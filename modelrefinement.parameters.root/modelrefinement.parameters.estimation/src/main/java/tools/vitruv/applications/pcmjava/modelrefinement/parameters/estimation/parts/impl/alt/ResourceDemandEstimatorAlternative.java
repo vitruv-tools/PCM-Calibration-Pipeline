@@ -105,7 +105,13 @@ public class ResourceDemandEstimatorAlternative implements IResourceDemandEstima
 					.getContainerUtilization(containerId);
 			if (resourceUtils != null) {
 				resourceUtils.entrySet().stream().filter(util -> util.getKey().equals(resourceId)).forEach(util -> {
-					util.getValue().entrySet().forEach(et -> timeline.addUtilization(et.getKey(), et.getValue()));
+					util.getValue().entrySet().forEach(et -> {
+						if (!Double.isNaN(et.getValue())) {
+							timeline.addUtilization(et.getKey(), et.getValue());
+						} else {
+							timeline.addUtilization(et.getKey(), 1.0d);
+						}
+					});
 				});
 			}
 		});

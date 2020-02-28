@@ -33,8 +33,8 @@ public class PalladioExecutorPart extends AbstractPipelinePart {
 
 		// TODO also v∂ariables not hardcoded maybe
 		HeadlessSimulationConfig simConfig = HeadlessSimulationConfig.builder()
-				.experimentName("Automatic Palladio Execution").repetitions(1).maximumMeasurementCount(50000)
-				.simulationTime(1000000).type(ESimulationType.SIMUCOM).build();
+				.experimentName("Automatic Palladio Execution").repetitions(1).maximumMeasurementCount(30000)
+				.simulationTime(450000).type(ESimulationType.SIMUCOM).build();
 
 		// perform the analysis
 		// TODO blocking approach is not the best way here

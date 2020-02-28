@@ -31,7 +31,7 @@ public class ParametricLinearRegression {
 	private float innerThres;
 	private int prec;
 
-	private static final int MAX_DEPTH = 5;
+	private static final int MAX_DEPTH = 4;
 
 	public ParametricLinearRegression(List<Pair<ServiceParameters, Double>> data, int precision,
 			float dependencyThreshold) {

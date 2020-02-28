@@ -46,10 +46,6 @@ public class TimelineAnalyzer implements ITimelineAnalysis {
 		// get max duration
 		long maxDuration = timeline.maxDuration();
 
-		// calculate baseline (system, ...)
-		LOG.info("Calculate baseline.");
-		double utilBaseline = calculateBaseline(timeline, maxDuration);
-
 		// saving data structures
 		Map<InternalActionTimelineObject, Double> usageAccumulator = new HashMap<>();
 		Map<InternalActionTimelineObject, ServiceCallTimelineObject> serviceCallParentMapping = new HashMap<>();
@@ -71,10 +67,7 @@ public class TimelineAnalyzer implements ITimelineAnalysis {
 
 				if (intersecting.size() > 0) {
 					// normalized util
-					double utilizationNormalized = ((before.getValue() + entry.getValue()) / 2d) - utilBaseline;
-
-					// scale it up to 1
-					utilizationNormalized *= 1d / (1d - utilBaseline);
+					double utilizationNormalized = ((before.getValue() + entry.getValue()) / 2d);
 
 					if (utilizationNormalized > 0.0) {
 						// unroll it
@@ -225,7 +218,7 @@ public class TimelineAnalyzer implements ITimelineAnalysis {
 		LOG.info("Performing linear regressions.");
 		Map<String, PCMRandomVariable> stoexMapping = new HashMap<>();
 		for (Entry<String, List<Pair<ServiceParameters, Double>>> demandEntry : iaDemands.entrySet()) {
-			ParametricLinearRegression regression = new ParametricLinearRegression(demandEntry.getValue(), 1, 0.2f);
+			ParametricLinearRegression regression = new ParametricLinearRegression(demandEntry.getValue(), 1, 0.7f);
 			PCMRandomVariable derived = regression.deriveStoex(null);
 			stoexMapping.put(demandEntry.getKey(), derived);
 			LOG.info(derived.getSpecification());
