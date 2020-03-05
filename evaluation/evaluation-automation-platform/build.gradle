@@ -1,0 +1,30 @@
+
+
+plugins {
+    id 'java'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    jcenter()
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: '*.jar')
+	
+	// https://mvnrepository.com/artifact/net.kieker-monitoring/kieker
+	compile group: 'net.kieker-monitoring', name: 'kieker', version: '1.13'
+	
+	// https://mvnrepository.com/artifact/log4j/log4j
+	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	
+	compile(group: 'nz.ac.waikato.cms.weka', name: 'weka-dev', version: '3.9.3')
+	
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+	compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+	
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	
+	compile group: 'org.cache2k', name: 'cache2k-core', version: '1.2.4.Final'
+}

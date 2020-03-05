@@ -1,0 +1,1 @@
+In the simulation models we have removed the loop that is normally present in the SEFF of the "train" service. One reason for this is that the average runtime is less than one millisecond and therefore negligible. On the other hand, this significantly accelerates the simulations.
