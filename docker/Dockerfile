@@ -36,7 +36,7 @@ RUN mkdir /etc/pipeline && \
 	cd /etc/pipeline/PCM-Calibration-Pipeline/modelrefinement.parameters.root && \
 	gradle bootJar
 
-ADD config.json /etc/pipeline/config.json
+ADD config.json /etc/pipeline/config_cocome.json
 	
 EXPOSE 8080 8080
 
